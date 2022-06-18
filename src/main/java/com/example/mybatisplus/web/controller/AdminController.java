@@ -77,6 +77,7 @@ public class AdminController {
         //lombok
         //Person   getAge  setAge
         //把什么推到远程
+        //
     }
 }
 
