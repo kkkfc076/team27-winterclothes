@@ -6,15 +6,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+//@SpringBootTest
 class MybatisplusApplicationTests {
 
-    @Autowired
-    private AdminService adminService;
+    //生成1-36的随机排列
     @Test
-    void contextLoads() {
-        Admin byId = adminService.getById(1);
-        System.out.println(byId);
+    public void hh(){
+        List<Integer> collect = IntStream.range(1, 37).boxed().collect(Collectors.toList());
+        Collections.shuffle(collect);
+        System.out.println(collect);
     }
+
+
 
 }
