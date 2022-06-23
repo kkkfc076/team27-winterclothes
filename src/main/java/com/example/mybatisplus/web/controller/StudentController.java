@@ -74,5 +74,13 @@ public class StudentController {
         studentService.save(student);
         return JsonResponse.success(null);
     }
+
+    @PostMapping("/login")
+    @ResponseBody
+    public JsonResponse login(@RequestBody Student student){
+        Student student1=studentService.stulogin(student);
+        return JsonResponse.success(student1);
+    }
+
 }
 
