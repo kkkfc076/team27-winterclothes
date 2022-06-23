@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.StudentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.Student">
+        <id column="id" property="id" />
+        <result column="sid" property="sid" />
+        <result column="pwd" property="pwd" />
+        <result column="name" property="name" />
+        <result column="sex" property="sex" />
+        <result column="sclass" property="sclass" />
+        <result column="grade" property="grade" />
+        <result column="major" property="major" />
+        <result column="plevel" property="plevel" />
+        <result column="pyear" property="pyear" />
+    </resultMap>
+    <select id="getPwd" resultType="java.lang.String">
+        SELECT pwd from student where sid = #{sid};
+    </select>
+
+</mapper>
