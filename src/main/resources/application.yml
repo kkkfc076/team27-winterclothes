@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/springboot_demo?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://127.0.0.1:3306/testdemo?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     username: root
-    password: admin
+    password:
   mvc:
     format:
       date: yyyy-MM-dd
@@ -15,7 +15,7 @@ server:
   servlet:
     encoding:
       charset: utf-8
-  port: 8081
+  port: 8082
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml, classpath:/mybatis/mapper/extend/*.xml

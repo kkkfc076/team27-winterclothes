@@ -1,16 +1,9 @@
 package com.example.mybatisplus.model.domain;
 
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
+import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -21,32 +14,40 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ * ????ѧ?
  * </p>
  *
- * @author lxp
- * @since 2021-06-17
+ * @author team27
+ * @since 2022-06-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Admin对象", description="")
-public class Admin extends Model<Admin> {
+@ApiModel(value="Student对象", description="????ѧ?")
+public class Student extends Model<Student> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @TableField("loginName")
-    private String loginName;
+    private Integer sid;
 
-    private String password;
+    private String pwd;
 
-    @TableField("lastLoginTime")
-    private LocalDateTime lastLoginTime;
+    private String name;
 
-    private String remark;
+    private String sex;
+
+    private Integer sclass;
+
+    private Integer grade;
+
+    private String major;
+
+    private String plevel;
+
+    private LocalDate pyear;
 
 
     @Override
