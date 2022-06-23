@@ -26,7 +26,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public Student stulogin(Student student) {
         QueryWrapper<Student> wrapper = new QueryWrapper<>();
-        wrapper.eq("loginName",student.getSid()).eq("password",student.getPwd());
+        wrapper.eq("sid",student.getSid()).eq("pwd",student.getPwd());
 
         Student student1 = studentMapper.selectOne(wrapper);
         return student1;
