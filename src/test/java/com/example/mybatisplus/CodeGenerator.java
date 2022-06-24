@@ -186,8 +186,8 @@ public class CodeGenerator {
         strategy.setSuperControllerClass("com.example.mybatisplus.common.BaseController");
         strategy.setEntityLombokModel(true);//启用lombok注解
         strategy.setChainModel(true);//启用lombok链式注解
-        strategy.setInclude("manager");//bms_book
-//        strategy.setTablePrefix("bms_");//去表前缀配置
+        strategy.setInclude("manager_application");//bms_book
+        strategy.setTablePrefix("bms_");//去表前缀配置
 
         mpg.setGlobalConfig(gc);
         mpg.setDataSource(dsc);
