@@ -84,5 +84,6 @@ public class StudentController {
         return JsonResponse.success(student1);
     }
 
+
 }
 

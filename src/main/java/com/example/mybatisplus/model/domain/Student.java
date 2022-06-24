@@ -35,7 +35,7 @@ public class Student extends Model<Student> {
 
     private String pwd;
 
-    private String name;
+    private String sname;
 
     private String sex;
 

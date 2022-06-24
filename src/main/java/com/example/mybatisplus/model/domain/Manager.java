@@ -34,15 +34,15 @@ public class Manager extends Model<Manager> {
 
     private String pwd;
 
-    private String name;
+    private String mname;
 
-    private Integer level;
+    private Integer mlevel;
 
     private String major;
 
     private Integer grade;
 
-    private Integer tclass;
+    private Integer mclass;
 
 
     @Override
