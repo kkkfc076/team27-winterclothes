@@ -22,7 +22,11 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Autowired
     private StudentMapper studentMapper;
 
-
+    /*
+    *
+    * 学生登录
+    *
+    * */
     @Override
     public Student stulogin(Student student) {
         QueryWrapper<Student> wrapper = new QueryWrapper<>();
@@ -31,4 +35,5 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         Student student1 = studentMapper.selectOne(wrapper);
         return student1;
     }
+
 }

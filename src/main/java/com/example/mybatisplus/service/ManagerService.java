@@ -3,6 +3,9 @@ package com.example.mybatisplus.service;
 import com.example.mybatisplus.model.domain.Manager;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
  * <p>
  * ???еĹ???Ա?˺ţ?????ϵͳ????Ա??????Ա??ѧԺ??ѧУ?û? 服务类
@@ -14,4 +17,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ManagerService extends IService<Manager> {
 
     Manager manlogin(Manager manager);
+
+    Integer modifyP(Manager man1);
+
+
 }
