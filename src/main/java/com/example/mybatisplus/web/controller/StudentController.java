@@ -74,7 +74,9 @@ public class StudentController {
         studentService.save(student);
         return JsonResponse.success(null);
     }
-
+    /*
+     * 描述：学生登录
+     */
     @PostMapping("/login")
     @ResponseBody
     public JsonResponse login(@RequestBody Student student){
