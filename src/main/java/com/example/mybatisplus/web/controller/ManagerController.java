@@ -1,5 +1,6 @@
 package com.example.mybatisplus.web.controller;
 
+import com.example.mybatisplus.model.domain.Student;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -7,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
-import com.example.mybatisplus.service.StudentService;
-import com.example.mybatisplus.model.domain.Student;
+import com.example.mybatisplus.service.ManagerService;
+import com.example.mybatisplus.model.domain.Manager;
 
 
 /**
@@ -17,17 +18,17 @@ import com.example.mybatisplus.model.domain.Student;
  *
  *
  * @author team27
- * @since 2022-06-23
+ * @since 2022-06-24
  * @version v1.0
  */
 @Controller
-@RequestMapping("/api/student")
-public class StudentController {
+@RequestMapping("/api/manager")
+public class ManagerController {
 
-    private final Logger logger = LoggerFactory.getLogger( StudentController.class );
+    private final Logger logger = LoggerFactory.getLogger( ManagerController.class );
 
     @Autowired
-    private StudentService studentService;
+    private ManagerService managerService;
 
     /**
     * 描述：根据Id 查询
@@ -36,8 +37,8 @@ public class StudentController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public JsonResponse getById(@PathVariable("id") Long id)throws Exception {
-        Student  student =  studentService.getById(id);
-        return JsonResponse.success(student);
+        Manager  manager =  managerService.getById(id);
+        return JsonResponse.success(manager);
     }
 
     /**
@@ -47,7 +48,7 @@ public class StudentController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public JsonResponse deleteById(@PathVariable("id") Long id) throws Exception {
-        studentService.removeById(id);
+        managerService.removeById(id);
         return JsonResponse.success(null);
     }
 
@@ -58,31 +59,31 @@ public class StudentController {
     */
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-    public JsonResponse updateStudent(Student  student) throws Exception {
-        studentService.updateById(student);
+    public JsonResponse updateManager(Manager  manager) throws Exception {
+        managerService.updateById(manager);
         return JsonResponse.success(null);
     }
 
 
     /**
-    * 描述:创建Student
+    * 描述:创建Manager
     *
     */
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResponse create(Student  student) throws Exception {
-        studentService.save(student);
+    public JsonResponse create(Manager  manager) throws Exception {
+        managerService.save(manager);
         return JsonResponse.success(null);
     }
-    /*
-     * 描述：学生登录
+    /**
+     * 描述:Manager登录
+     *
      */
-    @PostMapping("/login")
+    @PostMapping("/mlogin")
     @ResponseBody
-    public JsonResponse login(@RequestBody Student student){
-        Student student1=studentService.stulogin(student);
-        return JsonResponse.success(student1);
+    public JsonResponse mlogin(@RequestBody Manager manager){
+        Manager manager1=managerService.manlogin(manager);
+        return JsonResponse.success(manager1);
     }
-
 }
 
