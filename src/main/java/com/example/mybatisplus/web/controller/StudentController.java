@@ -1,6 +1,8 @@
 package com.example.mybatisplus.web.controller;
 
 import com.example.mybatisplus.common.utls.SessionUtils;
+import com.example.mybatisplus.mapper.StudentMapper;
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,8 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.StudentService;
 import com.example.mybatisplus.model.domain.Student;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
@@ -129,16 +133,16 @@ public class StudentController {
         json.put("flag",flag);
         return JsonResponse.success(json);
     }
-    /**
-     * 获得个人信息
-     */
 
+
+    //学生信息
     @GetMapping("/getInfo")
     @ResponseBody
     public JsonResponse getInfo() throws Exception {
         Student student1= getCurstu();
         Long id=student1.getId();
         return getById(id);
+    }
 
     }
 }

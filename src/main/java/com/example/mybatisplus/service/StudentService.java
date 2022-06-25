@@ -17,4 +17,6 @@ public interface StudentService extends IService<Student> {
     Student stulogin(Student student);
 
     Integer modifyP(Student student1);
+
+    Student selectByS(Student student);
 }
