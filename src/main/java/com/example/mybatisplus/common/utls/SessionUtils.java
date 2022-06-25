@@ -29,8 +29,4 @@ public class SessionUtils {
     public static Student getCurstu() {
         return (Student) session().getAttribute("curUser");
     }
-
-    public static Student getCurSUser() {
-        return (Student) session().getAttribute("curUser");
-    }
 }
