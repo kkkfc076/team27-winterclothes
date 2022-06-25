@@ -1,5 +1,10 @@
 package com.example.mybatisplus.web.controller;
 
+import com.example.mybatisplus.common.utls.SessionUtils;
+import com.example.mybatisplus.mapper.StudentMapper;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -9,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.StudentService;
 import com.example.mybatisplus.model.domain.Student;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 
 
 /**
@@ -81,9 +92,57 @@ public class StudentController {
     @ResponseBody
     public JsonResponse login(@RequestBody Student student){
         Student student1=studentService.stulogin(student);
+        if(student1.getId()!=null){
+            SessionUtils.saveCurUser(student1);
+        }
         return JsonResponse.success(student1);
     }
 
+    /*
+     *
+     * 修改密码
+     * */
+     @RequestMapping("/modifyPwd")
+    @ResponseBody
+    public JsonResponse modifyPwd(@RequestBody Map<String,String> params){
+         String oldPassword=params.get("oldPassword");
+         String newPassword=params.get("newPassword");
+         Integer flag=-1;
+        JSONObject json = new JSONObject();
+        Student student1= getCurstu();
+        String pwd=student1.getPwd();
+        if (StringUtils.isNotEmpty(oldPassword)) {
+            try {
+                if (oldPassword.equals(pwd)) {
+                    Student stu1 = new Student();
+                    stu1.setId(student1.getId());
+                    stu1.setPwd(newPassword);
+                    flag =studentService.modifyP(stu1);
+                    student1.setPwd(newPassword);
+                    SessionUtils.saveCurUser(student1);
+                    if (flag > 0) {
+                        flag = 2;// 修改成功
+                    }
+                } else {
+                    flag = 0;// 旧密码错误
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        json.put("flag",flag);
+        return JsonResponse.success(json);
+    }
+
+
+    //学生信息
+    @GetMapping("/getInfo")
+    @ResponseBody
+    public JsonResponse getInfo() throws Exception {
+        Student student1= getCurstu();
+        Long id=student1.getId();
+        return getById(id);
+    }
 
 }
 
