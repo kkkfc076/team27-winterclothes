@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.mybatisplus.common.utls.SessionUtils.getCurUser;
 import static org.apache.commons.lang3.ObjectUtils.NULL;
 import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 
@@ -118,7 +119,7 @@ public class ManagerController {
     public JsonResponse modifyPwd(String oldPassword,String newPassword){
         Integer flag=-1;
         JSONObject json = new JSONObject();
-        Manager manager1= SessionUtils.getCurUser();
+        Manager manager1= getCurUser();
         if (StringUtils.isNotEmpty(oldPassword)) {
             try {
                 if (oldPassword.equals(manager1.getPwd())) {
