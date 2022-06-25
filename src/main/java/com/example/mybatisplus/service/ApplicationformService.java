@@ -17,4 +17,5 @@ public interface ApplicationformService extends IService<Applicationform> {
     Applicationform getByStukey(Integer sid);
 
 
+    Integer updateReason(Applicationform applicationform);
 }

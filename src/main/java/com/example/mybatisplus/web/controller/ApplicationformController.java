@@ -15,6 +15,8 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ApplicationformService;
 import com.example.mybatisplus.model.domain.Applicationform;
 
+import java.util.Map;
+
 
 /**
  *
@@ -91,14 +93,16 @@ public class ApplicationformController {
     * */
     @PostMapping ("/addReason")
     @ResponseBody
-    public JsonResponse addReason(String reason){
+    public JsonResponse addReason(@RequestBody Map<String,String> param){
         Integer flag=-1;
         JSONObject json = new JSONObject();
+        String reason=param.get("reason");
         Student student1= SessionUtils.getCurSUser();
         Applicationform applicationform=applicationformService.getByStukey(student1.getSid());
         applicationform.setReason(reason);
-        if(applicationform.getReason()!=null){
-            flag=1;
+        flag=applicationformService.updateReason(applicationform);
+        if(flag>0){
+            flag=2;
         }else {
             flag=0;
         }

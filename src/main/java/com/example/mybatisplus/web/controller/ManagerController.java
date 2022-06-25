@@ -122,7 +122,7 @@ public class ManagerController {
         String newPassword=params.get("newPassword");
         Integer flag=-1;
         JSONObject json = new JSONObject();
-        Manager manager1= (Manager) SessionUtils.getCurUser();
+        Manager manager1= SessionUtils.getCurUser();
         if (StringUtils.isNotEmpty(oldPassword)) {
             try {
                 if (oldPassword.equals(manager1.getPwd())) {

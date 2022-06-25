@@ -29,5 +29,10 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
         return applicationformMapper.getByStukey(sid);
     }
 
+    @Override
+    public Integer updateReason(Applicationform applicationform) {
+        return applicationformMapper.updateReason(applicationform);
+    }
+
 
 }
