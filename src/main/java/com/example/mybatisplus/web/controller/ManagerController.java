@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.util.HashMap;
@@ -116,10 +117,12 @@ public class ManagerController {
     * */
     @RequestMapping("/modifyPwd")
     @ResponseBody
-    public JsonResponse modifyPwd(String oldPassword,String newPassword){
+    public JsonResponse modifyPwd(@RequestBody Map<String,String> params){
+        String oldPassword=params.get("oldPassword");
+        String newPassword=params.get("newPassword");
         Integer flag=-1;
         JSONObject json = new JSONObject();
-        Manager manager1= getCurUser();
+        Manager manager1= (Manager) SessionUtils.getCurUser();
         if (StringUtils.isNotEmpty(oldPassword)) {
             try {
                 if (oldPassword.equals(manager1.getPwd())) {
