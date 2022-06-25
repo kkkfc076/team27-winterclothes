@@ -12,5 +12,32 @@
         <result column="result" property="result" />
         <result column="cid" property="cid" />
     </resultMap>
+    <update id="updateReason">
+        update applicationform
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="aid != null and ''!=aid">
+                aid = #{aid},
+            </if>
+            <if test="batKey != null and ''!=batKey">
+                bat_key = #{batKey},
+            </if>
+            <if test="stuKey != null and ''!=stuKey">
+                stu_key = #{stuKey},
+            </if>
+            <if test="reason != null and ''!=reason">
+                reason = #{reason},
+            </if>
+            <if test="result != null and ''!=result">
+                result = #{result},
+            </if>
+            <if test="cid != null and ''!=cid">
+                cid = #{cid},
+            </if>
+        </trim>
+            where id = #{id}
+    </update>
 
 </mapper>
