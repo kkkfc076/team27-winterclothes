@@ -73,4 +73,11 @@ public class BaseController<S extends IService<T>,T>{
         service.removeById(id);
         return JsonResponse.success("删除成功");
     }
+
+    /**
+     * 修改密码
+     *
+     */
+
+
 }

@@ -7,11 +7,42 @@
         <id column="id" property="id" />
         <result column="mid" property="mid" />
         <result column="pwd" property="pwd" />
-        <result column="name" property="name" />
-        <result column="level" property="level" />
+        <result column="mname" property="mname" />
+        <result column="mlevel" property="mlevel" />
         <result column="major" property="major" />
         <result column="grade" property="grade" />
-        <result column="class" property="class" />
+        <result column="mclass" property="mclass" />
     </resultMap>
+    <update id="modifyP">
+        update manager
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="mid != null and ''!=mid">
+                mid = #{mid},
+            </if>
+            <if test="pwd != null and ''!=pwd">
+                pwd = #{pwd},
+            </if>
+            <if test="mname != null and ''!=mname">
+                mname = #{mname},
+            </if>
+            <if test="mlevel != null and ''!=mlevel">
+                mlevel = #{mlevel},
+            </if>
+            <if test="major != null and ''!=major">
+                major = #{major},
+            </if>
+            <if test="grade != null and ''!=grade">
+                grade = #{grade},
+            </if>
+            <if test="mclass != null and ''!=mclass">
+                mclass = #{mclass},
+            </if>
+
+        </trim>
+            where id = #{id}
+    </update>
 
 </mapper>

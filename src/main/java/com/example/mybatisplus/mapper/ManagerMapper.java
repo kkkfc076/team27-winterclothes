@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ManagerMapper extends BaseMapper<Manager> {
 
+    Integer modifyP(Manager man);
 }

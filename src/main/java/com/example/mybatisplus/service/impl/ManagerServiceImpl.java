@@ -1,13 +1,21 @@
 package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.mapper.StudentMapper;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.mapper.ManagerMapper;
 import com.example.mybatisplus.service.ManagerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,6 +37,16 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         wrapper.eq("mid",manager.getMid()).eq("pwd",manager.getPwd());
 
         Manager manager1= managerMapper.selectOne(wrapper);
+
         return manager1;
     }
+
+    @Override
+    public Integer modifyP(Manager man) {
+        return managerMapper.modifyP(man);
+    }
+
+
+
+
 }
