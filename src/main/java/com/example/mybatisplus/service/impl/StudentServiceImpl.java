@@ -49,4 +49,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return studentMapper.modifyP(stu);
     }
 
+    @Override
+    public Student selectByS(Student student) {
+        QueryWrapper<Student> wrapper = new QueryWrapper<>();
+        wrapper.eq("sid",student.getSid());
+        Student students = studentMapper.selectOne(wrapper);
+        return students;
+    }
+
 }
