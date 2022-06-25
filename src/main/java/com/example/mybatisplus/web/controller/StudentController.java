@@ -129,5 +129,17 @@ public class StudentController {
         json.put("flag",flag);
         return JsonResponse.success(json);
     }
+    /**
+     * 获得个人信息
+     */
+
+    @GetMapping("/getInfo")
+    @ResponseBody
+    public JsonResponse getInfo() throws Exception {
+        Student student1= getCurstu();
+        Long id=student1.getId();
+        return getById(id);
+
+    }
 }
 
