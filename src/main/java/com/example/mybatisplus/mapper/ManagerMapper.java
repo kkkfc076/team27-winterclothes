@@ -1,8 +1,8 @@
 package com.example.mybatisplus.mapper;
 
-import com.example.mybatisplus.model.domain.Manager;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.springframework.stereotype.Repository;
+        import com.example.mybatisplus.model.domain.Manager;
+        import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+        import org.springframework.stereotype.Repository;
 
 /**
  * <p>
