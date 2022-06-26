@@ -2,8 +2,10 @@ package com.example.mybatisplus.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.mapper.ClothesMapper;
+import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
+import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -77,17 +79,49 @@ public class ClothesController {
     @ResponseBody
     public JsonResponse create(Clothes clothes) throws Exception {
         clothesService.save(clothes);
-        return JsonResponse.success(null);
+        return JsonResponse.success(11);
+    }
+
+    /*
+    *
+    * 添加寒衣
+    *
+    * */
+    @ResponseBody
+    @RequestMapping("/addClothes")
+    public JsonResponse addClothes(@RequestBody Clothes clothes){
+        Integer flag=-1;
+        JSONObject json = new JSONObject();
+        boolean temp=clothesService.save(clothes);
+        if(temp){
+            flag=2;
+        }else {
+            flag=0;
+        }
+        json.put("flag",flag);
+        return JsonResponse.success(json);
+    }
+
+    /*
+    *
+    * 管理
+    * */
+    @ResponseBody
+    @GetMapping ("/getClolist")
+    public JsonResponse whiteList(PageDTO pageDTO,Clothes clothes){
+        Page<Clothes> page = clothesService.pageListtoM(pageDTO,clothes);
+        return JsonResponse.success(page);
+
     }
 
     /**
-     * 获得寒衣款式
+     * 学生获得寒衣款式
      */
     @ResponseBody
     @GetMapping("/styles")
-    public JsonResponse clothes() {
+    public JsonResponse clothes(PageDTO pageDTO) {
         Student student1 = getCurstu();
-        Page<Clothes> page= clothesService.pageList(student1);
+        Page<Clothes> page= clothesService.pageList(pageDTO,student1);
         return JsonResponse.success(page) ;
     }
 

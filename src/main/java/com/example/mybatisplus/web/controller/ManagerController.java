@@ -114,7 +114,7 @@ public class ManagerController {
     @ResponseBody
     public JsonResponse mlogin(@RequestBody Manager manager){
         Manager manager1=managerService.manlogin(manager);
-        if(manager1!=null && manager1.getPermission()){
+        if(manager1!=null && manager1.getPermission()!=0){
             SessionUtils.saveCurUser(manager1);
             return JsonResponse.success(manager1);
         }else {

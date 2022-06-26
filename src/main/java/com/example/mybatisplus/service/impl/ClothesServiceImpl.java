@@ -9,6 +9,7 @@ import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.ClothesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +29,29 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
 
 
     @Override
-    public Page<Clothes> pageList( Student student) {
-        Page<Clothes> page = new Page<>(1,100000);
+    public Page<Clothes> pageList(PageDTO pageDTO,Student student) {
+        Page<Clothes> page = new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
         String sex=student.getSex();
         QueryWrapper<Clothes> wrapper =new QueryWrapper<>();
         if (sex != null && sex != "") {
             wrapper.eq("sex",sex);
+        }
+        page=super.page(page,wrapper);
+        return page;
+    }
+
+    @Override
+    public Page<Clothes> pageListtoM(PageDTO pageDTO, Clothes clothes) {
+        Page<Clothes> page=new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
+        QueryWrapper<Clothes> wrapper=new QueryWrapper<>();
+        if(StringUtils.isNotBlank(clothes.getCname())){
+            wrapper.eq("cname",clothes.getCname());
+        }
+        if(clothes.getStyle()!=null){
+            wrapper.eq("style",clothes.getStyle());
+        }
+        if(StringUtils.isNotBlank(clothes.getSex())){
+            wrapper.eq("sex",clothes.getSex());
         }
         page=super.page(page,wrapper);
         return page;
