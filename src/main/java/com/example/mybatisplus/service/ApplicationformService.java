@@ -14,7 +14,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ApplicationformService extends IService<Applicationform> {
 
 
-    Applicationform getByStukey(Integer sid);
+    Applicationform getByStukey(Integer sid, Integer bid);
 
 
+    Applicationform addStukey(Integer sid, String reason);
 }

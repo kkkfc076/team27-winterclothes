@@ -2,7 +2,7 @@ package com.example.mybatisplus.web.controller;
 
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
-import com.example.mybatisplus.model.domain.Manager;
+import com.example.mybatisplus.model.domain.Batch;
 import com.example.mybatisplus.model.domain.Student;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,17 +85,18 @@ public class ApplicationformController {
 
     /*
     *
-    * 添加result
+    * 修改reason
     *
     *
     * */
-    @PostMapping ("/addReason")
+    @PostMapping ("/updateReason")
     @ResponseBody
-    public JsonResponse addReason(String reason){
+    public JsonResponse updateReason(String reason){
         Integer flag=-1;
         JSONObject json = new JSONObject();
         Student student1= SessionUtils.getCurSUser();
-        Applicationform applicationform=applicationformService.getByStukey(student1.getSid());
+        Integer bid=2019;
+        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),bid);
         applicationform.setReason(reason);
         if(applicationform.getReason()!=null){
             flag=1;
@@ -105,5 +106,33 @@ public class ApplicationformController {
         json.put("flag",flag);
         return JsonResponse.success(json);
     }
+
+    //查看申请状态
+    @GetMapping ("/getAPInfo")
+    @ResponseBody
+    public JsonResponse getAPIngo() {
+        Student student1= SessionUtils.getCurSUser();
+        Integer bid=2019;
+        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),bid);
+        return JsonResponse.success(applicationform);
+    }
+
+    //申请理由
+    @PostMapping ("/addReason")
+    @ResponseBody
+    public JsonResponse addReason(String reason){
+        Integer flag=-1;
+        JSONObject json = new JSONObject();
+        Student student1= SessionUtils.getCurSUser();
+        Applicationform applicationform=applicationformService.addStukey(student1.getSid(),reason);
+        if(applicationform.getReason()!=null){
+            flag=1;
+        }else {
+            flag=0;
+        }
+        json.put("flag",flag);
+        return JsonResponse.success(json);
+    }
+
 }
 
