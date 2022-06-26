@@ -1,9 +1,14 @@
 package com.example.mybatisplus.web.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
+import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.example.mybatisplus.model.domain.Student;
 //import jdk.vm.ci.meta.Constant;
 //import jdk.vm.ci.meta.Constant;
+import com.example.mybatisplus.model.dto.PageDTO;
+import com.example.mybatisplus.service.ManagerApplicationService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import net.sf.json.JSONObject;
 import org.apache.catalina.connector.Response;
@@ -25,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +49,7 @@ import static org.apache.commons.lang3.ObjectUtils.isEmpty;
  * @since 2022-06-24
  * @version v1.0
  */
+
 @Controller
 @RequestMapping("/api/manager")
 public class ManagerController {
@@ -51,7 +58,8 @@ public class ManagerController {
 
     @Autowired
     private ManagerService managerService;
-
+    @Autowired
+    private ManagerApplicationService managerApplicationService;
     /**
     * 描述：根据Id 查询
     *
@@ -145,6 +153,23 @@ public class ManagerController {
         json.put("flag",flag);
         return JsonResponse.success(json);
     }
+
+    //xxxDTo：数据传输层，专门用来当参数
+    //待我审核：分页查看
+
+//    @GetMapping("/pageList")
+//    @ResponseBody
+//    public JsonResponse pageList( PageDTO pageDTO, ManagerApplication mApp){
+//        Manager manager1= SessionUtils.getCurUser();
+//        QueryWrapper<ManagerApplication> wrapper=new QueryWrapper();
+//        wrapper.eq("man_key",manager1.getMid());
+//        if(manager1.getMid()!=null) {
+//          mApp=mApp.setManKey(manager1.getMid());
+//        }
+//        Page<ManagerApplication> page =managerApplicationService.pagelist(pageDTO,mApp);
+//        return JsonResponse.success(page);
+//
+//    }
 
 
 }

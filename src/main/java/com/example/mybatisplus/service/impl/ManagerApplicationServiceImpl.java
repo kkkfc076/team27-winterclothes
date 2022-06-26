@@ -12,7 +12,12 @@ import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.model.dto.UserInfoDTO;
 import com.example.mybatisplus.service.ManagerApplicationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,18 +30,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicationMapper, ManagerApplication> implements ManagerApplicationService {
 
+    @Autowired
+    ManagerApplicationMapper managerApplicationMapper;
     @Override
     public Page<ManagerApplication> pagelist(PageDTO pageDTO, ManagerApplication mApp) {
         Page<ManagerApplication> page=new Page<>(pageDTO.getPageNo(), pageDTO.getPageSize());
         QueryWrapper<ManagerApplication> wrapper=new QueryWrapper<>();
-        UserInfoDTO userInfo=SecurityUtils.getUserInfo();
         if(mApp.getManKey()!=null)
-           wrapper.eq("mankey",userInfo.getMid()) ;
+           wrapper.eq("man_key",mApp.getManKey()) ;
         if(mApp.getId()!=null){
-            wrapper.eq("id",userInfo.getId());
+            wrapper.eq("id",mApp.getId());
         }
         wrapper.eq("state",0);
         page= super.page(page,wrapper);
         return page;
     }
+
+
 }

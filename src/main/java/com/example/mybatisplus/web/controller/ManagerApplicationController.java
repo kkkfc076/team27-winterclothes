@@ -1,10 +1,12 @@
 package com.example.mybatisplus.web.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.dto.PageDTO;
+import com.example.mybatisplus.service.ManagerService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -33,7 +35,6 @@ public class ManagerApplicationController {
 
     @Autowired
     private ManagerApplicationService managerApplicationService;
-
     /**
     * 描述：根据Id 查询
     *
@@ -84,11 +85,15 @@ public class ManagerApplicationController {
      */
     //xxxDTo：数据传输层，专门用来当参数
     //待我审核：分页查看
-    @ResponseBody
     @GetMapping("/pageList")
-    public JsonResponse pageList(PageDTO pageDTO, ManagerApplication mApp){
-        Manager manager= SessionUtils.getCurUser();
-        mApp.setManKey(manager.getMid());
+    @ResponseBody
+    public JsonResponse pageList( PageDTO pageDTO, ManagerApplication mApp){
+        Manager manager1= SessionUtils.getCurUser();
+        QueryWrapper<ManagerApplication> wrapper=new QueryWrapper();
+        wrapper.eq("man_key",manager1.getMid());
+        if(manager1.getMid()!=null) {
+          mApp=mApp.setManKey(manager1.getMid());
+        }
         Page<ManagerApplication> page =managerApplicationService.pagelist(pageDTO,mApp);
         return JsonResponse.success(page);
 

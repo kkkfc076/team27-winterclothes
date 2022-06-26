@@ -12,5 +12,8 @@
         <result column="result" property="result" />
         <result column="state" property="state" />
     </resultMap>
+<!--    <select id="selectByMid" resultMap="BaseResultMap">-->
+<!--        select * from manager_application where mankey= #{a}-->
+<!--    </select>-->
 
 </mapper>

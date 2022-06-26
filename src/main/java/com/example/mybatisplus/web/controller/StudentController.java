@@ -140,7 +140,7 @@ public class StudentController {
         Long id=student1.getId();
         return getById(id);
 
-    }
+
 }
 
 //

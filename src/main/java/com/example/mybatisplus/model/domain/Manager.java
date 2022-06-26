@@ -42,7 +42,7 @@ public class Manager extends Model<Manager> {
 
     private Integer grade;
 
-    private Integer mclass;
+//    private Integer mclass;
 
 
     @Override
