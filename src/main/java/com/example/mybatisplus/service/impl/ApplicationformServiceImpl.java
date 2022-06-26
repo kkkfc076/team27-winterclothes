@@ -1,9 +1,12 @@
 package com.example.mybatisplus.service.impl;
 
+import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
+import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.service.ApplicationformService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,5 +19,20 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMapper, Applicationform> implements ApplicationformService {
+
+    @Autowired
+    private  ApplicationformMapper applicationformMapper;
+
+
+    @Override
+    public Applicationform getByStukey(Integer sid) {
+        return applicationformMapper.getByStukey(sid);
+    }
+
+    @Override
+    public Integer updateReason(Applicationform applicationform) {
+        return applicationformMapper.updateReason(applicationform);
+    }
+
 
 }

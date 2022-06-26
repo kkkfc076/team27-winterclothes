@@ -40,4 +40,9 @@
             where id = #{id}
     </update>
 
+    <select id="getByStukey" resultType="com.example.mybatisplus.model.domain.Applicationform">
+        select * from applicationform where stu_Key=#{sid}
+    </select>
+
+
 </mapper>

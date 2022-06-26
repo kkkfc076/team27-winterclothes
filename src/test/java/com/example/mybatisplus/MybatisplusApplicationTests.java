@@ -21,7 +21,7 @@ import java.util.Map;
 @SpringBootTest//加载ioc容器
 class MybatisplusApplicationTests {
 
-@Autowired
+    @Autowired
     StudentMapper studentMapper;
 @Autowired
     ManagerMapper managerMapper;
