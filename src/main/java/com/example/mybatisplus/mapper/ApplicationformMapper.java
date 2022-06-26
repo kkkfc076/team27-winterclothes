@@ -17,10 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Repository
 public interface ApplicationformMapper extends BaseMapper<Applicationform> {
 
-
-    Applicationform getByStukey(@Param("sid") Integer sid);
-
-
     Integer updateReason(Applicationform applicationform);
 
     Integer updateCid(Integer sid,Integer satKey);

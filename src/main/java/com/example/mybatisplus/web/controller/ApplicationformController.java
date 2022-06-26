@@ -100,7 +100,7 @@ public class ApplicationformController {
         Integer flag=-1;
         JSONObject json = new JSONObject();
         String reason=param.get("reason");
-        Student student1= SessionUtils.getCurSUser();
+        Student student1= getCurstu();
         Integer t=2019;
         Applicationform applicationform=applicationformService.getApp(student1.getSid(),t);
         applicationform.setReason(reason);
