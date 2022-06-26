@@ -6,6 +6,8 @@ import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.mybatisplus.model.dto.PageDTO;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -17,4 +19,6 @@ import com.example.mybatisplus.model.dto.PageDTO;
 public interface ManagerApplicationService extends IService<ManagerApplication> {
 
     Page<ManagerApplication> pagelist(PageDTO pageDTO, ManagerApplication mApp);
+
+
 }
