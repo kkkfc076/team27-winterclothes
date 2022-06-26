@@ -85,10 +85,11 @@ public class ClothesController {
      */
     @ResponseBody
     @GetMapping("/styles")
-    public JsonResponse clothes(PageDTO pageDTO) {
+    public JsonResponse clothes() {
         Student student1 = getCurstu();
-        Page<Clothes> page= clothesService.pageList(pageDTO,student1);
+        Page<Clothes> page= clothesService.pageList(student1);
         return JsonResponse.success(page) ;
     }
+
 }
 

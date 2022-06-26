@@ -22,4 +22,10 @@ public interface ApplicationformMapper extends BaseMapper<Applicationform> {
 
 
     Integer updateReason(Applicationform applicationform);
+
+    Integer updateCid(Integer sid,Integer satKey);
+
+    Applicationform getApp(Integer sid, Integer batKey);
+
+    Integer updateCid(Applicationform applicationform);
 }

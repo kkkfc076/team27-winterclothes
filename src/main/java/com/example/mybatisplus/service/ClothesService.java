@@ -19,5 +19,6 @@ import java.util.List;
  */
 public interface ClothesService extends IService<Clothes> {
 
-    Page<Clothes> pageList(PageDTO pageDTO, Student student1);
+    Page<Clothes> pageList( Student student1);
+
 }

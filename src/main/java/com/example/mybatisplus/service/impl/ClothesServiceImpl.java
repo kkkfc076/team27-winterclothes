@@ -28,8 +28,8 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
 
 
     @Override
-    public Page<Clothes> pageList(PageDTO pageDTO, Student student) {
-        Page<Clothes> page = new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
+    public Page<Clothes> pageList( Student student) {
+        Page<Clothes> page = new Page<>(1,100000);
         String sex=student.getSex();
         QueryWrapper<Clothes> wrapper =new QueryWrapper<>();
         if (sex != null && sex != "") {
@@ -38,4 +38,5 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         page=super.page(page,wrapper);
         return page;
     }
+
 }

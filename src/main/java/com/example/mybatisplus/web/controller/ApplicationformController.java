@@ -2,6 +2,7 @@ package com.example.mybatisplus.web.controller;
 
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
+import com.example.mybatisplus.model.domain.Clothes;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Student;
 import net.sf.json.JSONObject;
@@ -16,6 +17,8 @@ import com.example.mybatisplus.service.ApplicationformService;
 import com.example.mybatisplus.model.domain.Applicationform;
 
 import java.util.Map;
+
+import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 
 
 /**
@@ -93,14 +96,36 @@ public class ApplicationformController {
     * */
     @PostMapping ("/addReason")
     @ResponseBody
-    public JsonResponse addReason(@RequestBody Map<String,String> param){
+    public JsonResponse addReason( Map<String,String> param){
         Integer flag=-1;
         JSONObject json = new JSONObject();
         String reason=param.get("reason");
         Student student1= SessionUtils.getCurSUser();
-        Applicationform applicationform=applicationformService.getByStukey(student1.getSid());
+        Integer t=2019;
+        Applicationform applicationform=applicationformService.getApp(student1.getSid(),t);
         applicationform.setReason(reason);
         flag=applicationformService.updateReason(applicationform);
+        if(flag>0){
+            flag=2;
+        }else {
+            flag=0;
+        }
+        json.put("flag",flag);
+        return JsonResponse.success(json);
+    }
+
+    /**
+     * 学生选择寒衣
+     */
+    @RequestMapping("/choose")
+    @ResponseBody
+    public JsonResponse choose(@RequestBody Clothes clothes){
+        Integer flag=-1;
+        JSONObject json = new JSONObject();
+        Student student1= getCurstu();
+        Applicationform applicationform=applicationformService.getApp(student1.getSid(),clothes.getBatKey());
+        applicationform.setCid(clothes.getCid());
+        flag=applicationformService.updateCid(applicationform);
         if(flag>0){
             flag=2;
         }else {
