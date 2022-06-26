@@ -2,7 +2,11 @@ package com.example.mybatisplus.mapper;
 
         import com.example.mybatisplus.model.domain.Manager;
         import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+        import org.apache.ibatis.annotations.Param;
         import org.springframework.stereotype.Repository;
+
+        import java.io.Serializable;
+        import java.util.List;
 
 /**
  * <p>
@@ -16,4 +20,6 @@ package com.example.mybatisplus.mapper;
 public interface ManagerMapper extends BaseMapper<Manager> {
 
     Integer modifyP(Manager man);
+
+    Boolean setPermissions(@Param("ids") List<Serializable> ids);
 }

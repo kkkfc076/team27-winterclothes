@@ -2,6 +2,7 @@ package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.mapper.StudentMapper;
 import com.example.mybatisplus.model.domain.Manager;
@@ -13,10 +14,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -67,6 +71,11 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         }
         page = super.page(page, wrapper);
         return page;
+    }
+
+    @Override
+    public Boolean setByIds(List<Serializable> ids) {
+        return CollectionUtils.isEmpty(ids) ? false : managerMapper.setPermissions(ids);
     }
 
 

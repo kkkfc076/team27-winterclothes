@@ -6,6 +6,7 @@ import com.example.mybatisplus.model.domain.Student;
 //import jdk.vm.ci.meta.Constant;
 //import jdk.vm.ci.meta.Constant;
 import com.example.mybatisplus.model.dto.PageDTO;
+import com.example.mybatisplus.model.dto.SetpermissionDTO;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import net.sf.json.JSONObject;
 import org.apache.catalina.connector.Response;
@@ -162,6 +163,16 @@ public class ManagerController {
         return JsonResponse.success(page);
 
     }
-
+    /*
+    *
+    * 批量授权
+    *
+    * */
+    @ResponseBody
+    @PostMapping ("/setPermission")
+    public JsonResponse setPermission(@RequestBody SetpermissionDTO setpermissionDTO){
+        Boolean flag=managerService.setByIds(setpermissionDTO.getIds());
+        return JsonResponse.success(flag);
+    }
 }
 

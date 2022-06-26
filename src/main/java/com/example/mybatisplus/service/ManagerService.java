@@ -7,6 +7,8 @@ import com.example.mybatisplus.model.dto.PageDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -24,4 +26,6 @@ public interface ManagerService extends IService<Manager> {
 
 
     Page<Manager> pageList(PageDTO pageDTO, Manager manager);
+
+    Boolean setByIds(List<Serializable> ids);
 }
