@@ -92,7 +92,7 @@ public class StudentController {
     @ResponseBody
     public JsonResponse login(@RequestBody Student student){
         Student student1=studentService.stulogin(student);
-        if(student1.getId()!=null){
+        if(student1!=null){
             SessionUtils.saveCurUser(student1);
         }
         return JsonResponse.success(student1);
@@ -144,7 +144,7 @@ public class StudentController {
         return getById(id);
     }
 
-    }
+
 }
 
 //

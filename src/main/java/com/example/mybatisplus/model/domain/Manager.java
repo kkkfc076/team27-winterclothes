@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.Accessors;
 
 /**
@@ -19,6 +20,7 @@ import lombok.experimental.Accessors;
  * @author team27
  * @since 2022-06-24
  */
+@Getter
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
@@ -42,8 +44,16 @@ public class Manager extends Model<Manager> {
 
     private Integer grade;
 
-    private Integer mclass;
+    public Boolean getPermission() {
+        return permission;
+    }
 
+    public void setPermission(Boolean permission) {
+        this.permission = permission;
+    }
+
+    //  private Integer mclass;
+    private Boolean permission;
 
     @Override
     protected Serializable pkVal() {

@@ -1,9 +1,11 @@
 package com.example.mybatisplus.web.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.model.domain.Student;
 //import jdk.vm.ci.meta.Constant;
 //import jdk.vm.ci.meta.Constant;
+import com.example.mybatisplus.model.dto.PageDTO;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import net.sf.json.JSONObject;
 import org.apache.catalina.connector.Response;
@@ -105,10 +107,13 @@ public class ManagerController {
     @ResponseBody
     public JsonResponse mlogin(@RequestBody Manager manager){
         Manager manager1=managerService.manlogin(manager);
-        if(manager1.getId()!=null){
+        if(manager1!=null && manager1.getPermission()){
             SessionUtils.saveCurUser(manager1);
+            return JsonResponse.success(manager1);
+        }else {
+            return JsonResponse.failure("用户名或密码错误");
         }
-        return JsonResponse.success(manager1);
+
     }
 
     /*
@@ -145,7 +150,18 @@ public class ManagerController {
         json.put("flag",flag);
         return JsonResponse.success(json);
     }
+    /*
+    *
+    * 白名单设置
+    *
+    * */
+    @ResponseBody
+    @GetMapping ("/getManlist")
+    public JsonResponse whiteList(PageDTO pageDTO,Manager manager){
+        Page<Manager> page = managerService.pageList(pageDTO,manager);
+        return JsonResponse.success(page);
 
+    }
 
 }
 

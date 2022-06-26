@@ -1,10 +1,12 @@
 package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.mapper.StudentMapper;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.mapper.ManagerMapper;
+import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.ManagerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
@@ -46,7 +48,26 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         return managerMapper.modifyP(man);
     }
 
+    @Override
+    public Page<Manager> pageList(PageDTO pageDTO, Manager manager) {
+        Page<Manager> page = new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
+        QueryWrapper<Manager> wrapper = new QueryWrapper<>();
 
+        if(StringUtils.isNotBlank(manager.getMname())){
+            wrapper.eq("mname",manager.getMname());
+        }
+        if(manager.getMlevel()!=null){
+            wrapper.eq("mlevel",manager.getMlevel());
+        }
+        if(manager.getGrade()!=null){
+            wrapper.eq("grade",manager.getGrade());
+        }
+        if(manager.getPermission()!=null){
+            wrapper.eq("permission",manager.getPermission());
+        }
+        page = super.page(page, wrapper);
+        return page;
+    }
 
 
 }
