@@ -9,51 +9,41 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * ???еĹ???Ա?˺ţ?????ϵͳ????Ա??????Ա??ѧԺ??ѧУ?û?
+ *
  * </p>
  *
  * @author team27
- * @since 2022-06-24
+ * @since 2022-06-26
  */
-@Getter
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Manager对象", description="???еĹ???Ա?˺ţ?????ϵͳ????Ա??????Ա??ѧԺ??ѧУ?û?")
-public class Manager extends Model<Manager> {
+@ApiModel(value="Clothes对象", description="")
+public class Clothes extends Model<Clothes> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Integer mid;
+    private Integer cid;
 
-    private String pwd;
+    private Integer batKey;
 
-    private String mname;
+    private String cname;
 
-    private Integer mlevel;
+    private String size;
 
-    private String major;
+    private Integer style;
 
-    private Integer grade;
+    private String sex;
 
-    public Boolean getPermission() {
-        return permission;
-    }
+    private String picture;
 
-    public void setPermission(Boolean permission) {
-        this.permission = permission;
-    }
-
-    //  private Integer mclass;
-    private Boolean permission;
 
     @Override
     protected Serializable pkVal() {

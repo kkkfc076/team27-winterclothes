@@ -8,7 +8,7 @@ import com.example.mybatisplus.model.domain.Student;
 //import jdk.vm.ci.meta.Constant;
 //import jdk.vm.ci.meta.Constant;
 import com.example.mybatisplus.model.dto.PageDTO;
-import com.example.mybatisplus.service.ManagerApplicationService;
+import com.example.mybatisplus.model.dto.SetpermissionDTO;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import net.sf.json.JSONObject;
 import org.apache.catalina.connector.Response;
@@ -113,10 +113,13 @@ public class ManagerController {
     @ResponseBody
     public JsonResponse mlogin(@RequestBody Manager manager){
         Manager manager1=managerService.manlogin(manager);
-        if(manager1.getId()!=null){
+        if(manager1!=null && manager1.getPermission()){
             SessionUtils.saveCurUser(manager1);
+            return JsonResponse.success(manager1);
+        }else {
+            return JsonResponse.failure("用户名或密码错误");
         }
-        return JsonResponse.success(manager1);
+
     }
 
     /*
@@ -153,24 +156,28 @@ public class ManagerController {
         json.put("flag",flag);
         return JsonResponse.success(json);
     }
+    /*
+    *
+    * 白名单设置
+    *
+    * */
+    @ResponseBody
+    @GetMapping ("/getManlist")
+    public JsonResponse whiteList(PageDTO pageDTO,Manager manager){
+        Page<Manager> page = managerService.pageList(pageDTO,manager);
+        return JsonResponse.success(page);
 
-    //xxxDTo：数据传输层，专门用来当参数
-    //待我审核：分页查看
-
-//    @GetMapping("/pageList")
-//    @ResponseBody
-//    public JsonResponse pageList( PageDTO pageDTO, ManagerApplication mApp){
-//        Manager manager1= SessionUtils.getCurUser();
-//        QueryWrapper<ManagerApplication> wrapper=new QueryWrapper();
-//        wrapper.eq("man_key",manager1.getMid());
-//        if(manager1.getMid()!=null) {
-//          mApp=mApp.setManKey(manager1.getMid());
-//        }
-//        Page<ManagerApplication> page =managerApplicationService.pagelist(pageDTO,mApp);
-//        return JsonResponse.success(page);
-//
-//    }
-
-
+    }
+    /*
+    *
+    * 批量授权
+    *
+    * */
+    @ResponseBody
+    @PostMapping ("/setPermission")
+    public JsonResponse setPermission(@RequestBody SetpermissionDTO setpermissionDTO){
+        Boolean flag=managerService.setByIds(setpermissionDTO.getIds());
+        return JsonResponse.success(flag);
+    }
 }
 
