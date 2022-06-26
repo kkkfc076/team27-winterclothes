@@ -1,8 +1,10 @@
 package com.example.mybatisplus.web.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.mybatisplus.model.dto.PageDTO;
-import org.springframework.stereotype.Repository;
+import com.example.mybatisplus.common.utls.SessionUtils;
+import com.example.mybatisplus.mapper.ApplicationformMapper;
+import com.example.mybatisplus.model.domain.Manager;
+import com.example.mybatisplus.model.domain.Student;
+import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ApplicationformService;
 import com.example.mybatisplus.model.domain.Applicationform;
+
+import java.util.Map;
 
 
 /**
@@ -31,6 +35,9 @@ public class ApplicationformController {
 
     @Autowired
     private ApplicationformService applicationformService;
+
+    @Autowired
+    private ApplicationformMapper applicationformMapper;
 
     /**
     * 描述：根据Id 查询
@@ -78,5 +85,29 @@ public class ApplicationformController {
         return JsonResponse.success(null);
     }
 
+    /*
+    *
+    * 添加result
+    *
+    *
+    * */
+    @PostMapping ("/addReason")
+    @ResponseBody
+    public JsonResponse addReason(@RequestBody Map<String,String> param){
+        Integer flag=-1;
+        JSONObject json = new JSONObject();
+        String reason=param.get("reason");
+        Student student1= SessionUtils.getCurSUser();
+        Applicationform applicationform=applicationformService.getByStukey(student1.getSid());
+        applicationform.setReason(reason);
+        flag=applicationformService.updateReason(applicationform);
+        if(flag>0){
+            flag=2;
+        }else {
+            flag=0;
+        }
+        json.put("flag",flag);
+        return JsonResponse.success(json);
+    }
 }
 

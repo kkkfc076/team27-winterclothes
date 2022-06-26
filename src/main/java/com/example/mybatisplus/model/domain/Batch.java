@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,34 +14,28 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author team27
- * @since 2022-06-24
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Applicationform对象", description="")
-public class Applicationform extends Model<Applicationform> {
+@ApiModel(value="Batch对象", description="")
+public class Batch extends Model<Batch> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Integer aid;
+    private Integer bid;
 
-    private Integer batKey;
+    private LocalDateTime startdate;
 
-    private Integer stuKey;
-
-    private String reason;
-
-    private Boolean result;
-
-    private Integer cid;
+    private LocalDateTime enddate;
 
 
     @Override
