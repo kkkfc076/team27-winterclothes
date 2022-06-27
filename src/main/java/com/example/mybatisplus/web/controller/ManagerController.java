@@ -3,12 +3,15 @@ package com.example.mybatisplus.web.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
+import com.example.mybatisplus.mapper.BatchMapper;
+import com.example.mybatisplus.model.domain.Batch;
 import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.example.mybatisplus.model.domain.Student;
 //import jdk.vm.ci.meta.Constant;
 //import jdk.vm.ci.meta.Constant;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.model.dto.SetpermissionDTO;
+import com.example.mybatisplus.service.BatchService;
 import com.example.mybatisplus.service.ManagerApplicationService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import net.sf.json.JSONObject;
@@ -32,7 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
+import javax.xml.crypto.Data;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +66,11 @@ public class ManagerController {
     private ManagerService managerService;
     @Autowired
     private ManagerApplicationService managerApplicationService;
+    @Autowired
+    private BatchService batchService;
+    @Autowired
+    private BatchMapper batchMapper;
+
     /**
     * 描述：根据Id 查询
     *
@@ -116,11 +126,29 @@ public class ManagerController {
         Manager manager1=managerService.manlogin(manager);
         if(manager1!=null && manager1.getPermission()!=0){
             SessionUtils.saveCurUser(manager1);
+            LocalDateTime dateTime = LocalDateTime.now();
+            SessionUtils.saveCurTime(dateTime);
             return JsonResponse.success(manager1);
         }else {
             return JsonResponse.failure("用户名或密码错误");
         }
-
+    }
+    /*
+    *
+    * 获取当前时间判断批次
+    *
+    * */
+    @GetMapping ("/getBatch")
+    @ResponseBody
+    public JsonResponse getBatch(){
+        JSONObject json=new JSONObject();
+        Integer bid=-1;
+        Batch batch = batchMapper.getBidByTime();
+        if(batch!=null){
+            bid=batch.getBid();
+        }
+        json.put("flag",bid);
+        return JsonResponse.success(json);
     }
 
     /*

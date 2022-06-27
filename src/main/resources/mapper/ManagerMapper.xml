@@ -37,7 +37,7 @@
             <if test="grade != null and ''!=grade">
                 grade = #{grade},
             </if>
-            <if test="permisssion != null and ''!=peimission">
+            <if test="permission != null and ''!=peimission">
                 permission = #{permission},
             </if>
         </trim>
