@@ -117,10 +117,20 @@ public class ManagerApplicationController {
     批量通过申请
     检查是否到达最高审核等级
      */
-    @PostMapping("/submits")
+    @PostMapping("/submitsApprove")
     @ResponseBody
     public JsonResponse submits(@RequestBody SubmitDTO submitDTO){
         managerApplicationService.updateAppform(submitDTO.getIds());
+        return JsonResponse.success(111);
+    }
+    /*
+    批量拒绝申请
+    检查是否到达最高审核等级
+     */
+    @PostMapping("/submitsDisApprove")
+    @ResponseBody
+    public JsonResponse submitsDis(@RequestBody SubmitDTO submitDTO){
+        managerApplicationService.updateAppformDis(submitDTO.getIds());
         return JsonResponse.success(111);
     }
 

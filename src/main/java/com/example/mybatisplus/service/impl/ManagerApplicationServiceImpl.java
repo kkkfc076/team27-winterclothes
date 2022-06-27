@@ -50,7 +50,7 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
         if(mApp.getId()!=null){
             wrapper.eq("id",mApp.getId());
         }
-        wrapper.eq("state",0);
+        wrapper.eq("result","待审核");
         page= super.page(page,wrapper);
         return page;
     }
@@ -64,17 +64,23 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
         if(mApp.getId()!=null){
             wrapper.eq("id",mApp.getId());
         }
-        wrapper.eq("state",1);
+        wrapper.like("result","通过");
         page= super.page(page,wrapper);
         return page;
     }
 
+    /*
+    批量审核通过申请
+    因为学院和学校默认通过，暂时只有在学校审核过后才会修改学生申请表的结果为1
+    之后考虑直接在辅导员通过后就将结果修改为1并通知学生
+     */
     @Override
     public void updateAppform(List<Serializable> ids) {
         List<ManagerApplication> managerApplication = managerApplicationMapper.selectBatchIds(ids);
         for (ManagerApplication mApp : managerApplication) {
 //          ManagerApplication mApp=managerApplicationMapper.selectById(id);
             if (mApp.getState() == 3) {
+                mApp.setResult("已通过");
                 mApp.setTime(LocalDateTime.now());
                 mApp.setReason("学校用户默认通过1");
                 mApp.setResult("已通过");
@@ -89,6 +95,7 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
             {
 //                mApp.setState(mApp.getState() + 1);
                 //为学校用户创建新的记录
+                mApp.setResult("已通过");
                 ManagerApplication mApp1 = new ManagerApplication();
                 mApp.setTime(LocalDateTime.now());
                 mApp.insertOrUpdate();
@@ -99,12 +106,13 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
                 wrapper.eq("mname", "学校测试").eq("mlevel", 3);
                 Manager manager = managerMapper.selectOne(wrapper);
                 mApp1.setManKey(manager.getMid());
+
                 managerApplicationMapper.insert(mApp1);
                 //插入新的审核数据，设置学校管理员为下一级审核员。
             } else if (mApp.getState() == 1)//辅导员提交申请
             {
 //                mApp.setState(mApp.getState() + 1);
-                mApp.setResult("审核中");
+                mApp.setResult("已通过");
                 mApp.setTime(LocalDateTime.now());
                 mApp.insertOrUpdate();
                 //为学校用户创建新的记录
@@ -126,5 +134,40 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
 
         }
 
+    }
+
+    /*
+    批量拒绝
+     */
+    @Override
+    public void updateAppformDis(List<Serializable> ids) {
+        List<ManagerApplication> managerApplication = managerApplicationMapper.selectBatchIds(ids);
+        for (ManagerApplication mApp : managerApplication) {
+//          ManagerApplication mApp=managerApplicationMapper.selectById(id);
+            if (mApp.getState() == 3) {
+                mApp.setResult("未通过");
+                mApp.setTime(LocalDateTime.now());
+                mApp.setReason("管理员批量操作，无法查看拒绝原因");
+                mApp.insertOrUpdate();//更新数据库
+            } else if (mApp.getState() == 2)//学院提交审核
+            {
+                mApp.setResult("未通过");
+                mApp.setReason("管理员批量操作，无法查看拒绝原因");
+                mApp.setTime(LocalDateTime.now());
+                mApp.insertOrUpdate();
+            } else if (mApp.getState() == 1)//辅导员提交申请
+            {
+                mApp.setResult("未通过");
+                mApp.setReason("管理员批量操作，无法查看拒绝原因");
+                mApp.setTime(LocalDateTime.now());
+                mApp.insertOrUpdate();
+            }
+                    //通知学生
+            QueryWrapper<Applicationform> wrapper=new QueryWrapper<>();
+            wrapper.eq("aid",mApp.getAppKey());
+            Applicationform app=applicationformMapper.selectOne(wrapper);
+            app.setResult(false);
+            app.insertOrUpdate();
+        }
     }
 }

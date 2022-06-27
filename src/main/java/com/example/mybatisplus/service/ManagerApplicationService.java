@@ -26,4 +26,6 @@ public interface ManagerApplicationService extends IService<ManagerApplication> 
 
 //    void updateAppform(List<Serializable> ids);
         void updateAppform(List<Serializable> ids);
+
+    void updateAppformDis(List<Serializable> ids);
 }
