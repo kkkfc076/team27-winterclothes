@@ -28,4 +28,7 @@ public interface ClothesService extends IService<Clothes> {
     Page<Clothes> getDIngo(PageDTO pageDTO, Clothes clothes);
     Page<Clothes> pageList( Student student1);
 
+    Page<Clothes> pageListtoM(PageDTO pageDTO, Clothes clothes);
+    Page<Clothes> pageList(PageDTO pageDTO,Student student1);
+
 }
