@@ -12,6 +12,9 @@
         <result column="result" property="result" />
         <result column="cid" property="cid" />
     </resultMap>
+    <insert id="addStukey">
+        insert into applicationform values (stu_key=#{sid},reason=#{reason})
+    </insert>
     <update id="updateReason">
         update applicationform
         <trim prefix="set" suffixOverrides=",">

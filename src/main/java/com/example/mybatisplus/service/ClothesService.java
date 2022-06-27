@@ -1,6 +1,10 @@
 package com.example.mybatisplus.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.mybatisplus.model.domain.Clothes;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.mybatisplus.model.dto.PageDTO;
+
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.model.domain.Clothes;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,6 +23,11 @@ import java.util.List;
  */
 public interface ClothesService extends IService<Clothes> {
 
-    Page<Clothes> pageList( Student student1);
+    Clothes getByCidAndBatKey(Integer sid);
+
+    Page<Clothes> getDIngo(PageDTO pageDTO, Clothes clothes);
+
+    Page<Clothes> pageListtoM(PageDTO pageDTO, Clothes clothes);
+    Page<Clothes> pageList(PageDTO pageDTO,Student student1);
 
 }

@@ -1,6 +1,5 @@
 package com.example.mybatisplus.service.impl;
 
-import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.model.domain.Clothes;
@@ -31,8 +30,18 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
     }
 
     @Override
+    public Applicationform getByStukey(Integer sid, Integer bid) {
+        return null;
+    }
+
+    @Override
     public Integer updateReason(Applicationform applicationform) {
         return applicationformMapper.updateReason(applicationform);
+    }
+
+    @Override
+    public Applicationform addStukey(Integer sid, String reason) {
+        return applicationformMapper.addStukey(sid,reason);
     }
 
     @Override

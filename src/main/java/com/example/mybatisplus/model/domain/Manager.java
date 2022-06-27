@@ -44,16 +44,16 @@ public class Manager extends Model<Manager> {
 
     private Integer grade;
 
-    public Boolean getPermission() {
+    public Integer getPermission() {
         return permission;
     }
 
-    public void setPermission(Boolean permission) {
+    public void setPermission(Integer permission) {
         this.permission = permission;
     }
 
     //  private Integer mclass;
-    private Boolean permission;
+    private Integer permission;
 
     @Override
     protected Serializable pkVal() {
