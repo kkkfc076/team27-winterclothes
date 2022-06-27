@@ -12,6 +12,7 @@
         <result column="style" property="style" />
         <result column="sex" property="sex" />
         <result column="picture" property="picture" />
+
     </resultMap>
     <select id="getClothesMapper" resultType="com.example.mybatisplus.model.domain.Clothes">
         select clothes.* from applicationform,student,clothes
@@ -20,7 +21,5 @@
           and applicationform.cid = clothes.cid
           <!--and clothes.bat_key = #{bat_key} -->;
     </select>
-        <result column="picture" property="picture"/>
-    </resultMap>
 
 </mapper>
