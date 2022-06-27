@@ -105,6 +105,35 @@ public class ClothesController {
         json.put("flag",flag);
         return JsonResponse.success(json);
     }
+    /*
+    *
+    * 删除单件款式
+    * */
+    @ResponseBody
+    @RequestMapping("/deleteClothes")
+    public JsonResponse deleteClothes(@RequestBody Clothes clothes){
+        Integer flag=-1;
+        JSONObject json = new JSONObject();
+        boolean temp=clothes.deleteById();
+        if(temp){
+            flag=2;
+        }else {
+            flag=0;
+        }
+        json.put("flag",flag);
+        return JsonResponse.success(json);
+    }
+    /*
+    *
+    * 编辑款式
+    *
+    * */
+    @PostMapping("/update")
+    @ResponseBody
+    public JsonResponse update(@RequestBody Clothes clothes){
+        clothesService.updateById(clothes);
+        return JsonResponse.success(111);
+    }
 
     /*
     *
