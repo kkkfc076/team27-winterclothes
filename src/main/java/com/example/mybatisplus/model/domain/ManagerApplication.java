@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author team27
@@ -39,9 +39,9 @@ public class ManagerApplication extends Model<ManagerApplication> {
 
     private LocalDateTime time;
 
-    private Boolean result;
+    private String result;//分为：待审核、审核中、审核通过、未通过审核四个状态
 
-    private Boolean state;
+    private Integer state;//已提交和未提交
 
 
     @Override

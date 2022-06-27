@@ -6,6 +6,7 @@ import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.mybatisplus.model.dto.PageDTO;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,4 +22,8 @@ public interface ManagerApplicationService extends IService<ManagerApplication> 
     Page<ManagerApplication> pagelist(PageDTO pageDTO, ManagerApplication mApp);
 
 
+    Page<ManagerApplication> checkedPagelist(PageDTO pageDTO, ManagerApplication mApp);
+
+//    void updateAppform(List<Serializable> ids);
+        void updateAppform(List<Serializable> ids);
 }

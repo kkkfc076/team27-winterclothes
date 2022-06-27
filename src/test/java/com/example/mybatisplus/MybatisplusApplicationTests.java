@@ -10,11 +10,17 @@ import com.example.mybatisplus.mapper.StudentMapper;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.ManagerApplication;
+import com.example.mybatisplus.model.dto.SubmitDTO;
+import com.example.mybatisplus.service.ManagerApplicationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +35,8 @@ class MybatisplusApplicationTests {
     ApplicationformMapper applicationformMapper;
 @Autowired
 ManagerApplicationMapper managerApplicationMapper;
+@Autowired
+ManagerApplicationService managerApplicationService;
 @Test
     public void get(){
         String pwd=studentMapper.getPwd(706);
@@ -46,10 +54,16 @@ ManagerApplicationMapper managerApplicationMapper;
     }
     @Test
     public void sl(){
-        ManagerApplication mApp=new ManagerApplication();
-        QueryWrapper<ManagerApplication> wrapper=new QueryWrapper();
-        wrapper.eq("man_key",111);
-        List<ManagerApplication> mapp= managerApplicationMapper.selectList(wrapper);
-        System.out.println(mapp);
+//        ManagerApplication mApp=new ManagerApplication();
+//        QueryWrapper<ManagerApplication> wrapper=new QueryWrapper();
+//        wrapper.eq("man_key",111);
+//        List<ManagerApplication> mapp= managerApplicationMapper.selectList(wrapper);
+//        System.out.println(mapp);
+//        List<ManagerApplication> list=managerApplicationMapper.selectBatchIds(Arrays.asList(1));
+//          managerApplicationService.updateAppform(13);
+//        for(ManagerApplication managerApplication:list){
+//
+//        }
+
     }
 }

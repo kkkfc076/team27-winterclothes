@@ -6,6 +6,7 @@ import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.dto.PageDTO;
+import com.example.mybatisplus.model.dto.SubmitDTO;
 import com.example.mybatisplus.service.ManagerService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ import com.example.mybatisplus.model.domain.ManagerApplication;
  *  前端控制器
  *
  *
- * @author team27
+ * @author team27:木
  * @since 2022-06-24
  * @version v1.0
  */
@@ -81,7 +82,7 @@ public class ManagerApplicationController {
         return JsonResponse.success(null);
     }
     /**
-     * *M
+     * *获取待审核完成的列表
      */
     //xxxDTo：数据传输层，专门用来当参数
     //待我审核：分页查看
@@ -96,7 +97,32 @@ public class ManagerApplicationController {
         }
         Page<ManagerApplication> page =managerApplicationService.pagelist(pageDTO,mApp);
         return JsonResponse.success(page);
-
     }
+    /*
+    获取已审核完成的申请表
+     */
+    @GetMapping("/checkedPageList")
+    @ResponseBody
+    public JsonResponse checkedPageList( PageDTO pageDTO, ManagerApplication mApp) {
+        Manager manager1 = SessionUtils.getCurUser();
+        QueryWrapper<ManagerApplication> wrapper = new QueryWrapper();
+        wrapper.eq("man_key", manager1.getMid());
+        if (manager1.getMid() != null) {
+            mApp = mApp.setManKey(manager1.getMid());
+        }
+            Page<ManagerApplication> page = managerApplicationService.checkedPagelist(pageDTO, mApp);
+        return JsonResponse.success(page);
+    }
+    /*
+    批量通过申请
+    检查是否到达最高审核等级
+     */
+    @PostMapping("/submits")
+    @ResponseBody
+    public JsonResponse submits(@RequestBody SubmitDTO submitDTO){
+        managerApplicationService.updateAppform(submitDTO.getIds());
+        return JsonResponse.success(111);
+    }
+
 }
 
