@@ -35,26 +35,24 @@ import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 @RequestMapping("/api/student")
 public class StudentController {
 
-    private final Logger logger = LoggerFactory.getLogger( StudentController.class );
+    private final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
     private StudentService studentService;
 
     /**
-    * 描述：根据Id 查询
-    *
-    */
+     * 描述：根据Id 查询
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse getById(@PathVariable("id") Long id)throws Exception {
-        Student  student =  studentService.getById(id);
+    public JsonResponse getById(@PathVariable("id") Long id) throws Exception {
+        Student student = studentService.getById(id);
         return JsonResponse.success(student);
     }
 
     /**
-    * 描述：根据Id删除
-    *
-    */
+     * 描述：根据Id删除
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public JsonResponse deleteById(@PathVariable("id") Long id) throws Exception {
@@ -64,27 +62,26 @@ public class StudentController {
 
 
     /**
-    * 描述：根据Id 更新
-    *
-    */
+     * 描述：根据Id 更新
+     */
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-    public JsonResponse updateStudent(Student  student) throws Exception {
+    public JsonResponse updateStudent(Student student) throws Exception {
         studentService.updateById(student);
         return JsonResponse.success(null);
     }
 
 
     /**
-    * 描述:创建Student
-    *
-    */
+     * 描述:创建Student
+     */
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResponse create(Student  student) throws Exception {
+    public JsonResponse create(Student student) throws Exception {
         studentService.save(student);
         return JsonResponse.success(null);
     }
+
     /*
      * 描述：学生登录
      */
@@ -102,22 +99,22 @@ public class StudentController {
      *
      * 修改密码
      * */
-     @RequestMapping("/modifyPwd")
+    @RequestMapping("/modifyPwd")
     @ResponseBody
-    public JsonResponse modifyPwd(@RequestBody Map<String,String> params){
-         String oldPassword=params.get("oldPassword");
-         String newPassword=params.get("newPassword");
-         Integer flag=-1;
+    public JsonResponse modifyPwd(@RequestBody Map<String, String> params) {
+        String oldPassword = params.get("oldPassword");
+        String newPassword = params.get("newPassword");
+        Integer flag = -1;
         JSONObject json = new JSONObject();
-        Student student1= getCurstu();
-        String pwd=student1.getPwd();
+        Student student1 = getCurstu();
+        String pwd = student1.getPwd();
         if (StringUtils.isNotEmpty(oldPassword)) {
             try {
                 if (oldPassword.equals(pwd)) {
                     Student stu1 = new Student();
                     stu1.setId(student1.getId());
                     stu1.setPwd(newPassword);
-                    flag =studentService.modifyP(stu1);
+                    flag = studentService.modifyP(stu1);
                     student1.setPwd(newPassword);
                     SessionUtils.saveCurUser(student1);
                     if (flag > 0) {
@@ -130,7 +127,7 @@ public class StudentController {
                 e.printStackTrace();
             }
         }
-        json.put("flag",flag);
+        json.put("flag", flag);
         return JsonResponse.success(json);
     }
 
@@ -139,8 +136,8 @@ public class StudentController {
     @GetMapping("/getInfo")
     @ResponseBody
     public JsonResponse getInfo() throws Exception {
-        Student student1= getCurstu();
-        Long id=student1.getId();
+        Student student1 = getCurstu();
+        Long id = student1.getId();
         return getById(id);
     }
 

@@ -16,9 +16,11 @@ import com.example.mybatisplus.model.domain.Student;
 public interface ApplicationformService extends IService<Applicationform> {
 
 
+    Applicationform getByStukey(Integer sid, Integer bid);
     Integer updateReason(Applicationform applicationform);
 
 
+    Applicationform addStukey(Integer sid, String reason);
     Integer updateCid(Applicationform applicationform);
 
     Applicationform getApp(Integer sid, Integer batKey);

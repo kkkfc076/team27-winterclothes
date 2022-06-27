@@ -1,6 +1,8 @@
 package com.example.mybatisplus.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.mybatisplus.common.utls.SessionUtils;
+import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.mapper.ClothesMapper;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Student;
@@ -33,16 +35,15 @@ import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 @Controller
 @RequestMapping("/api/clothes")
 public class ClothesController {
-
     private final Logger logger = LoggerFactory.getLogger(ClothesController.class);
 
     @Autowired
     private ClothesService clothesService;
-    private ClothesMapper clothesMapper;
 
     /**
-     * 描述：根据Id 查询
-     */
+    * 描述：根据Id 查询
+    *
+    */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public JsonResponse getById(@PathVariable("id") Long id) throws Exception {
@@ -51,8 +52,9 @@ public class ClothesController {
     }
 
     /**
-     * 描述：根据Id删除
-     */
+    * 描述：根据Id删除
+    *
+    */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public JsonResponse deleteById(@PathVariable("id") Long id) throws Exception {
@@ -62,8 +64,9 @@ public class ClothesController {
 
 
     /**
-     * 描述：根据Id 更新
-     */
+    * 描述：根据Id 更新
+    *
+    */
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
     public JsonResponse updateClothes(Clothes clothes) throws Exception {
@@ -73,8 +76,9 @@ public class ClothesController {
 
 
     /**
-     * 描述:创建Clothes
-     */
+    * 描述:创建Clothes
+    *
+    */
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
     public JsonResponse create(Clothes clothes) throws Exception {
@@ -113,6 +117,25 @@ public class ClothesController {
         return JsonResponse.success(page);
 
     }
+
+    //查看登记
+    @GetMapping ("/getCInfo")
+    @ResponseBody
+    public JsonResponse getCIngo( ) {
+        Student student1= SessionUtils.getCurSUser();
+        Clothes clothes =clothesService.getByCidAndBatKey(student1.getSid());
+        return JsonResponse.success(clothes);
+    }
+
+    //查看历史批次记录
+    @GetMapping ("/getDInfo")
+    @ResponseBody
+    public JsonResponse getDIngo(PageDTO pageDTO,Clothes clothes) {
+        Page<Clothes> page =clothesService.getDIngo(pageDTO,clothes);
+        return JsonResponse.success(page);
+    }
+
+
 
     /**
      * 学生获得寒衣款式
