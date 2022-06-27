@@ -33,8 +33,6 @@ import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 @Controller
 @RequestMapping("/api/clothes")
 public class ClothesController {
-
-    private final Logger logger = LoggerFactory.getLogger( ClothesController.class );
     private final Logger logger = LoggerFactory.getLogger(ClothesController.class);
 
     @Autowired
@@ -46,8 +44,6 @@ public class ClothesController {
     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse getById(@PathVariable("id") Long id)throws Exception {
-        Clothes  clothes =  clothesService.getById(id);
     public JsonResponse getById(@PathVariable("id") Long id) throws Exception {
         Clothes clothes = clothesService.getById(id);
         return JsonResponse.success(clothes);
@@ -71,7 +67,6 @@ public class ClothesController {
     */
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-    public JsonResponse updateClothes(Clothes  clothes) throws Exception {
     public JsonResponse updateClothes(Clothes clothes) throws Exception {
         clothesService.updateById(clothes);
         return JsonResponse.success(null);

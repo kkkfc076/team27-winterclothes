@@ -6,18 +6,12 @@ import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Clothes;
 import com.example.mybatisplus.mapper.ClothesMapper;
-import com.example.mybatisplus.common.JsonResponse;
-import com.example.mybatisplus.model.domain.Clothes;
-import com.example.mybatisplus.mapper.ClothesMapper;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.ClothesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Queue;
 
 /**
  * <p>
@@ -41,20 +35,22 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
     @Override
     public Page<Clothes> getDIngo(PageDTO pageDTO, Clothes clothes) {
         Page<Clothes> page = new Page<>(pageDTO.getPageNo(), pageDTO.getPageSize());
-        QueryWrapper<Clothes> wrapper =new QueryWrapper<>();
+        QueryWrapper<Clothes> wrapper = new QueryWrapper<>();
 
-        if(clothes.getBatKey()!=null){
-            wrapper.like("Bid",clothes.getBatKey());
+        if (clothes.getBatKey() != null) {
+            wrapper.like("Bid", clothes.getBatKey());
         }
 
-        if(clothes.getCname()!=null && clothes.getCname()!=""){
-            wrapper.like("Cname",clothes.getCname());
+        if (clothes.getCname() != null && clothes.getCname() != "") {
+            wrapper.like("Cname", clothes.getCname());
         }
 
-        if(clothes.getPicture()!=null){
-            wrapper.like("Picture",clothes.getPicture());
+        if (clothes.getPicture() != null) {
+            wrapper.like("Picture", clothes.getPicture());
         }
-        page= super.page(page,wrapper);
+        page = super.page(page, wrapper);
+        return page;
+    }
 
 
     @Override

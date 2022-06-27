@@ -25,4 +25,6 @@ public interface ApplicationformMapper extends BaseMapper<Applicationform> {
 
     Applicationform addStukey(Integer sid, String reason);
     Integer updateCid(Applicationform applicationform);
+
+    Applicationform getByStukey(Integer sid, Integer bid);
 }

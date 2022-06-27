@@ -87,9 +87,6 @@ public class StudentController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public JsonResponse login(@RequestBody Student student) {
-        Student student1 = studentService.stulogin(student);
-        if (student1.getId() != null) {
     public JsonResponse login(@RequestBody Student student){
         Student student1=studentService.stulogin(student);
         if(student1!=null){
