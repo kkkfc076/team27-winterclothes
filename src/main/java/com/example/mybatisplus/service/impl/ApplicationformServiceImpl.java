@@ -31,7 +31,7 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
 
     @Override
     public Applicationform getByStukey(Integer sid, Integer bid) {
-        return null;
+        return applicationformMapper.getApp(sid,bid);
     }
 
     @Override

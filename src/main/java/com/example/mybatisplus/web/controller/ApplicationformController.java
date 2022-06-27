@@ -97,15 +97,16 @@ public class ApplicationformController {
     * */
     @PostMapping ("/updateReason")
     @ResponseBody
-    public JsonResponse updateReason(String reason){
+    public JsonResponse updateReason(@RequestBody Applicationform applicationform1){
         Integer flag=-1;
         JSONObject json = new JSONObject();
         Student student1= SessionUtils.getCurSUser();
         Integer bid=2019;
         Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),bid);
-        applicationform.setReason(reason);
-        if(applicationform.getReason()!=null){
-            flag=1;
+        applicationform.setReason(applicationform1.getReason());
+        flag=applicationformService.updateReason(applicationform);
+        if(flag>0){
+            flag=2;
         }else {
             flag=0;
         }
@@ -123,21 +124,13 @@ public class ApplicationformController {
         return JsonResponse.success(applicationform);
     }
 
-    //申请理由
-    @PostMapping ("/addReason")
+    @PostMapping("/saveReason")
     @ResponseBody
-    public JsonResponse addReason(String reason){
-        Integer flag=-1;
-        JSONObject json = new JSONObject();
+    public JsonResponse saveReason(@RequestBody Applicationform applicationform){
         Student student1= SessionUtils.getCurSUser();
-        Applicationform applicationform=applicationformService.addStukey(student1.getSid(),reason);
-        if(applicationform.getReason()!=null){
-            flag=1;
-        }else {
-            flag=0;
-        }
-        json.put("flag",flag);
-        return JsonResponse.success(json);
+        applicationform.setStuKey(student1.getSid());
+        applicationformService.save(applicationform);
+        return JsonResponse.success(11);
     }
 
     /**
