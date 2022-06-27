@@ -2,6 +2,8 @@ package com.example.mybatisplus.web.controller;
 
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
+import com.example.mybatisplus.model.domain.Clothes;
+import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Batch;
 import com.example.mybatisplus.model.domain.Student;
 import net.sf.json.JSONObject;
@@ -14,6 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ApplicationformService;
 import com.example.mybatisplus.model.domain.Applicationform;
+
+import java.util.Map;
+
+import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 
 
 /**
@@ -127,6 +133,27 @@ public class ApplicationformController {
         Applicationform applicationform=applicationformService.addStukey(student1.getSid(),reason);
         if(applicationform.getReason()!=null){
             flag=1;
+        }else {
+            flag=0;
+        }
+        json.put("flag",flag);
+        return JsonResponse.success(json);
+    }
+
+    /**
+     * 学生选择寒衣
+     */
+    @RequestMapping("/choose")
+    @ResponseBody
+    public JsonResponse choose(@RequestBody Clothes clothes){
+        Integer flag=-1;
+        JSONObject json = new JSONObject();
+        Student student1= getCurstu();
+        Applicationform applicationform=applicationformService.getApp(student1.getSid(),clothes.getBatKey());
+        applicationform.setCid(clothes.getCid());
+        flag=applicationformService.updateCid(applicationform);
+        if(flag>0){
+            flag=2;
         }else {
             flag=0;
         }

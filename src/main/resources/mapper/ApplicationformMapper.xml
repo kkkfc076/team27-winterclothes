@@ -15,9 +15,63 @@
     <insert id="addStukey">
         insert into applicationform values (stu_key=#{sid},reason=#{reason})
     </insert>
+    <update id="updateReason">
+        update applicationform
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="aid != null and ''!=aid">
+                aid = #{aid},
+            </if>
+            <if test="batKey != null and ''!=batKey">
+                bat_key = #{batKey},
+            </if>
+            <if test="stuKey != null and ''!=stuKey">
+                stu_key = #{stuKey},
+            </if>
+            <if test="reason != null and ''!=reason">
+                reason = #{reason},
+            </if>
+            <if test="result != null and ''!=result">
+                result = #{result},
+            </if>
+            <if test="cid != null and ''!=cid">
+                cid = #{cid},
+            </if>
+        </trim>
+            where id = #{id}
+    </update>
 
-    <select id="getByStukey" resultType="com.example.mybatisplus.model.domain.Applicationform">
-        select * from applicationform where stu_Key=#{sid}
+    <update id="updateCid">
+        update applicationform
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="aid != null and ''!=aid">
+                aid = #{aid},
+            </if>
+            <if test="batKey != null and ''!=batKey">
+                bat_key = #{batKey},
+            </if>
+            <if test="stuKey != null and ''!=stuKey">
+                stu_key = #{stuKey},
+            </if>
+            <if test="reason != null and ''!=reason">
+                reason = #{reason},
+            </if>
+            <if test="result != null and ''!=result">
+                result = #{result},
+            </if>
+            <if test="cid != null and ''!=cid">
+                cid = #{cid},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+    <select id="getApp" resultType="com.example.mybatisplus.model.domain.Applicationform">
+        select * from applicationform where stu_Key=#{sid} and bat_key=#{batKey}
     </select>
 
 

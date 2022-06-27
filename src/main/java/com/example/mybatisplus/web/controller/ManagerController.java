@@ -1,9 +1,15 @@
 package com.example.mybatisplus.web.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
+import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.example.mybatisplus.model.domain.Student;
 //import jdk.vm.ci.meta.Constant;
 //import jdk.vm.ci.meta.Constant;
+import com.example.mybatisplus.model.dto.PageDTO;
+import com.example.mybatisplus.model.dto.SetpermissionDTO;
+import com.example.mybatisplus.service.ManagerApplicationService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import net.sf.json.JSONObject;
 import org.apache.catalina.connector.Response;
@@ -25,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +50,7 @@ import static org.apache.commons.lang3.ObjectUtils.isEmpty;
  * @since 2022-06-24
  * @version v1.0
  */
+
 @Controller
 @RequestMapping("/api/manager")
 public class ManagerController {
@@ -51,7 +59,8 @@ public class ManagerController {
 
     @Autowired
     private ManagerService managerService;
-
+    @Autowired
+    private ManagerApplicationService managerApplicationService;
     /**
     * 描述：根据Id 查询
     *
@@ -105,10 +114,13 @@ public class ManagerController {
     @ResponseBody
     public JsonResponse mlogin(@RequestBody Manager manager){
         Manager manager1=managerService.manlogin(manager);
-        if(manager1.getId()!=null){
+        if(manager1!=null && manager1.getPermission()){
             SessionUtils.saveCurUser(manager1);
+            return JsonResponse.success(manager1);
+        }else {
+            return JsonResponse.failure("用户名或密码错误");
         }
-        return JsonResponse.success(manager1);
+
     }
 
     /*
@@ -122,7 +134,7 @@ public class ManagerController {
         String newPassword=params.get("newPassword");
         Integer flag=-1;
         JSONObject json = new JSONObject();
-        Manager manager1= (Manager) SessionUtils.getCurUser();
+        Manager manager1= getCurUser();
         if (StringUtils.isNotEmpty(oldPassword)) {
             try {
                 if (oldPassword.equals(manager1.getPwd())) {
@@ -145,7 +157,28 @@ public class ManagerController {
         json.put("flag",flag);
         return JsonResponse.success(json);
     }
+    /*
+    *
+    * 白名单设置
+    *
+    * */
+    @ResponseBody
+    @GetMapping ("/getManlist")
+    public JsonResponse whiteList(PageDTO pageDTO,Manager manager){
+        Page<Manager> page = managerService.pageList(pageDTO,manager);
+        return JsonResponse.success(page);
 
-
+    }
+    /*
+    *
+    * 批量授权
+    *
+    * */
+    @ResponseBody
+    @PostMapping ("/setPermission")
+    public JsonResponse setPermission(@RequestBody SetpermissionDTO setpermissionDTO){
+        Boolean flag=managerService.setByIds(setpermissionDTO.getIds());
+        return JsonResponse.success(flag);
+    }
 }
 

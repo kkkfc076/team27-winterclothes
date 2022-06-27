@@ -20,5 +20,7 @@
           and applicationform.cid = clothes.cid
           <!--and clothes.bat_key = #{bat_key} -->;
     </select>
+        <result column="picture" property="picture"/>
+    </resultMap>
 
 </mapper>

@@ -11,7 +11,7 @@
         <result column="mlevel" property="mlevel" />
         <result column="major" property="major" />
         <result column="grade" property="grade" />
-        <result column="mclass" property="mclass" />
+        <result column="permission" property="permission"/>
     </resultMap>
     <update id="modifyP">
         update manager
@@ -37,12 +37,18 @@
             <if test="grade != null and ''!=grade">
                 grade = #{grade},
             </if>
-            <if test="mclass != null and ''!=mclass">
-                mclass = #{mclass},
+            <if test="permisssion != null and ''!=peimission">
+                permission = #{permission},
             </if>
-
         </trim>
             where id = #{id}
+    </update>
+    <update id="setPermissions">
+        update manager set permission=true where id in(
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
     </update>
 
 </mapper>

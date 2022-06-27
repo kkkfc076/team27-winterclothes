@@ -1,10 +1,14 @@
 package com.example.mybatisplus.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.model.domain.Manager;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.mybatisplus.model.dto.PageDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -21,4 +25,7 @@ public interface ManagerService extends IService<Manager> {
     Integer modifyP(Manager man1);
 
 
+    Page<Manager> pageList(PageDTO pageDTO, Manager manager);
+
+    Boolean setByIds(List<Serializable> ids);
 }

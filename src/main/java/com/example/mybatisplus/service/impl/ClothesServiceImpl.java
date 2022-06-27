@@ -6,11 +6,18 @@ import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Clothes;
 import com.example.mybatisplus.mapper.ClothesMapper;
+import com.example.mybatisplus.common.JsonResponse;
+import com.example.mybatisplus.model.domain.Clothes;
+import com.example.mybatisplus.mapper.ClothesMapper;
+import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.ClothesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Queue;
 
 /**
  * <p>
@@ -49,6 +56,16 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         }
         page= super.page(page,wrapper);
 
+
+    @Override
+    public Page<Clothes> pageList( Student student) {
+        Page<Clothes> page = new Page<>(1,100000);
+        String sex=student.getSex();
+        QueryWrapper<Clothes> wrapper =new QueryWrapper<>();
+        if (sex != null && sex != "") {
+            wrapper.eq("sex",sex);
+        }
+        page=super.page(page,wrapper);
         return page;
     }
 

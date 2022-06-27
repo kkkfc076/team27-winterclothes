@@ -2,6 +2,8 @@ package com.example.mybatisplus.service.impl;
 
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
+import com.example.mybatisplus.model.domain.Clothes;
+import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.service.ApplicationformService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,13 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
     @Override
     public Applicationform getByStukey(Integer sid, Integer bid) {
         return applicationformMapper.getByStukey(sid);
+    public Applicationform getApp(Integer sid, Integer batKey) {
+        return applicationformMapper.getApp(sid,batKey);
+    }
+
+    @Override
+    public Integer updateReason(Applicationform applicationform) {
+        return applicationformMapper.updateReason(applicationform);
     }
 
     @Override
@@ -32,5 +41,9 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
         return applicationformMapper.addStukey(sid,reason);
     }
 
+    @Override
+    public Integer updateCid(Applicationform applicationform) {
+        return applicationformMapper.updateCid(applicationform);
+    }
 
 }

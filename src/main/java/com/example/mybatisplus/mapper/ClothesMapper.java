@@ -4,6 +4,9 @@ import com.example.mybatisplus.model.domain.Clothes;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import com.example.mybatisplus.model.domain.Student;
+
+import java.util.List;
 
 /**
  * <p>
