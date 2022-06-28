@@ -22,4 +22,5 @@ public interface StudentMapper extends BaseMapper<Student> {
     String getPwd(@Param("sid") int sid);
     Integer modifyP(Student stu);
 
+    String getBySid(@Param("sid") Integer sid);
 }

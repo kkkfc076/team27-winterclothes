@@ -40,4 +40,6 @@ public class SessionUtils {
     public static void saveCurBatch(Batch batch) {session().setAttribute("curBatch",batch);}
 
     public static Batch getCurBatch(){return (Batch) session().getAttribute("curBatch");}
+
+
 }

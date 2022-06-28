@@ -12,5 +12,8 @@
     <select id="getBidByTime" resultType="com.example.mybatisplus.model.domain.Batch">
         select * from batch where startdate &lt; curtime() and enddate>=curtime();
     </select>
+    <update id="updateBatch">
+        update batch
+    </update>
 
 </mapper>

@@ -19,6 +19,7 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ApplicationformService;
 import com.example.mybatisplus.model.domain.Applicationform;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
@@ -155,6 +156,14 @@ public class ApplicationformController {
         }
         json.put("flag",flag);
         return JsonResponse.success(json);
+    }
+    /**
+     * 导出学生申请表
+     * */
+    @PostMapping("/export")
+    @ResponseBody
+    public void export(HttpServletResponse response){
+        applicationformService.export(response);
     }
 
     //申请表中有无学生

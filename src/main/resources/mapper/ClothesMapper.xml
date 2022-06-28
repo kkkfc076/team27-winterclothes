@@ -18,8 +18,12 @@
         select clothes.* from applicationform,student,clothes
         where sid=#{sid}
           and sid=stu_key
-          and applicationform.cid = clothes.cid
+          and applicaionform.cid = clothes.cid
           <!--and clothes.bat_key = #{bat_key} -->;
+    </select>
+    <select id="getByCid" resultType="com.example.mybatisplus.model.domain.Clothes">
+         select clothes.* from clothes
+        where cid=#{cid}
     </select>
     <select id="getByCidAndBatKey" resultType="com.example.mybatisplus.model.domain.Clothes">
         select  clothes.* from applicationform,student,clothes

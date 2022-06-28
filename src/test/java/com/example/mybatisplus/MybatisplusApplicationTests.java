@@ -4,6 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.*;
+import com.example.mybatisplus.model.domain.Applicationform;
+import com.example.mybatisplus.model.domain.Batch;
+import com.example.mybatisplus.model.domain.Manager;
+import com.example.mybatisplus.model.domain.ManagerApplication;
+import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.model.dto.SubmitDTO;
 import com.example.mybatisplus.service.ManagerApplicationService;
@@ -25,6 +30,7 @@ class MybatisplusApplicationTests {
 
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
     StudentService studentService;
 @Autowired
     ManagerMapper managerMapper;
@@ -53,8 +59,8 @@ ManagerApplicationService managerApplicationService;
     Manager userInfo= SessionUtils.getCurUser();
     System.out.println(userInfo);
     }
-    @Test
-    public void sl1(){
+//    @Test
+//    public void sl(){
 //        ManagerApplication mApp=new ManagerApplication();
 //        QueryWrapper<ManagerApplication> wrapper=new QueryWrapper();
 //        wrapper.eq("man_key",111);
@@ -65,7 +71,11 @@ ManagerApplicationService managerApplicationService;
 //        for(ManagerApplication managerApplication:list){
 //
 //        }
-    }
+        @Test
+        public void file(){
+            String name=studentService.getBySid(123);
+            System.out.println(name);
+        }
     @Test
     public void getBatch(){
         Batch batch=batchMapper.getBidByTime();

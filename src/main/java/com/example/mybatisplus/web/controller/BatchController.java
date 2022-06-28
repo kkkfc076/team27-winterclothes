@@ -1,5 +1,7 @@
 package com.example.mybatisplus.web.controller;
 
+import com.example.mybatisplus.common.utls.SessionUtils;
+import com.example.mybatisplus.mapper.BatchMapper;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.BatchService;
 import com.example.mybatisplus.model.domain.Batch;
+
+import java.time.LocalDateTime;
 
 
 /**
@@ -29,6 +33,8 @@ public class BatchController {
 
     @Autowired
     private BatchService batchService;
+    @Autowired
+    private BatchMapper batchMapper;
 
     /**
     * 描述：根据Id 查询
@@ -78,6 +84,7 @@ public class BatchController {
     /*
     *
     *
+    * 添加批次
     *
     * */
     @RequestMapping(value = "/addBatch", method = RequestMethod.POST)
@@ -93,6 +100,24 @@ public class BatchController {
         }
         json.put("flag",flag);
         return JsonResponse.success(json);
+    }
+
+    /*
+    *
+    *
+    *
+    * */
+    @PostMapping("/updateBatch")
+    @ResponseBody
+    public JsonResponse setBatch(@RequestBody Batch batch){
+        Batch batch1 = SessionUtils.getCurBatch();
+        batch.setId(batch1.getId());
+        try {
+            updateBatch(batch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return JsonResponse.success(11);
     }
 }
 

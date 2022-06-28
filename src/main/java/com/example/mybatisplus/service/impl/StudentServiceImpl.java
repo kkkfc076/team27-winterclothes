@@ -45,12 +45,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
-    public Student selectByS(Student student) {
-        QueryWrapper<Student> wrapper = new QueryWrapper<>();
-        wrapper.eq("sid",student.getSid());
-        Student students = studentMapper.selectOne(wrapper);
-        return students;
+    public String getBySid(Integer stuKey) {
+        return studentMapper.getBySid(stuKey);
     }
+
 
     @Override
     public Page<Student> pageList(PageDTO pageDTO) {

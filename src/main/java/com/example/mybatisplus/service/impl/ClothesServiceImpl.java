@@ -32,6 +32,9 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
     private ClothesMapper clothesMapper;
 
     @Override
+    public Clothes getByCid(Integer cid) {
+        return clothesMapper.getByCid(cid);
+    }
     public Clothes getByCidAndBatKey(Integer sid,Integer bid)
     {
         return clothesMapper.getByCidAndBatKey(sid,bid);

@@ -56,8 +56,8 @@
     <select id="getPwd" resultType="java.lang.String">
         SELECT pwd from student where sid = #{sid};
     </select>
-    <select id="selectByS" resultType="com.example.mybatisplus.model.domain.Student">
-        select * from student where sid=#{sid}
+    <select id="getBySid" resultType="java.lang.String">
+        select sname from student where sid=#{sid}
     </select>
 
 </mapper>
