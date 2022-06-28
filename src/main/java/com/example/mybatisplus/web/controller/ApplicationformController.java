@@ -134,7 +134,7 @@ public class ApplicationformController {
         Student student1= SessionUtils.getCurSUser();
         applicationform.setStuKey(student1.getSid());
         applicationformService.save(applicationform);
-        return JsonResponse.success(11);
+        return JsonResponse.success(111);
     }
 
     /**
