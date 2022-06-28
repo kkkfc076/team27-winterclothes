@@ -147,6 +147,10 @@ public class ApplicationformController {
         JSONObject json = new JSONObject();
         Student student1= getCurstu();
         Applicationform applicationform=applicationformService.getApp(student1.getSid(),clothes.getBatKey());
+        if(!applicationform.getResult()){
+            json.put("flag",flag);
+            return JsonResponse.success(json);
+        }
         applicationform.setCid(clothes.getCid());
         flag=applicationformService.updateCid(applicationform);
         if(flag>0){
