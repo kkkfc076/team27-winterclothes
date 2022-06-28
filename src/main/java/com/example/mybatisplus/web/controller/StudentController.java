@@ -1,7 +1,11 @@
 package com.example.mybatisplus.web.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.StudentMapper;
+import com.example.mybatisplus.model.domain.Batch;
+import com.example.mybatisplus.model.domain.Clothes;
+import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Clothes;
 import net.sf.json.JSON;
@@ -141,6 +145,14 @@ public class StudentController {
         Student student1 = getCurstu();
         Long id = student1.getId();
         return getById(id);
+    }
+    //学生列表
+    @GetMapping("/getstuList")
+    @ResponseBody
+    public  JsonResponse getstuList(PageDTO pageDTO) throws Exception{
+        Batch batch=SessionUtils.getCurBatch();
+        Page<Student> page= studentService.pageList(pageDTO);
+        return JsonResponse.success(page) ;
     }
 
 

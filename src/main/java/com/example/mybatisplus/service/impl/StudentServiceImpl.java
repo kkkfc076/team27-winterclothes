@@ -1,21 +1,16 @@
 package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.mybatisplus.common.JsonResponse;
-import com.example.mybatisplus.common.utls.SessionUtils;
-import com.example.mybatisplus.model.domain.Manager;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.mybatisplus.model.domain.Batch;
+import com.example.mybatisplus.model.domain.Clothes;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.mapper.StudentMapper;
+import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.StudentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import net.sf.json.JSONObject;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 
 /**
  * <p>
@@ -57,4 +52,13 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return students;
     }
 
+    @Override
+    public Page<Student> pageList(PageDTO pageDTO) {
+        Page<Student> page=new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
+        QueryWrapper<Student> wrapper=new QueryWrapper<>();
+         //   wrapper.eq("batch",batch.getBid());
+
+        page=super.page(page, wrapper);
+        return page;
+    }
 }

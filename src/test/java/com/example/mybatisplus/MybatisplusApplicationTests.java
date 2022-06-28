@@ -4,12 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.*;
-import com.example.mybatisplus.model.domain.Applicationform;
-import com.example.mybatisplus.model.domain.Batch;
-import com.example.mybatisplus.model.domain.Manager;
-import com.example.mybatisplus.model.domain.ManagerApplication;
+import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.model.dto.SubmitDTO;
 import com.example.mybatisplus.service.ManagerApplicationService;
+import com.example.mybatisplus.service.StudentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +25,7 @@ class MybatisplusApplicationTests {
 
     @Autowired
     StudentMapper studentMapper;
+    StudentService studentService;
 @Autowired
     ManagerMapper managerMapper;
 @Autowired
@@ -71,5 +70,11 @@ ManagerApplicationService managerApplicationService;
     public void getBatch(){
         Batch batch=batchMapper.getBidByTime();
         Batch batch1=batch;
+    }
+
+    @Test
+    public void sel(){
+
+
     }
 }

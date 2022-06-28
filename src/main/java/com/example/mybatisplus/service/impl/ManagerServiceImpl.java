@@ -2,23 +2,36 @@ package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+import com.example.mybatisplus.common.BaseController;
 import com.example.mybatisplus.common.JsonResponse;
+import com.example.mybatisplus.common.utls.ExcelUtil;
 import com.example.mybatisplus.mapper.StudentMapper;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.mapper.ManagerMapper;
+import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.ManagerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.mybatisplus.service.StudentService;
+import lombok.val;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +49,12 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
 
     @Autowired
     private ManagerMapper managerMapper;
+    @Autowired
+    private StudentMapper studentMapper;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private ManagerService managerService;
 
     @Override
     public Manager manlogin(Manager manager) {
@@ -76,6 +95,78 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
     @Override
     public Boolean setByIds(List<Serializable> ids) {
         return CollectionUtils.isEmpty(ids) ? false : managerMapper.setPermissions(ids);
+    }
+
+    @Override
+    public Map<String, Object> importStu(MultipartFile file) {
+        //验证文件
+        Map<String,Object> map=new HashMap<>();
+        try {
+            ExcelUtil.checkFile(file);
+
+            List<String[]> strings= ExcelUtil.readExcel(file);
+            int rowCount = strings.size();//获取总行数
+            if(rowCount==1){
+                return null;
+            }
+            //验证第一行
+            //如果是，格式化字符串
+            String[] row;
+            //批量插入
+            for(int i=1;i<=rowCount;i++){
+                row=strings.get(i);
+                Student student=new Student();
+                student.setSid(Integer.valueOf(row[0]));
+                student.setPwd("123");
+                student.setSname(row[1]);
+                student.setSex(row[2]);
+                student.setSclass(Integer.valueOf(row[3]));
+                student.setGrade(Integer.valueOf(row[4]));
+                student.setMajor(row[5]);
+                student.setPlevel(row[6]);
+                student.setPyear(Integer.valueOf(row[7]));
+                studentService.save(student);
+            }
+            //返回信息
+            map.put("msg","成功导入");
+        } catch (IOException e) {
+            map.put("errorMsg","请输入正确的文件");
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> importMan(MultipartFile file) {
+        Map<String,Object> map=new HashMap<>();
+        try {
+            ExcelUtil.checkFile(file);
+
+            List<String[]> strings= ExcelUtil.readExcel(file);
+            int rowCount = strings.size();//获取总行数
+            if(rowCount==1){
+                return null;
+            }
+            //验证第一行
+            //如果是，格式化字符串
+            String[] row;
+            //批量插入
+            for(int i=1;i<=rowCount;i++){
+                row=strings.get(i);
+                Manager manager=new Manager();
+                manager.setMid(Integer.valueOf(row[0]));
+                manager.setMname(row[1]);
+                manager.setMlevel(Integer.valueOf(row[2]));
+                manager.setMajor(row[3]);
+                manager.setGrade(Integer.valueOf(row[4]));
+                manager.setPermission(0);
+                managerService.save(manager);
+            }
+            //返回信息
+            map.put("msg","成功导入");
+        } catch (IOException e) {
+            map.put("errorMsg","请输入正确的文件");
+        }
+        return map;
     }
 
 

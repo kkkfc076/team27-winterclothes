@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.model.domain.Manager;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.mybatisplus.model.dto.PageDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -28,4 +31,8 @@ public interface ManagerService extends IService<Manager> {
     Page<Manager> pageList(PageDTO pageDTO, Manager manager);
 
     Boolean setByIds(List<Serializable> ids);
+
+    Map<String, Object> importStu(MultipartFile file) throws IOException;
+
+    Map<String, Object> importMan(MultipartFile file);
 }

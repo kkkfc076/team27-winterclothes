@@ -1,5 +1,6 @@
 package com.example.mybatisplus.common.utls;
 
+import com.example.mybatisplus.model.domain.Batch;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Student;
 import org.springframework.boot.web.servlet.server.Session;
@@ -35,4 +36,8 @@ public class SessionUtils {
     public static void saveCurTime(LocalDateTime dateTime) {session().setAttribute("logintime",dateTime);}
 
     public static LocalDateTime getCurTime() {return (LocalDateTime) session().getAttribute("logintime");}
+
+    public static void saveCurBatch(Batch batch) {session().setAttribute("curBatch",batch);}
+
+    public static Batch getCurBatch(){return (Batch) session().getAttribute("curBatch");}
 }

@@ -28,6 +28,7 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ManagerService;
 import com.example.mybatisplus.model.domain.Manager;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -37,6 +38,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import javax.xml.crypto.Data;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -146,6 +148,7 @@ public class ManagerController {
         Batch batch = batchMapper.getBidByTime();
         if(batch!=null){
             bid=batch.getBid();
+            SessionUtils.saveCurBatch(batch);
         }
         json.put("flag",bid);
         return JsonResponse.success(json);
@@ -207,6 +210,35 @@ public class ManagerController {
     public JsonResponse setPermission(@RequestBody SetpermissionDTO setpermissionDTO){
         Boolean flag=managerService.setByIds(setpermissionDTO.getIds());
         return JsonResponse.success(flag);
+    }
+
+    /*
+    *
+    * 导入学生用户
+    *
+    *
+    * */
+    @PostMapping("/importStu")
+    @ResponseBody
+    public JsonResponse importStu(MultipartFile file){
+        try {
+            Map<String,Object> map=managerService.importStu(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return JsonResponse.success(null);
+    }
+    /*
+    *
+    * 导入管理员用户
+    * 每个管理员用户初始权限都为0
+    *
+    * */
+    @PostMapping("/importMan")
+    @ResponseBody
+    public JsonResponse importMan(MultipartFile file){
+        Map<String,Object> map=managerService.importMan(file);
+        return JsonResponse.success(null);
     }
 }
 
