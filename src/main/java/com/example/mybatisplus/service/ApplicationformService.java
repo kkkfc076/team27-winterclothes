@@ -7,6 +7,8 @@ import com.example.mybatisplus.model.domain.Clothes;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <p>
  *  服务类
@@ -27,6 +29,8 @@ public interface ApplicationformService extends IService<Applicationform> {
     Integer updateCid(Applicationform applicationform);
 
     Applicationform getApp(Integer sid, Integer batKey);
+
+    void export(HttpServletResponse response);
 
     Page<Applicationform> getDIngo(PageDTO pageDTO, Student student);
 }

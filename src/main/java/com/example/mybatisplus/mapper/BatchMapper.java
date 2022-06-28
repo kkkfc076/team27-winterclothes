@@ -19,4 +19,7 @@ import java.time.LocalDateTime;
 public interface BatchMapper extends BaseMapper<Batch> {
 
     Batch getBidByTime();
+
+
+    Integer updatebatch(LocalDateTime enddate);
 }

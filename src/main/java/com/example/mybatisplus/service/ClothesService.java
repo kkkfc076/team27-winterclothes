@@ -23,6 +23,7 @@ import java.util.List;
  */
 public interface ClothesService extends IService<Clothes> {
 
+    Clothes getByCid(Integer cid);
     Clothes getByCidAndBatKey(Integer sid,Integer bid);
 
     Page<Clothes> getDIngo(PageDTO pageDTO, Clothes clothes1);

@@ -7,6 +7,7 @@ import com.example.mybatisplus.mapper.ClothesMapper;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
+import com.example.mybatisplus.service.ApplicationformService;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import com.example.mybatisplus.model.domain.Clothes;
 import java.util.List;
 
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
+import static com.example.mybatisplus.common.utls.SessionUtils.session;
 
 
 /**
@@ -39,6 +41,7 @@ public class ClothesController {
 
     @Autowired
     private ClothesService clothesService;
+    private ApplicationformService applicationformService;
 
     /**
     * 描述：根据Id 查询
@@ -96,6 +99,7 @@ public class ClothesController {
     public JsonResponse addClothes(@RequestBody Clothes clothes){
         Integer flag=-1;
         JSONObject json = new JSONObject();
+        clothes.setBatKey(SessionUtils.getCurBatch().getBid());
         boolean temp=clothesService.save(clothes);
         if(temp){
             flag=2;
@@ -160,7 +164,7 @@ public class ClothesController {
     //查看历史记录
     @GetMapping ("/getDInfo")
     @ResponseBody
-    public JsonResponse getDIngo(PageDTO pageDTO,Clothes clothes) {
+    public JsonResponse getDInfo(PageDTO pageDTO,Clothes clothes) {
         Page<Clothes> page =clothesService.getDIngo(pageDTO,clothes);
         return JsonResponse.success(page);
     }
@@ -168,7 +172,7 @@ public class ClothesController {
 
 
     /**
-     * 学生获得寒衣款式
+     * 学生获得寒衣款式列表
      */
     @ResponseBody
     @GetMapping("/styles")
