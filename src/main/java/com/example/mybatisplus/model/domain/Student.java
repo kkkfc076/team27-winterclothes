@@ -47,12 +47,11 @@ public class Student extends Model<Student> {
 
     private String plevel;
 
-    private LocalDate pyear;
+    private Integer pyear;
 
 
     @Override
     protected Serializable pkVal() {
         return this.id;
     }
-
 }

@@ -152,11 +152,12 @@ public class ClothesController {
     @ResponseBody
     public JsonResponse getCIngo( ) {
         Student student1= SessionUtils.getCurSUser();
-        Clothes clothes =clothesService.getByCidAndBatKey(student1.getSid());
+        Integer bid=2019;
+        Clothes clothes =clothesService.getByCidAndBatKey(student1.getSid(),bid);
         return JsonResponse.success(clothes);
     }
 
-    //查看历史批次记录
+    //查看历史记录
     @GetMapping ("/getDInfo")
     @ResponseBody
     public JsonResponse getDIngo(PageDTO pageDTO,Clothes clothes) {
@@ -177,5 +178,13 @@ public class ClothesController {
         return JsonResponse.success(page) ;
     }
 
+
+    //查看详情
+    @ResponseBody
+    @PostMapping("/getDetail")
+    public JsonResponse getDetail(@RequestBody Clothes clothes) {
+        Clothes clothes1 =clothesService.getByCid(clothes);
+        return JsonResponse.success(clothes1);
+    }
 }
 

@@ -1,9 +1,12 @@
 package com.example.mybatisplus.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.model.domain.Clothes;
 import com.example.mybatisplus.model.domain.Student;
+import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.ApplicationformService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,22 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
     public Applicationform getApp(Integer sid, Integer batKey) {
         return applicationformMapper.getApp(sid,batKey);
     }
+
+    @Override
+    public Page<Applicationform> getDIngo(PageDTO pageDTO, Student student) {
+        Page<Applicationform> page = new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
+
+        Integer sid = student.getSid();
+
+        QueryWrapper<Applicationform> wrapper =new QueryWrapper<>();
+
+        if (sid != null) {
+            wrapper.eq("stu_key",sid);
+        }
+        page=super.page(page,wrapper);
+        return page;
+    }
+
 
     @Override
     public Applicationform getByStukey(Integer sid, Integer bid) {
