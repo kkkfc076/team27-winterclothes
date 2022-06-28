@@ -9,5 +9,8 @@
         <result column="startdate" property="startdate" />
         <result column="enddate" property="enddate" />
     </resultMap>
+    <select id="getBidByTime" resultType="com.example.mybatisplus.model.domain.Batch">
+        select * from batch where startdate &lt; curtime() and enddate>=curtime();
+    </select>
 
 </mapper>

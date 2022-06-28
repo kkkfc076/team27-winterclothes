@@ -7,6 +7,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 public class SessionUtils {
     private static final String USERKEY = "sessionUser";
@@ -23,14 +24,15 @@ public class SessionUtils {
     }
 
 
-    public static Manager getCurUser() {
+    public static Manager getCurUser() { return (Manager) session().getAttribute("curUser");}
 
-        return (Manager) session().getAttribute("curUser");
-    }
     public static Student getCurstu() {
         return (Student) session().getAttribute("curUser");
     }
 
-    public static Student getCurSUser() {return (Student) session().getAttribute("curUser");
-    }
+    public static Student getCurSUser() {return (Student) session().getAttribute("curUser");}
+
+    public static void saveCurTime(LocalDateTime dateTime) {session().setAttribute("logintime",dateTime);}
+
+    public static LocalDateTime getCurTime() {return (LocalDateTime) session().getAttribute("logintime");}
 }

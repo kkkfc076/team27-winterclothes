@@ -88,7 +88,7 @@ public class ClothesController {
 
     /*
     *
-    * 添加寒衣
+    * 管理员添加寒衣
     *
     * */
     @ResponseBody
@@ -107,7 +107,7 @@ public class ClothesController {
     }
     /*
     *
-    * 删除单件款式
+    * 管理员删除单件款式
     * */
     @ResponseBody
     @RequestMapping("/deleteClothes")
@@ -125,7 +125,7 @@ public class ClothesController {
     }
     /*
     *
-    * 编辑款式
+    * 管理员编辑款式
     *
     * */
     @PostMapping("/update")
@@ -137,7 +137,7 @@ public class ClothesController {
 
     /*
     *
-    * 管理
+    * 管理员管理所有寒衣
     * */
     @ResponseBody
     @GetMapping ("/getClolist")

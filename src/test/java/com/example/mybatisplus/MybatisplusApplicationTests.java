@@ -3,11 +3,9 @@ package com.example.mybatisplus;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.common.utls.SessionUtils;
-import com.example.mybatisplus.mapper.ApplicationformMapper;
-import com.example.mybatisplus.mapper.ManagerApplicationMapper;
-import com.example.mybatisplus.mapper.ManagerMapper;
-import com.example.mybatisplus.mapper.StudentMapper;
+import com.example.mybatisplus.mapper.*;
 import com.example.mybatisplus.model.domain.Applicationform;
+import com.example.mybatisplus.model.domain.Batch;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.example.mybatisplus.model.dto.SubmitDTO;
@@ -37,6 +35,10 @@ class MybatisplusApplicationTests {
 ManagerApplicationMapper managerApplicationMapper;
 @Autowired
 ManagerApplicationService managerApplicationService;
+@Autowired
+    BatchMapper batchMapper;
+
+
 @Test
     public void get(){
         String pwd=studentMapper.getPwd(706);
@@ -64,6 +66,10 @@ ManagerApplicationService managerApplicationService;
 //        for(ManagerApplication managerApplication:list){
 //
 //        }
-
+    }
+    @Test
+    public void getBatch(){
+        Batch batch=batchMapper.getBidByTime();
+        Batch batch1=batch;
     }
 }
