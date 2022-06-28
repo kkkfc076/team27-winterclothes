@@ -1,7 +1,11 @@
 package com.example.mybatisplus.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.mybatisplus.model.domain.Clothes;
+import com.example.mybatisplus.model.domain.Student;
+import com.example.mybatisplus.model.dto.PageDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,5 +30,4 @@ public interface ApplicationformMapper extends BaseMapper<Applicationform> {
     Applicationform addStukey(@Param("sid") Integer sid, @Param("reason") String reason);
 
     Integer updateCid(Applicationform applicationform);
-
 }

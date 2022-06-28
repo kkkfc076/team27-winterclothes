@@ -73,6 +73,9 @@
     <select id="getApp" resultType="com.example.mybatisplus.model.domain.Applicationform">
         select * from applicationform where stu_Key=#{sid} and bat_key=#{batKey}
     </select>
+    <select id="getByStukey" resultType="com.example.mybatisplus.model.domain.Applicationform">
+        select  * from applicationform where stu_key=#{sid} and bat_key = #{bid}
+    </select>
 
 
 </mapper>

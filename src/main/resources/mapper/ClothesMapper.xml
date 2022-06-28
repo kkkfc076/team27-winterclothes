@@ -21,5 +21,13 @@
           and applicationform.cid = clothes.cid
           <!--and clothes.bat_key = #{bat_key} -->;
     </select>
+    <select id="getByCidAndBatKey" resultType="com.example.mybatisplus.model.domain.Clothes">
+        select  clothes.* from applicationform,student,clothes
+        where sid=#{sid}
+          and student.sid=applicationform.stu_key
+          and applicationform.cid = clothes.cid
+          and clothes.bat_key = #{bid}
+          and applicationform.bat_key = clothes.bat_key
+    </select>
 
 </mapper>

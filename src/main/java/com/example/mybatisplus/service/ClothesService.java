@@ -23,11 +23,12 @@ import java.util.List;
  */
 public interface ClothesService extends IService<Clothes> {
 
-    Clothes getByCidAndBatKey(Integer sid);
+    Clothes getByCidAndBatKey(Integer sid,Integer bid);
 
-    Page<Clothes> getDIngo(PageDTO pageDTO, Clothes clothes);
+    Page<Clothes> getDIngo(PageDTO pageDTO, Clothes clothes1);
 
     Page<Clothes> pageListtoM(PageDTO pageDTO, Clothes clothes);
     Page<Clothes> pageList(PageDTO pageDTO,Student student1);
 
+    Clothes getByCid(Clothes clothes);
 }
