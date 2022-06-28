@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Manager;
+import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.model.dto.SubmitDTO;
 import com.example.mybatisplus.service.ManagerService;
@@ -133,6 +134,14 @@ public class ManagerApplicationController {
         managerApplicationService.updateAppformDis(submitDTO.getIds());
         return JsonResponse.success(111);
     }
-
+    /*
+    根据申请单编号查询学生id
+     */
+    @GetMapping (value = "/appInfo/{id}")
+    @ResponseBody
+    public JsonResponse stuInfo(@PathVariable Long id){
+        Student student=managerApplicationService.getApperInfo(id);
+        return JsonResponse.success(student);
+    }
 }
 

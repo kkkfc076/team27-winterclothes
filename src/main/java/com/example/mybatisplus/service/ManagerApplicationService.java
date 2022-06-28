@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 
 import java.io.Serializable;
@@ -28,4 +29,6 @@ public interface ManagerApplicationService extends IService<ManagerApplication> 
         void updateAppform(List<Serializable> ids);
 
     void updateAppformDis(List<Serializable> ids);
+
+    Student getApperInfo(Serializable id);
 }

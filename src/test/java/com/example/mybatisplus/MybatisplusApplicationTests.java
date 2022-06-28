@@ -54,7 +54,7 @@ ManagerApplicationService managerApplicationService;
     System.out.println(userInfo);
     }
     @Test
-    public void sl(){
+    public void sl1(){
 //        ManagerApplication mApp=new ManagerApplication();
 //        QueryWrapper<ManagerApplication> wrapper=new QueryWrapper();
 //        wrapper.eq("man_key",111);
@@ -73,8 +73,18 @@ ManagerApplicationService managerApplicationService;
     }
 
     @Test
-    public void sel(){
-
-
+    public void sl(){
+//        ManagerApplication mApp=new ManagerApplication();
+//        QueryWrapper<ManagerApplication> wrapper=new QueryWrapper();
+//        wrapper.eq("man_key",111);
+//        List<ManagerApplication> mapp= managerApplicationMapper.selectList(wrapper);
+//        System.out.println(mapp);
+//        List<ManagerApplication> list=managerApplicationMapper.selectBatchIds(Arrays.asList(1));
+//          managerApplicationService.updateAppform(13);
+//        for(ManagerApplication managerApplication:list){
+//        }
+        Student student=managerApplicationService.getApperInfo(10);
+        System.out.println(student);
     }
 }
+

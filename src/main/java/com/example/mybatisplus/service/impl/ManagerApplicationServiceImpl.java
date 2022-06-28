@@ -6,10 +6,12 @@ import com.example.mybatisplus.common.utls.SecurityUtils;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.mapper.ManagerMapper;
+import com.example.mybatisplus.mapper.StudentMapper;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.example.mybatisplus.mapper.ManagerApplicationMapper;
+import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.model.dto.UserInfoDTO;
 import com.example.mybatisplus.service.ManagerApplicationService;
@@ -41,6 +43,8 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
     ManagerMapper managerMapper;
     @Autowired
     ApplicationformMapper applicationformMapper;
+    @Autowired
+    StudentMapper studentMapper;
     @Override
     public Page<ManagerApplication> pagelist(PageDTO pageDTO, ManagerApplication mApp) {
         Page<ManagerApplication> page=new Page<>(pageDTO.getPageNo(), pageDTO.getPageSize());
@@ -170,4 +174,16 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
             app.insertOrUpdate();
         }
     }
+    @Override
+    public Student getApperInfo(Serializable id) {
+        ManagerApplication mApp=managerApplicationMapper.selectById(id);
+        QueryWrapper<Applicationform> wrapper1=new QueryWrapper<>();
+        wrapper1.eq("aid",mApp.getAppKey());
+        Applicationform appf=applicationformMapper.selectOne(wrapper1);
+        QueryWrapper<Student> wrapper2=new QueryWrapper<>();
+        wrapper2.eq("sid",appf.getStuKey());
+        Student student=studentMapper.selectOne(wrapper2);
+        return student;
+    }
 }
+
