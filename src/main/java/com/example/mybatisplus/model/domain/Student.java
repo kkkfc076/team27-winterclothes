@@ -54,5 +54,4 @@ public class Student extends Model<Student> {
     protected Serializable pkVal() {
         return this.id;
     }
-
 }

@@ -2,6 +2,8 @@ package com.example.mybatisplus.web.controller;
 
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.StudentMapper;
+import com.example.mybatisplus.model.domain.Applicationform;
+import com.example.mybatisplus.model.domain.Clothes;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;

@@ -1,11 +1,13 @@
 package com.example.mybatisplus.web.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.model.domain.Clothes;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Batch;
 import com.example.mybatisplus.model.domain.Student;
+import com.example.mybatisplus.model.dto.PageDTO;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -124,6 +126,7 @@ public class ApplicationformController {
         return JsonResponse.success(applicationform);
     }
 
+    //增加reason
     @PostMapping("/saveReason")
     @ResponseBody
     public JsonResponse saveReason(@RequestBody Applicationform applicationform){
@@ -154,7 +157,32 @@ public class ApplicationformController {
         return JsonResponse.success(json);
     }
 
+    //申请表中有无学生
+    @RequestMapping("/match")
+    @ResponseBody
+    public JsonResponse match( ){
+        Integer flag=-1;
+        JSONObject json = new JSONObject();
+        Student student1= getCurstu();
+        Integer bid=2019;
+        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),bid);
+        if(applicationform==null){
+            flag=2;
+        }else {
+            flag=0;
+        }
+        json.put("flag",flag);
+        return JsonResponse.success(json);
+    }
 
+    //查看历史记录
+    @GetMapping ("/getDInfo")
+    @ResponseBody
+    public JsonResponse getDIngo(PageDTO pageDTO) {
+        Student student1 = getCurstu();
+        Page<Applicationform> page =applicationformService.getDIngo(pageDTO,student1);
+        return JsonResponse.success(page);
+    }
 
 }
 

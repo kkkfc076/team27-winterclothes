@@ -2,6 +2,7 @@ package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Clothes;
@@ -13,6 +14,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,13 +32,16 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
     private ClothesMapper clothesMapper;
 
     @Override
-    public Clothes getByCidAndBatKey(Integer sid) {
-        return clothesMapper.getClothesMapper(sid);
+    public Clothes getByCidAndBatKey(Integer sid,Integer bid)
+    {
+        return clothesMapper.getByCidAndBatKey(sid,bid);
     }
 
     @Override
     public Page<Clothes> getDIngo(PageDTO pageDTO, Clothes clothes) {
         Page<Clothes> page = new Page<>(pageDTO.getPageNo(), pageDTO.getPageSize());
+
+
         QueryWrapper<Clothes> wrapper = new QueryWrapper<>();
 
         if (clothes.getBatKey() != null) {
@@ -65,6 +71,16 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         page=super.page(page,wrapper);
         return page;
     }
+
+    @Override
+    public Clothes getByCid(Clothes clothes) {
+        QueryWrapper<Clothes> wrapper = new QueryWrapper<>();
+        wrapper.eq("cid",clothes.getCid());
+
+        Clothes clothes1 = clothesMapper.selectOne(wrapper);
+        return clothes1;
+    }
+
 
     @Override
     public Page<Clothes> pageListtoM(PageDTO pageDTO, Clothes clothes) {
