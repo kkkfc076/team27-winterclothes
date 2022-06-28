@@ -83,8 +83,10 @@ ManagerApplicationService managerApplicationService;
 //          managerApplicationService.updateAppform(13);
 //        for(ManagerApplication managerApplication:list){
 //        }
-        Student student=managerApplicationService.getApperInfo(10);
-        System.out.println(student);
+//        Student student=managerApplicationService.getApperInfo(10);
+//        System.out.println(student);
+//        managerApplicationService.storeReason(1,"测试1");
+        managerApplicationService.updateAppform(Collections.singletonList(1));
     }
 }
 

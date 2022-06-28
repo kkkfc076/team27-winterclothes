@@ -185,5 +185,50 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
         Student student=studentMapper.selectOne(wrapper2);
         return student;
     }
+
+    @Override
+    public Applicationform getsAppInfo(Serializable id) {
+        ManagerApplication mApp=managerApplicationMapper.selectById(id);
+        QueryWrapper<Applicationform> wrapper1=new QueryWrapper<>();
+        wrapper1.eq("aid",mApp.getAppKey());
+        Applicationform appf=applicationformMapper.selectOne(wrapper1);
+        return appf;
+    }
+
+    @Override
+    public void storeReason(Serializable id,String reason) {
+        ManagerApplication mApp=managerApplicationMapper.selectById(id);
+        if(mApp!=null){
+        mApp.setReason(reason);
+        mApp.insertOrUpdate();}
+    }
+
+    @Override
+    public void updateOneDisApp(List<Serializable> singletonList) {
+        List<ManagerApplication> managerApplication = managerApplicationMapper.selectBatchIds(singletonList);
+        for (ManagerApplication mApp : managerApplication) {
+            if (mApp.getState() == 3) {
+                mApp.setResult("未通过");
+                mApp.setTime(LocalDateTime.now());
+                mApp.insertOrUpdate();//更新数据库
+            } else if (mApp.getState() == 2)//学院提交审核
+            {
+                mApp.setResult("未通过");
+                mApp.setTime(LocalDateTime.now());
+                mApp.insertOrUpdate();
+            } else if (mApp.getState() == 1)//辅导员提交申请
+            {
+                mApp.setResult("未通过");
+                mApp.setTime(LocalDateTime.now());
+                mApp.insertOrUpdate();
+            }
+            //通知学生
+            QueryWrapper<Applicationform> wrapper=new QueryWrapper<>();
+            wrapper.eq("aid",mApp.getAppKey());
+            Applicationform app=applicationformMapper.selectOne(wrapper);
+            app.setResult(false);
+            app.insertOrUpdate();
+        }
+    }
 }
 
