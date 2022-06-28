@@ -22,6 +22,7 @@ import com.example.mybatisplus.model.domain.Clothes;
 import java.util.List;
 
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
+import static com.example.mybatisplus.common.utls.SessionUtils.session;
 
 
 /**
@@ -98,6 +99,7 @@ public class ClothesController {
     public JsonResponse addClothes(@RequestBody Clothes clothes){
         Integer flag=-1;
         JSONObject json = new JSONObject();
+        clothes.setBatKey(SessionUtils.getCurBatch().getBid());
         boolean temp=clothesService.save(clothes);
         if(temp){
             flag=2;
