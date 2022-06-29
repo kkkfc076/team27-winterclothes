@@ -22,6 +22,7 @@ import com.example.mybatisplus.model.domain.Applicationform;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+import static com.example.mybatisplus.common.utls.SessionUtils.getCurBatch;
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 
 
@@ -150,13 +151,17 @@ public class ApplicationformController {
         Integer flag=-1;
         JSONObject json = new JSONObject();
         Student student1= getCurstu();
-        Applicationform applicationform=applicationformService.getApp(student1.getSid(),clothes.getBatKey());
-        applicationform.setCid(clothes.getCid());
-        flag=applicationformService.updateCid(applicationform);
-        if(flag>0){
-            flag=2;
-        }else {
-            flag=0;
+        Applicationform applicationform=applicationformService.getApp(student1.getSid(),SessionUtils.getCurBatch().getBid());
+        if(applicationform.getResult()){
+            applicationform.setCid(clothes.getCid());
+            flag=applicationformService.updateCid(applicationform);
+            if(flag>0){
+                flag=2;
+            }else {
+                flag=0;
+            }
+            json.put("flag",flag);
+            return JsonResponse.success(json);
         }
         json.put("flag",flag);
         return JsonResponse.success(json);
@@ -167,6 +172,7 @@ public class ApplicationformController {
     @PostMapping("/export")
     @ResponseBody
     public void export(HttpServletResponse response){
+
         applicationformService.export(response);
     }
 
@@ -174,7 +180,7 @@ public class ApplicationformController {
     @RequestMapping("/match")
     @ResponseBody
     public JsonResponse match( ){
-        Integer flag=-1;
+        Integer flag= -1;
         JSONObject json = new JSONObject();
         Student student1= getCurstu();
         Batch batch1=SessionUtils.getCurBatch();
