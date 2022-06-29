@@ -148,7 +148,8 @@ public class ApplicationformController {
         JSONObject json = new JSONObject();
         Student student1= getCurstu();
         Applicationform applicationform=applicationformService.getApp(student1.getSid(),SessionUtils.getCurBatch().getBid());
-        if(applicationform.getResult()){
+        String result = String.valueOf(applicationform.getResult());
+        if(result =="true"){
             applicationform.setCid(clothes.getCid());
             flag=applicationformService.updateCid(applicationform);
             if(flag>0){

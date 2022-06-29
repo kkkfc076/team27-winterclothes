@@ -55,7 +55,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     public Page<Student> pageList(PageDTO pageDTO) {
         Page<Student> page=new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
         QueryWrapper<Student> wrapper=new QueryWrapper<>();
-//        wrapper.eq("plevel",student.getPlevel());
 
         page=super.page(page, wrapper);
         return page;

@@ -37,9 +37,6 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
     private ClothesService clothesService;
 
     @Override
-    public Clothes getByCid(Integer cid) {
-        return clothesMapper.getByCid(cid);
-    }
     public Clothes getByCidAndBatKey(Integer sid,Integer bid)
     {
         return clothesMapper.getByCidAndBatKey(sid,bid);
@@ -71,14 +68,14 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
     @Override
     public Page<Clothes> pageList(PageDTO pageDTO,Student student) {
         Page<Clothes> page = new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
-        Batch batch=SessionUtils.getCurBatch();
         String sex=student.getSex();
-        Integer bid=batch.getBid();
+        Integer bid=SessionUtils.getCurBatch().getBid();
         QueryWrapper<Clothes> wrapper =new QueryWrapper<>();
+        wrapper.select("distinct style,cname,bat_key,sex,picture");
         if (sex != null && sex != "") {
             wrapper.eq("sex",sex);
         }
-            wrapper.eq("bat_key",bid);
+            wrapper.eq("bat_key", bid);
         page=super.page(page,wrapper);
         return page;
     }

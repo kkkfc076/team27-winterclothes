@@ -23,8 +23,6 @@ import java.util.Map;
  * @since 2022-06-26
  */
 public interface ClothesService extends IService<Clothes> {
-
-    Clothes getByCid(Integer cid);
     Clothes getByCidAndBatKey(Integer sid,Integer bid);
 
     Page<Clothes> getDIngo(PageDTO pageDTO, Clothes clothes1);

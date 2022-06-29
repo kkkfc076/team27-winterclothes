@@ -24,4 +24,5 @@ public interface ClothesMapper extends BaseMapper<Clothes> {
     Clothes getByCidAndBatKey(@Param("sid") Integer sid,@Param("bid") Integer bid);
 
     Clothes getByCid(Integer cid);
+
 }

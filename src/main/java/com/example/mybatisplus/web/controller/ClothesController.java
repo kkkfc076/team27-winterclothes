@@ -155,7 +155,7 @@ public class ClothesController {
     *
     * */
     @ResponseBody
-    @GetMapping("/styleStatistics")
+    @RequestMapping("/styleStatistics")
     public JsonResponse styleStatistics(PageDTO pageDTO,Clothes clothes){
         Page<Clothes> page = clothesService.styleList(pageDTO,clothes);
         return JsonResponse.success(page);
@@ -182,7 +182,7 @@ public class ClothesController {
 
 
     /**
-     * 学生获得寒衣款式列表
+     * 学生获得寒衣款式列表(除去尺寸,只返回款式)
      */
     @ResponseBody
     @GetMapping("/styles")

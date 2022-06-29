@@ -39,7 +39,7 @@ public class Clothes extends Model<Clothes> {
 
     private String size;
 
-    private Integer style;
+    private String style;
 
     private String sex;
 
