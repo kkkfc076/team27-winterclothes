@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.model.domain.Applicationform;
+import com.example.mybatisplus.model.domain.Batch;
 import com.example.mybatisplus.model.domain.Clothes;
 import com.example.mybatisplus.mapper.ClothesMapper;
 import com.example.mybatisplus.model.domain.Student;
@@ -66,11 +67,14 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
     @Override
     public Page<Clothes> pageList(PageDTO pageDTO,Student student) {
         Page<Clothes> page = new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
+        Batch batch=SessionUtils.getCurBatch();
         String sex=student.getSex();
+        Integer bid=batch.getBid();
         QueryWrapper<Clothes> wrapper =new QueryWrapper<>();
         if (sex != null && sex != "") {
             wrapper.eq("sex",sex);
         }
+            wrapper.eq("bat_key",bid);
         page=super.page(page,wrapper);
         return page;
     }

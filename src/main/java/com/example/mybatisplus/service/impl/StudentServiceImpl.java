@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.model.domain.Batch;
 import com.example.mybatisplus.model.domain.Clothes;
+import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.mapper.StudentMapper;
 import com.example.mybatisplus.model.dto.PageDTO;
@@ -54,7 +55,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     public Page<Student> pageList(PageDTO pageDTO) {
         Page<Student> page=new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
         QueryWrapper<Student> wrapper=new QueryWrapper<>();
-         //   wrapper.eq("batch",batch.getBid());
+//        wrapper.eq("plevel",student.getPlevel());
 
         page=super.page(page, wrapper);
         return page;
