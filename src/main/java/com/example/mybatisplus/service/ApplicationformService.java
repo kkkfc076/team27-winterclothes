@@ -33,4 +33,6 @@ public interface ApplicationformService extends IService<Applicationform> {
     void export(HttpServletResponse response);
 
     Page<Applicationform> getDIngo(PageDTO pageDTO, Student student);
+
+    void updateD(Long id);
 }

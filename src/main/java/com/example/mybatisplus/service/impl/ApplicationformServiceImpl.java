@@ -2,6 +2,7 @@ package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.model.domain.Clothes;
@@ -59,6 +60,11 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
         }
         page=super.page(page,wrapper);
         return page;
+    }
+
+    @Override
+    public void updateD(Long id) {
+        applicationformMapper.updateD(id);
     }
 
 
