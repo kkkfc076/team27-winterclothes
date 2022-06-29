@@ -104,8 +104,8 @@ public class ApplicationformController {
         Integer flag=-1;
         JSONObject json = new JSONObject();
         Student student1= SessionUtils.getCurSUser();
-        Integer bid=2019;
-        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),bid);
+        Batch batch1=SessionUtils.getCurBatch();
+        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),batch1.getBid());
         applicationform.setReason(applicationform1.getReason());
         flag=applicationformService.updateReason(applicationform);
         if(flag>0){
