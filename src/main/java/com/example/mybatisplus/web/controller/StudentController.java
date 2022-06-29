@@ -146,8 +146,6 @@ public class StudentController {
         Long id = student1.getId();
         return getById(id);
     }
-
-
     //学生列表
     @GetMapping("/getstuList")
     @ResponseBody
@@ -156,6 +154,7 @@ public class StudentController {
         Page<Student> page= studentService.pageList(pageDTO);
         return JsonResponse.success(page) ;
     }
+
 
 }
 
