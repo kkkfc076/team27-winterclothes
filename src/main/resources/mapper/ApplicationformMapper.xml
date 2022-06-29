@@ -71,7 +71,7 @@
         where id = #{id}
     </update>
     <update id="updateD">
-        update applicationForm set aid=#{id}
+        update applicationForm set aid=#{id} where id=#{id}
     </update>
     <select id="getApp" resultType="com.example.mybatisplus.model.domain.Applicationform">
         select * from applicationform where stu_Key=#{sid} and bat_key=#{batKey}
