@@ -17,6 +17,7 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ClothesService;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 import static com.example.mybatisplus.common.utls.SessionUtils.session;
@@ -142,10 +143,22 @@ public class ClothesController {
     * */
     @ResponseBody
     @GetMapping ("/getClolist")
-    public JsonResponse whiteList(PageDTO pageDTO,Clothes clothes){
+    public JsonResponse cloList(PageDTO pageDTO,Clothes clothes){
         Page<Clothes> page = clothesService.pageListtoM(pageDTO,clothes);
         return JsonResponse.success(page);
 
+    }
+
+    /*
+    *
+    * 申请总览：款式数量统计
+    *
+    * */
+    @ResponseBody
+    @GetMapping("/styleStatistics")
+    public JsonResponse styleStatistics(PageDTO pageDTO,Clothes clothes){
+        Page<Clothes> page = clothesService.styleList(pageDTO,clothes);
+        return JsonResponse.success(page);
     }
 
     //查看登记
@@ -186,6 +199,18 @@ public class ClothesController {
     public JsonResponse getDetail(@RequestBody Clothes clothes) {
         Clothes clothes1 =clothesService.getByCid(clothes);
         return JsonResponse.success(clothes1);
+    }
+
+    /*
+    *
+    * 数据总览：款式数据统计
+    *
+    * */
+    @GetMapping("/cloStatistics")
+    @ResponseBody
+    public JsonResponse cloStatistics(){
+        Map<String,Object> map = clothesService.cloStatistics();
+        return JsonResponse.success(map);
     }
 }
 

@@ -38,4 +38,5 @@ public interface ManagerApplicationService extends IService<ManagerApplication> 
     void storeReason(Serializable id,String reason);
 
     void updateOneDisApp(List<Serializable> singletonList);
+
 }

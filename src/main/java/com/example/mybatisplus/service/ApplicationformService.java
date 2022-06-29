@@ -8,6 +8,7 @@ import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,6 +34,8 @@ public interface ApplicationformService extends IService<Applicationform> {
     void export(HttpServletResponse response);
 
     Page<Applicationform> getDIngo(PageDTO pageDTO, Student student);
+
+    Map<String, Object> dataStatistics();
 
     void updateD(Long id);
 }

@@ -12,6 +12,7 @@ import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,7 +30,12 @@ public interface ClothesService extends IService<Clothes> {
     Page<Clothes> getDIngo(PageDTO pageDTO, Clothes clothes1);
 
     Page<Clothes> pageListtoM(PageDTO pageDTO, Clothes clothes);
+
     Page<Clothes> pageList(PageDTO pageDTO,Student student1);
 
     Clothes getByCid(Clothes clothes);
+
+    Map<String, Object> cloStatistics();
+
+    Page<Clothes> styleList(PageDTO pageDTO, Clothes clothes);
 }

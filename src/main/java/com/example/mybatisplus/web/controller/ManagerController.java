@@ -226,7 +226,7 @@ public class ManagerController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return JsonResponse.success(null);
+        return JsonResponse.success(1);
     }
     /*
     *
@@ -238,7 +238,8 @@ public class ManagerController {
     @ResponseBody
     public JsonResponse importMan(MultipartFile file){
         Map<String,Object> map=managerService.importMan(file);
-        return JsonResponse.success(null);
+        return JsonResponse.success(map);
     }
+
 }
 

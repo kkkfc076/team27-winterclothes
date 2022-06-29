@@ -22,6 +22,7 @@ import com.example.mybatisplus.model.domain.ManagerApplication;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Map;
 
 
 /**
@@ -186,5 +187,7 @@ public class ManagerApplicationController {
         managerApplicationService.updateOneDisApp(Collections.singletonList(id));
         return JsonResponse.success(111);
     }
+
+
 }
 

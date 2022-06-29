@@ -3,10 +3,7 @@ package com.example.mybatisplus.web.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
-import com.example.mybatisplus.model.domain.Clothes;
-import com.example.mybatisplus.model.domain.Manager;
-import com.example.mybatisplus.model.domain.Batch;
-import com.example.mybatisplus.model.domain.Student;
+import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.model.dto.PageDTO;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ApplicationformService;
-import com.example.mybatisplus.model.domain.Applicationform;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -199,6 +195,17 @@ public class ApplicationformController {
         Student student1 = getCurstu();
         Page<Applicationform> page =applicationformService.getDIngo(pageDTO,student1);
         return JsonResponse.success(page);
+    }
+
+    /*
+     *
+     * 数据总览:申请统计
+     * */
+    @GetMapping("/applyStatistics")
+    @ResponseBody
+    public JsonResponse dataStatistics(){
+        Map<String,Object> map=applicationformService.dataStatistics();
+        return JsonResponse.success(map);
     }
 
 }

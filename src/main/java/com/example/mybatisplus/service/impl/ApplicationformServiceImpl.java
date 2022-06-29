@@ -2,7 +2,7 @@ package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.model.domain.Clothes;
@@ -22,7 +22,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -37,6 +39,8 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
 
     @Autowired
     private  ApplicationformMapper applicationformMapper;
+    @Autowired
+    private ApplicationformService applicationformService;
     @Autowired
     private StudentService studentService;
 
@@ -60,6 +64,22 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
         }
         page=super.page(page,wrapper);
         return page;
+    }
+
+    @Override
+    public Map<String, Object> dataStatistics() {
+        Map<String,Object> map=new HashMap<>();
+        QueryWrapper<Applicationform> wrapper=new QueryWrapper<>();
+        Integer bid= SessionUtils.getCurBatch().getBid();
+        List<Applicationform> list1=applicationformService.list(wrapper.eq("bat_key",bid));//该批次总申请数
+        List<Applicationform> list2=applicationformService.list(wrapper.eq("result",1));//已通过
+        List<Applicationform> list3=applicationformService.list(wrapper.eq("result",0));//未通过
+        Integer unCheck=list1.size()-list2.size()-list3.size();
+        map.put("total",list1.size());
+        map.put("pass",list2.size());
+        map.put("unpass",list3.size());
+        map.put("unCheck",unCheck);
+        return map;
     }
 
     @Override

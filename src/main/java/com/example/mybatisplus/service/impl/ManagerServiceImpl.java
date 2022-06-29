@@ -10,6 +10,7 @@ import com.example.mybatisplus.common.utls.ExcelUtil;
 import com.example.mybatisplus.mapper.StudentMapper;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.mapper.ManagerMapper;
+import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.ManagerService;
@@ -168,6 +169,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         }
         return map;
     }
+
 
 
 }

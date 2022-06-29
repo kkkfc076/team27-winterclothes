@@ -16,7 +16,9 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,6 +33,8 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
 
     @Autowired
     private ClothesMapper clothesMapper;
+    @Autowired
+    private ClothesService clothesService;
 
     @Override
     public Clothes getByCid(Integer cid) {
@@ -88,6 +92,28 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         return clothes1;
     }
 
+    @Override
+    public Map<String, Object> cloStatistics() {
+        QueryWrapper<Clothes> wrapper = new QueryWrapper<>();
+        Map<String,Object> map=new HashMap<>();
+        Integer bid=SessionUtils.getCurBatch().getBid();
+        List<Clothes> list1=clothesService.list(wrapper.eq("bat_key",bid));
+        List<Clothes> list2=clothesService.list(wrapper.eq("sex","男"));
+
+        map.put("total",list1.size());
+        map.put("man",list2.size());
+        map.put("woman",list1.size()-list2.size());
+        return map;
+    }
+
+    @Override
+    public Page<Clothes> styleList(PageDTO pageDTO, Clothes clothes) {
+        Page<Clothes> page=new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
+        QueryWrapper<Clothes> wrapper=new QueryWrapper<>();
+        wrapper.eq("bat_key",SessionUtils.getCurBatch().getBid());
+        return null;
+    }
+
 
     @Override
     public Page<Clothes> pageListtoM(PageDTO pageDTO, Clothes clothes) {
@@ -101,6 +127,9 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         }
         if(StringUtils.isNotBlank(clothes.getSex())){
             wrapper.eq("sex",clothes.getSex());
+        }
+        if(clothes.getBatKey()!=null){
+            wrapper.eq("bat_key",clothes.getBatKey());
         }
         page=super.page(page,wrapper);
         return page;

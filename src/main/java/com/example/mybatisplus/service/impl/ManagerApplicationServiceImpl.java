@@ -44,6 +44,8 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
     @Autowired
     ApplicationformMapper applicationformMapper;
     @Autowired
+    ManagerApplicationService managerApplicationService;
+    @Autowired
     StudentMapper studentMapper;
     @Override
     public Page<ManagerApplication> pagelist(PageDTO pageDTO, ManagerApplication mApp) {
@@ -230,5 +232,6 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
             app.insertOrUpdate();
         }
     }
+
 }
 
