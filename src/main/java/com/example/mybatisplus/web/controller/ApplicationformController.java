@@ -22,6 +22,7 @@ import com.example.mybatisplus.model.domain.Applicationform;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+import static com.example.mybatisplus.common.utls.SessionUtils.getCurBatch;
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 
 
@@ -104,8 +105,8 @@ public class ApplicationformController {
         Integer flag=-1;
         JSONObject json = new JSONObject();
         Student student1= SessionUtils.getCurSUser();
-        Integer bid=2019;
-        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),bid);
+        Batch batch=SessionUtils.getCurBatch();
+        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),batch.getBid());
         applicationform.setReason(applicationform1.getReason());
         flag=applicationformService.updateReason(applicationform);
         if(flag>0){
@@ -122,8 +123,8 @@ public class ApplicationformController {
     @ResponseBody
     public JsonResponse getAPIngo() {
         Student student1= SessionUtils.getCurSUser();
-        Integer bid=2019;
-        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),bid);
+        Batch batch = SessionUtils.getCurBatch();
+        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),batch.getBid());
         return JsonResponse.success(applicationform);
     }
 
@@ -133,6 +134,7 @@ public class ApplicationformController {
     public JsonResponse saveReason(@RequestBody Applicationform applicationform){
         Student student1= SessionUtils.getCurSUser();
         applicationform.setStuKey(student1.getSid());
+        applicationform.setBatKey(SessionUtils.getCurBatch().getBid());
         applicationformService.save(applicationform);
         return JsonResponse.success(111);
     }
@@ -146,17 +148,17 @@ public class ApplicationformController {
         Integer flag=-1;
         JSONObject json = new JSONObject();
         Student student1= getCurstu();
-        Applicationform applicationform=applicationformService.getApp(student1.getSid(),clothes.getBatKey());
-        if(!applicationform.getResult()){
+        Applicationform applicationform=applicationformService.getApp(student1.getSid(),SessionUtils.getCurBatch().getBid());
+        if(applicationform.getResult()){
+            applicationform.setCid(clothes.getCid());
+            flag=applicationformService.updateCid(applicationform);
+            if(flag>0){
+                flag=2;
+            }else {
+                flag=0;
+            }
             json.put("flag",flag);
             return JsonResponse.success(json);
-        }
-        applicationform.setCid(clothes.getCid());
-        flag=applicationformService.updateCid(applicationform);
-        if(flag>0){
-            flag=2;
-        }else {
-            flag=0;
         }
         json.put("flag",flag);
         return JsonResponse.success(json);
@@ -167,6 +169,7 @@ public class ApplicationformController {
     @PostMapping("/export")
     @ResponseBody
     public void export(HttpServletResponse response){
+
         applicationformService.export(response);
     }
 
@@ -174,11 +177,10 @@ public class ApplicationformController {
     @RequestMapping("/match")
     @ResponseBody
     public JsonResponse match( ){
-        Integer flag=-1;
+        Integer flag= -1;
         JSONObject json = new JSONObject();
         Student student1= getCurstu();
-        Integer bid=2019;
-        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),bid);
+        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),SessionUtils.getCurBatch().getBid());
         if(applicationform==null){
             flag=2;
         }else {
