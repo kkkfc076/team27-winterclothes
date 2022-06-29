@@ -67,7 +67,7 @@ public class BatchController {
     @ResponseBody
     public JsonResponse updateBatch(Batch  batch) throws Exception {
         batchService.updateById(batch);
-        return JsonResponse.success(null);
+        return JsonResponse.success(batch);
     }
 
 
@@ -103,21 +103,30 @@ public class BatchController {
     }
 
     /*
+     *
+     * 获取当前时间判断批次
+     *
+     * */
+    @GetMapping ("/getBatch")
+    @ResponseBody
+    public JsonResponse getBatch(){
+        Batch batch = batchMapper.getBidByTime();
+        if(batch!=null){
+            SessionUtils.saveCurBatch(batch);
+        }
+        return JsonResponse.success(batch);
+    }
+
+    /*
     *
-    *
+    *延长时间
     *
     * */
     @PostMapping("/updateBatch")
     @ResponseBody
-    public JsonResponse setBatch(@RequestBody Batch batch){
-        Batch batch1 = SessionUtils.getCurBatch();
-        batch.setId(batch1.getId());
-        try {
-            updateBatch(batch);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return JsonResponse.success(11);
+    public JsonResponse prolongBatch(@RequestBody Batch batch){
+        batchService.updateById(batch);
+        return JsonResponse.success(batch);
     }
 }
 
