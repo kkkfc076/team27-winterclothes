@@ -110,8 +110,16 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
     public Page<Clothes> styleList(PageDTO pageDTO, Clothes clothes) {
         Page<Clothes> page=new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
         QueryWrapper<Clothes> wrapper=new QueryWrapper<>();
-        wrapper.eq("bat_key",SessionUtils.getCurBatch().getBid());
-        return null;
+        wrapper=wrapper.eq("bat_key",SessionUtils.getCurBatch().getBid());
+        if(StringUtils.isNotBlank(clothes.getSex())){
+            wrapper.eq("sex",clothes.getSex());
+        }
+        if(clothes.getStyle()!=null){
+            wrapper.eq("style",clothes.getStyle());
+        }
+
+        page=super.page(page,wrapper);
+        return page;
     }
 
 
