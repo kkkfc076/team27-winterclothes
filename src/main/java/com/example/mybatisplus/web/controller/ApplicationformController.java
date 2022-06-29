@@ -123,8 +123,8 @@ public class ApplicationformController {
     @ResponseBody
     public JsonResponse getAPIngo() {
         Student student1= SessionUtils.getCurSUser();
-        Batch batch = SessionUtils.getCurBatch();
-        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),batch.getBid());
+        Batch batch1=SessionUtils.getCurBatch();
+        Applicationform applicationform=applicationformService.getByStukey(student1.getSid(),batch1.getBid());
         return JsonResponse.success(applicationform);
     }
 
@@ -136,7 +136,8 @@ public class ApplicationformController {
         applicationform.setStuKey(student1.getSid());
         applicationform.setBatKey(SessionUtils.getCurBatch().getBid());
         applicationformService.save(applicationform);
-        return JsonResponse.success(111);
+        applicationformService.updateD(applicationform.getId());
+        return JsonResponse.success(applicationform);
     }
 
     /**

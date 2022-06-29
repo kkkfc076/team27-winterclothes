@@ -32,4 +32,6 @@ public interface ApplicationformMapper extends BaseMapper<Applicationform> {
     Integer updateCid(Applicationform applicationform);
 
     Applicationform getByStukey(Integer sid, Integer bid);
+
+    void updateD(@Param("id") Long id);
 }
