@@ -153,8 +153,8 @@ public class ClothesController {
     @ResponseBody
     public JsonResponse getCIngo( ) {
         Student student1= SessionUtils.getCurSUser();
-        Batch batch=SessionUtils.getCurBatch();
-        Clothes clothes =clothesService.getByCidAndBatKey(student1.getSid(), batch.getBid());
+        Batch batch1=SessionUtils.getCurBatch();
+        Clothes clothes =clothesService.getByCidAndBatKey(student1.getSid(),batch1.getBid());
         return JsonResponse.success(clothes);
     }
 
