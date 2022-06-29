@@ -9,6 +9,7 @@ import com.example.mybatisplus.model.dto.PageDTO;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,4 +32,10 @@ public interface ManagerApplicationService extends IService<ManagerApplication> 
     void updateAppformDis(List<Serializable> ids);
 
     Student getApperInfo(Serializable id);
+
+    Applicationform getsAppInfo(Serializable id);
+
+    void storeReason(Serializable id,String reason);
+
+    void updateOneDisApp(List<Serializable> singletonList);
 }

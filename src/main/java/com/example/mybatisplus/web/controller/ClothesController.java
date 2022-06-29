@@ -2,10 +2,8 @@ package com.example.mybatisplus.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
-import com.example.mybatisplus.model.domain.Applicationform;
+import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.mapper.ClothesMapper;
-import com.example.mybatisplus.model.domain.Manager;
-import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.ApplicationformService;
 import net.sf.json.JSONObject;
@@ -17,11 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ClothesService;
-import com.example.mybatisplus.model.domain.Clothes;
 
 import java.util.List;
 
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
+import static com.example.mybatisplus.common.utls.SessionUtils.session;
 
 
 /**
@@ -98,6 +96,7 @@ public class ClothesController {
     public JsonResponse addClothes(@RequestBody Clothes clothes){
         Integer flag=-1;
         JSONObject json = new JSONObject();
+        clothes.setBatKey(SessionUtils.getCurBatch().getBid());
         boolean temp=clothesService.save(clothes);
         if(temp){
             flag=2;
@@ -154,8 +153,8 @@ public class ClothesController {
     @ResponseBody
     public JsonResponse getCIngo( ) {
         Student student1= SessionUtils.getCurSUser();
-        Integer bid=2019;
-        Clothes clothes =clothesService.getByCidAndBatKey(student1.getSid(),bid);
+        Batch batch=SessionUtils.getCurBatch();
+        Clothes clothes =clothesService.getByCidAndBatKey(student1.getSid(), batch.getBid());
         return JsonResponse.success(clothes);
     }
 

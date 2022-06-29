@@ -3,6 +3,7 @@ package com.example.mybatisplus.web.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
+import com.example.mybatisplus.mapper.ManagerApplicationMapper;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Student;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ManagerApplicationService;
 import com.example.mybatisplus.model.domain.ManagerApplication;
+
+import java.io.Serializable;
+import java.util.Collections;
 
 
 /**
@@ -128,6 +132,7 @@ public class ManagerApplicationController {
     批量拒绝申请
     检查是否到达最高审核等级
      */
+
     @PostMapping("/submitsDisApprove")
     @ResponseBody
     public JsonResponse submitsDis(@RequestBody SubmitDTO submitDTO){
@@ -142,6 +147,44 @@ public class ManagerApplicationController {
     public JsonResponse stuInfo(@PathVariable Long id){
         Student student=managerApplicationService.getApperInfo(id);
         return JsonResponse.success(student);
+    }
+    /*
+   根据申请单编号查询学生表的批次和原因等信息
+    */
+    @GetMapping (value = "/sAppInfo/{id}")
+    @ResponseBody
+    public JsonResponse sAppInfo(@PathVariable Long id){
+        Applicationform applf=managerApplicationService.getsAppInfo(id);
+        return JsonResponse.success(applf);
+    }
+    /*
+    保存用户
+     */
+    @PostMapping(value="/tempSave/{id}")
+    @ResponseBody
+    public JsonResponse tempsaveResaon(@PathVariable Serializable id, @RequestBody ManagerApplication mApp){
+        managerApplicationService.storeReason(id,mApp.getReason());
+     return JsonResponse.success(111);
+    }
+    /*
+    审批通过单个用户
+     */
+    @PostMapping(value="/approve/{id}")
+    @ResponseBody
+    public JsonResponse approveOne(@PathVariable Serializable id,@RequestBody ManagerApplication mApp){
+        managerApplicationService.storeReason(id,mApp.getReason());
+        managerApplicationService.updateAppform(Collections.singletonList(id));
+        return JsonResponse.success(111);
+    }
+    /*
+    审批拒绝 单个用户
+     */
+    @PostMapping(value="/disapprove/{id}")
+    @ResponseBody
+    public JsonResponse disApproveOne(@PathVariable Serializable id,@RequestBody ManagerApplication mApp){
+        managerApplicationService.storeReason(id,mApp.getReason());
+        managerApplicationService.updateOneDisApp(Collections.singletonList(id));
+        return JsonResponse.success(111);
     }
 }
 

@@ -150,7 +150,7 @@ public class StudentController {
     @GetMapping("/getstuList")
     @ResponseBody
     public  JsonResponse getstuList(PageDTO pageDTO) throws Exception{
-        Batch batch=SessionUtils.getCurBatch();
+        // Batch batch=SessionUtils.getCurBatch();
         Page<Student> page= studentService.pageList(pageDTO);
         return JsonResponse.success(page) ;
     }
