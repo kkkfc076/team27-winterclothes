@@ -44,6 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurUser;
+import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 import static org.apache.commons.lang3.ObjectUtils.NULL;
 import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 
@@ -241,5 +242,13 @@ public class ManagerController {
         return JsonResponse.success(map);
     }
 
+    //manager个人信息
+    @GetMapping("/getMan")
+    @ResponseBody
+    public JsonResponse getMan()throws Exception {
+        Manager manager = getCurUser();
+        Long id = manager.getId();
+        return getById(id);
+    }
 }
 
