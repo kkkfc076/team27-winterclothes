@@ -135,7 +135,7 @@ public class ApplicationformController {
         Batch batch1=SessionUtils.getCurBatch();
         Applicationform applicationform1=applicationformService.getByStukey(student1.getSid(),batch1.getBid());
         applicationformService.updateD(applicationform1.getId());
-        return JsonResponse.success(applicationform);
+        return JsonResponse.success(applicationform1);
     }
 
     /**
