@@ -119,6 +119,23 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         return page;
     }
 
+    @Override
+    public Clothes addClothes(Clothes clothes) {
+        QueryWrapper<Clothes> wrapper=new QueryWrapper<>();
+        clothes.setBatKey(SessionUtils.getCurBatch().getBid());
+        wrapper.eq("style",clothes.getStyle());
+        List<Clothes>list=clothesService.list(wrapper);
+        if (list.size()>0){
+            clothes.setPicture(list.get(0).getPicture());
+            clothes.setCname(list.get(0).getCname());
+            clothes.setSex(list.get(0).getSex());
+        }
+        clothesService.save(clothes);
+        clothes.setCid(Math.toIntExact(clothes.getId()));
+        clothesService.updateById(clothes);
+        return clothes;
+    }
+
 
     @Override
     public Page<Clothes> pageListtoM(PageDTO pageDTO, Clothes clothes) {

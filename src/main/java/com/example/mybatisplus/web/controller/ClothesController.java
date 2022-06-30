@@ -95,19 +95,8 @@ public class ClothesController {
     @ResponseBody
     @RequestMapping("/addClothes")
     public JsonResponse addClothes(@RequestBody Clothes clothes){
-        Integer flag=-1;
-        JSONObject json = new JSONObject();
-        clothes.setBatKey(SessionUtils.getCurBatch().getBid());
-        boolean temp=clothesService.save(clothes);
-        clothes.setCid(Math.toIntExact(clothes.getId()));
-        clothesService.updateById(clothes);
-        if(temp){
-            flag=2;
-        }else {
-            flag=0;
-        }
-        json.put("flag",flag);
-        return JsonResponse.success(json);
+        Clothes clothes1=clothesService.addClothes(clothes);
+        return JsonResponse.success(clothes1);
     }
     /*
     *

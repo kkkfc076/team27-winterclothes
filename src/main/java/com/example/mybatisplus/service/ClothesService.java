@@ -36,4 +36,6 @@ public interface ClothesService extends IService<Clothes> {
     Map<String, Object> cloStatistics();
 
     Page<Clothes> styleList(PageDTO pageDTO, Clothes clothes);
+
+    Clothes addClothes(Clothes clothes);
 }
