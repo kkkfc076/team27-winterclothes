@@ -106,7 +106,7 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
                 mApp.setTime(LocalDateTime.now());
                 mApp.insertOrUpdate();
                 mApp1.setAppKey(mApp.getAppKey());
-                mApp1. setResult("已通过");//默认学校用户通过申请
+                mApp1. setResult("待审核");//默认学校用户通过申请
                 mApp1.setState(3);//自动提交
                 QueryWrapper<Manager> wrapper = new QueryWrapper();
                 wrapper.eq("mname", "学校测试").eq("mlevel", 3);
@@ -125,7 +125,7 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
                 ManagerApplication mApp1 = new ManagerApplication();
                 mApp1.setAppKey(mApp.getAppKey());
                 mApp1.setReason("学院用户默认通过");
-                mApp1.setResult("已通过");//默认学院用户通过申请
+                mApp1.setResult("待审核");//默认学院用户通过申请
                 mApp1.setState(2);//自动提交
                 QueryWrapper<Manager> manWrapper = new QueryWrapper();
                 manWrapper.eq("mid",mApp.getManKey());

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.model.domain.Applicationform;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.mybatisplus.model.domain.Clothes;
+import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 
@@ -38,4 +39,6 @@ public interface ApplicationformService extends IService<Applicationform> {
     Map<String, Object> dataStatistics();
 
     void updateD(Long id);
+
+    void addMAform(Applicationform applicationform);
 }

@@ -9,7 +9,9 @@ import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.model.dto.SubmitDTO;
+import com.example.mybatisplus.service.ApplicationformService;
 import com.example.mybatisplus.service.ManagerService;
+import com.example.mybatisplus.service.StudentService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -42,6 +44,10 @@ public class ManagerApplicationController {
 
     @Autowired
     private ManagerApplicationService managerApplicationService;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private ApplicationformService applicationformService;
     /**
     * 描述：根据Id 查询
     *
@@ -186,6 +192,19 @@ public class ManagerApplicationController {
         managerApplicationService.storeReason(id,mApp.getReason());
         managerApplicationService.updateOneDisApp(Collections.singletonList(id));
         return JsonResponse.success(111);
+    }
+
+
+    /*
+    *
+    * 将新增的申请表连到Manager_applicaion表
+    *
+    * */
+    @RequestMapping()
+    @ResponseBody
+    public JsonResponse addMAform(Applicationform applicationform){
+        applicationformService.addMAform(applicationform);
+        return JsonResponse.success(1);
     }
 
 

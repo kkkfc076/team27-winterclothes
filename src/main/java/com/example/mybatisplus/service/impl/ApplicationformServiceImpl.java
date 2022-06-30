@@ -3,13 +3,13 @@ package com.example.mybatisplus.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
-import com.example.mybatisplus.model.domain.Applicationform;
+import com.example.mybatisplus.mapper.ManagerMapper;
+import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
-import com.example.mybatisplus.model.domain.Clothes;
-import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.service.ApplicationformService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.mybatisplus.service.ManagerApplicationService;
 import com.example.mybatisplus.service.StudentService;
 //import javafx.concurrent.Worker;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -43,6 +43,10 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
     private ApplicationformService applicationformService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private ManagerMapper managerMapper;
+    @Autowired
+    private ManagerApplicationService managerApplicationService;
 
 
     @Override
@@ -85,6 +89,23 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
     @Override
     public void updateD(Long id) {
         applicationformMapper.updateD(id);
+    }
+
+    @Override
+    public void addMAform(Applicationform applicationform) {
+        Student student=SessionUtils.getCurstu();
+        ManagerApplication managerApplication1=new ManagerApplication();
+        Integer grade=student.getGrade();
+        String major=student.getMajor();
+        QueryWrapper<Manager> wrapper1=new QueryWrapper<>();
+        /**************辅导员****************/
+        wrapper1.eq("major",major).eq("grade",grade).eq("mlevel",1);
+        Manager manager1=managerMapper.selectOne(wrapper1);
+        managerApplication1.setManKey(manager1.getMid());
+        managerApplication1.setAppKey(Math.toIntExact(applicationform.getId()));
+        managerApplication1.setState(1);
+        managerApplication1.setResult("待审核");
+        managerApplicationService.save(managerApplication1);
     }
 
 

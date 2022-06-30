@@ -151,14 +151,23 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
             //如果是，格式化字符串
             String[] row;
             //批量插入
-            for(int i=1;i<=rowCount;i++){
+            for(int i=1;i<rowCount+1;i++){
                 row=strings.get(i);
                 Manager manager=new Manager();
                 manager.setMid(Integer.valueOf(row[0]));
+                manager.setPwd("123");
                 manager.setMname(row[1]);
                 manager.setMlevel(Integer.valueOf(row[2]));
-                manager.setMajor(row[3]);
-                manager.setGrade(Integer.valueOf(row[4]));
+                if(StringUtils.isNotBlank(row[3])){
+                    manager.setMajor(row[3]);
+                }else {
+                    manager.setMajor(null);
+                }
+                if(StringUtils.isNotBlank(row[4])){
+                    manager.setGrade(Integer.valueOf(row[4]));
+                }else {
+                    manager.setGrade(null);
+                }
                 manager.setPermission(0);
                 managerService.save(manager);
             }

@@ -99,6 +99,8 @@ public class ClothesController {
         JSONObject json = new JSONObject();
         clothes.setBatKey(SessionUtils.getCurBatch().getBid());
         boolean temp=clothesService.save(clothes);
+        clothes.setCid(Math.toIntExact(clothes.getId()));
+        clothesService.updateById(clothes);
         if(temp){
             flag=2;
         }else {
