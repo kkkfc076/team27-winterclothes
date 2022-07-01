@@ -25,4 +25,9 @@ public interface ClothesMapper extends BaseMapper<Clothes> {
 
     Clothes getByCid(Integer cid);
 
+    List<Integer> selectCids();
+
+    void setNums(Integer cid);
+
+    List<Clothes> All();
 }

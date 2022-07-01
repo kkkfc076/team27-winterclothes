@@ -22,4 +22,5 @@ public interface ManagerMapper extends BaseMapper<Manager> {
     Integer modifyP(Manager man);
 
     Boolean setPermissions(@Param("ids") List<Serializable> ids);
+
 }

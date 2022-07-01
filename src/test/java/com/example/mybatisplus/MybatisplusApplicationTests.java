@@ -20,10 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SpringBootTest//加载ioc容器
 class MybatisplusApplicationTests {
@@ -42,9 +39,11 @@ ManagerApplicationMapper managerApplicationMapper;
 ManagerApplicationService managerApplicationService;
 @Autowired
     BatchMapper batchMapper;
+@Autowired
+    private ClothesMapper clothesMapper;
 
 
-@Test
+    @Test
     public void get(){
         String pwd=studentMapper.getPwd(706);
     }
@@ -99,6 +98,17 @@ ManagerApplicationService managerApplicationService;
 //        managerApplicationService.updateAppform(Collections.singletonList(1));
         Map<String,Object> man=managerApplicationService.getHisInfo(67l);
         System.out.println(man);
+    }
+
+    @Test
+    public void sta(){
+        List<Integer> list=clothesMapper.selectCids();
+        System.out.println(list);
+        for(int i=0;i<list.size();i++){
+            clothesMapper.setNums(list.get(i));
+        }
+        List<Clothes> list1=clothesMapper.All();
+        System.out.println(list1);
     }
 }
 

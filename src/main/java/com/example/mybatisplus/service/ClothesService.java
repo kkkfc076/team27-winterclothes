@@ -38,4 +38,6 @@ public interface ClothesService extends IService<Clothes> {
     Page<Clothes> styleList(PageDTO pageDTO, Clothes clothes);
 
     Clothes addClothes(Clothes clothes);
+
+    void Statistics();
 }

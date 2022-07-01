@@ -136,6 +136,14 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         return clothes;
     }
 
+    @Override
+    public void Statistics() {
+        List<Integer> list=clothesMapper.selectCids();
+        for(int i=0;i<list.size();i++){
+            clothesMapper.setNums(list.get(i));
+        }
+    }
+
 
     @Override
     public Page<Clothes> pageListtoM(PageDTO pageDTO, Clothes clothes) {

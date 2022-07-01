@@ -135,6 +135,7 @@ public class ClothesController {
     @ResponseBody
     @GetMapping ("/getClolist")
     public JsonResponse cloList(PageDTO pageDTO,Clothes clothes){
+        clothesService.Statistics();
         Page<Clothes> page = clothesService.pageListtoM(pageDTO,clothes);
         return JsonResponse.success(page);
 
@@ -202,6 +203,16 @@ public class ClothesController {
     public JsonResponse cloStatistics(){
         Map<String,Object> map = clothesService.cloStatistics();
         return JsonResponse.success(map);
+    }
+
+    /*
+     * 数据总览：已选款式统计
+     * */
+    @GetMapping("")
+    @ResponseBody
+    public JsonResponse statistics(){
+        clothesService.Statistics();
+        return JsonResponse.success(1);
     }
 }
 
