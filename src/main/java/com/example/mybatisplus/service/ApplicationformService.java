@@ -42,4 +42,5 @@ public interface ApplicationformService extends IService<Applicationform> {
 
     void addMAform(Applicationform applicationform);
 
+    void verify(HttpServletResponse response);
 }

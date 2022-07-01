@@ -108,9 +108,8 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
         managerApplicationService.save(managerApplication1);
     }
 
-
     @Override
-    public void export(HttpServletResponse response) {
+    public void verify(HttpServletResponse response) {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition","attachment; filename=xxx.xls");
         List<Applicationform> applicationforms=applicationformMapper.selectList(null);
@@ -125,10 +124,67 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
         cell.setCellValue("学生姓名");
 
         cell=row.createCell(2);
-        cell.setCellValue("审核结果");
+        cell.setCellValue("申请理由");
 
         cell=row.createCell(3);
-        cell.setCellValue("理由");
+        cell.setCellValue("审核状态");
+
+        for(int i=0;i<applicationforms.size();i++){
+            row=sheet.createRow(i+1);
+
+            cell=row.createCell(0);
+            cell.setCellValue(applicationforms.get(i).getStuKey());
+
+            cell=row.createCell(1);
+            cell.setCellValue(studentService.getBySid(applicationforms.get(i).getStuKey()));
+
+            cell=row.createCell(2);
+            cell.setCellValue(applicationforms.get(i).getReason());
+
+           cell=row.createCell(3);
+            String result = applicationforms.get(i).getResult()==null?"":applicationforms.get(i).getResult().toString();
+            if(result=="true"){
+                cell.setCellValue("未通过");
+            }else if(result=="false"){
+                cell.setCellValue("已通过");
+            }else{
+                cell.setCellValue("待审核");
+            }
+
+        }
+        try {
+            ((HSSFWorkbook) wb).write(response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void export(HttpServletResponse response) {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition","attachment; filename=xxx.xls");
+        QueryWrapper<Applicationform> wrapper=new QueryWrapper<>();
+        wrapper.eq("result",1);
+        List<Applicationform> applicationforms=applicationformMapper.selectList(wrapper);
+        Workbook wb = new HSSFWorkbook();
+        Sheet sheet = wb.createSheet();
+
+        Row row=sheet.createRow(0);
+        Cell cell=row.createCell(0);
+        cell.setCellValue("学生学号");
+
+        cell=row.createCell(1);
+        cell.setCellValue("学生姓名");
+
+        cell=row.createCell(2);
+        cell.setCellValue("申请理由");
+
+        cell=row.createCell(3);
+        cell.setCellValue("审核结果");
+
+        cell=row.createCell(4);
+        cell.setCellValue("寒衣款式");
 
 
         for(int i=0;i<applicationforms.size();i++){
@@ -138,14 +194,16 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
             cell.setCellValue(applicationforms.get(i).getStuKey());
 
             cell=row.createCell(1);
-            Integer Sid=applicationforms.get(i).getStuKey();
             cell.setCellValue(studentService.getBySid(applicationforms.get(i).getStuKey()));
 
-            cell=row.createCell(2);
+            cell=row.createCell(3);
             cell.setCellValue(applicationforms.get(i).getResult()==null?"":applicationforms.get(i).getResult().toString());
 
-            cell=row.createCell(3);
+            cell=row.createCell(2);
             cell.setCellValue(applicationforms.get(i).getReason());
+
+            cell=row.createCell(4);
+            cell.setCellValue(applicationforms.get(i).getCid());
         }
         try {
             ((HSSFWorkbook) wb).write(response.getOutputStream());
