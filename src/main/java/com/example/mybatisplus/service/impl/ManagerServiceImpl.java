@@ -7,12 +7,10 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.mybatisplus.common.BaseController;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.common.utls.ExcelUtil;
-import com.example.mybatisplus.mapper.StudentMapper;
-import com.example.mybatisplus.model.domain.Manager;
-import com.example.mybatisplus.mapper.ManagerMapper;
-import com.example.mybatisplus.model.domain.ManagerApplication;
-import com.example.mybatisplus.model.domain.Student;
+import com.example.mybatisplus.mapper.*;
+import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.model.dto.PageDTO;
+import com.example.mybatisplus.service.ApplicationformService;
 import com.example.mybatisplus.service.ManagerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mybatisplus.service.StudentService;
@@ -36,6 +34,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -56,7 +55,12 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
     private StudentService studentService;
     @Autowired
     private ManagerService managerService;
-
+    @Autowired
+    ClothesMapper clothesMapper;
+    @Autowired
+    ApplicationformMapper applicationformMapper;
+    @Autowired
+    BatchMapper batchMapper;
     @Override
     public Manager manlogin(Manager manager) {
         QueryWrapper<Manager> wrapper=new QueryWrapper<>();
@@ -179,6 +183,72 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         return map;
     }
 
+    @Override
+    public List<Batch> getallBatch() {
+        Map<String ,Object> map =new HashMap<>();
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.isNotNull("Bid");
+        List<Batch> batch=batchMapper.selectList(wrapper);
+        return batch;
+    }
+
+    @Override
+    public Map<String,Object> getSelData(String str, Integer batch) {
+        QueryWrapper<Student> wrapper1=new QueryWrapper();
+        List<Student> student=studentMapper.selectList(wrapper1.eq("major",str));
+        List sid_card=student.stream().map(Student::getSid).collect(Collectors.toList());
+        Integer passed=0,total=0,unpass=0,uncheck=0;
+        for(int i=0;i<sid_card.size();i++){
+            QueryWrapper<Applicationform> wrapper=new QueryWrapper();
+            wrapper.eq("stu_key",sid_card.get(i)).eq("bat_key",batch);
+            Applicationform appf=applicationformMapper.selectOne(wrapper);
+            if(appf!=null) {
+                if (appf.getResult() != null) {
+                    if (appf.getResult() == true) {
+                        passed++;
+                        total++;
+                    } else if (appf.getResult() == false) {
+                        unpass++;
+                        total++;
+                    } else {
+                        uncheck++;
+                        total++;
+                    }
+                }
+            }
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("total",total);
+        map.put("pass",passed);
+        map.put("unpass",unpass);
+        map.put("unCheck",uncheck);
+        return map;
+
+    }
+
+    @Override
+    public Map<String, Object> getClo(Integer batch) {
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("bat_key",batch);
+        List<Clothes> clothes=clothesMapper.selectList(wrapper);
+        Integer total=0,man=0,woman=0;
+        for(Clothes clothes1:clothes){
+            System.out.println(clothes1);
+            if(clothes1.getSex().equals("男")){
+                man++;
+                total++;
+            }
+            if(clothes1.getSex().equals("女")){
+                woman++;
+                total++;
+            }
+        }
+        Map<String,Object> map= new HashMap<>();
+        map.put("total",total);
+        map.put("man",man);
+        map.put("woman",woman);
+        return map;
+    }
 
 
 }

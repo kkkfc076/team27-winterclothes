@@ -11,7 +11,9 @@ import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.model.dto.SubmitDTO;
+import com.example.mybatisplus.service.BatchService;
 import com.example.mybatisplus.service.ManagerApplicationService;
+import com.example.mybatisplus.service.ManagerService;
 import com.example.mybatisplus.service.StudentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ class MybatisplusApplicationTests {
 
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
+    ManagerService managerService;
     @Autowired
     StudentService studentService;
 @Autowired
@@ -84,21 +88,9 @@ ManagerApplicationService managerApplicationService;
 
     @Test
     public void sl(){
-//        ManagerApplication mApp=new ManagerApplication();
-//        QueryWrapper<ManagerApplication> wrapper=new QueryWrapper();
-//        wrapper.eq("man_key",111);
-//        List<ManagerApplication> mapp= managerApplicationMapper.selectList(wrapper);
-//        System.out.println(mapp);
-//        List<ManagerApplication> list=managerApplicationMapper.selectBatchIds(Arrays.asList(1));
-//          managerApplicationService.updateAppform(13);
-//        for(ManagerApplication managerApplication:list){
-//        }
-//        Student student=managerApplicationService.getApperInfo(10);
-//        System.out.println(student);
-//        managerApplicationService.storeReason(1,"测试1");
-//        managerApplicationService.updateAppform(Collections.singletonList(1));
-        Map<String,Object> man=managerApplicationService.getHisInfo(67l);
-        System.out.println(man);
+//
+        Map<String ,Object> map=managerService.getClo(2022);
+        System.out.println(map);
     }
 }
 

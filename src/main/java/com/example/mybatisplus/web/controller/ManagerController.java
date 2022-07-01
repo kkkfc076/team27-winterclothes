@@ -41,6 +41,7 @@ import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurUser;
@@ -249,6 +250,28 @@ public class ManagerController {
         Manager manager = getCurUser();
         Long id = manager.getId();
         return getById(id);
+    }
+    /*
+    获取所有批次
+     */
+    @GetMapping("/getAllBatch")
+    @ResponseBody
+    public JsonResponse getAllBatch() {
+       List<Batch> map=managerService.getallBatch();
+        return JsonResponse.success(map);
+    }
+
+    @GetMapping("/getselecteddata")
+    @ResponseBody
+    public JsonResponse getSelectedData( String str, Integer batch){
+        Map<String,Object> map=managerService.getSelData(str,batch);
+        return JsonResponse.success(map);
+    }
+    @GetMapping("/getClo")
+    @ResponseBody
+    public JsonResponse getClo( Integer batch){
+        Map<String,Object> map=managerService.getClo(batch);
+        return JsonResponse.success(map);
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.mybatisplus.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.mybatisplus.model.domain.Batch;
 import com.example.mybatisplus.model.domain.Manager;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.mybatisplus.model.domain.ManagerApplication;
@@ -36,4 +37,10 @@ public interface ManagerService extends IService<Manager> {
     Map<String, Object> importStu(MultipartFile file) throws IOException;
 
     Map<String, Object> importMan(MultipartFile file);
+
+    List<Batch> getallBatch();
+
+    Map<String,Object> getSelData(String str, Integer batch);
+
+    Map<String, Object> getClo( Integer batch);
 }
