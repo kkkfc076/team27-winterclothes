@@ -7,11 +7,8 @@ import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
 import com.example.mybatisplus.mapper.ManagerMapper;
 import com.example.mybatisplus.mapper.StudentMapper;
-import com.example.mybatisplus.model.domain.Applicationform;
-import com.example.mybatisplus.model.domain.Manager;
-import com.example.mybatisplus.model.domain.ManagerApplication;
+import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.mapper.ManagerApplicationMapper;
-import com.example.mybatisplus.model.domain.Student;
 import com.example.mybatisplus.model.dto.PageDTO;
 import com.example.mybatisplus.model.dto.UserInfoDTO;
 import com.example.mybatisplus.service.ManagerApplicationService;
@@ -57,6 +54,17 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
         if(mApp.getId()!=null){
             wrapper.eq("id",mApp.getId());
         }
+        Batch batch=SessionUtils.getCurBatch();
+        QueryWrapper wrapper1=new QueryWrapper();
+        wrapper1.eq("bat_key",batch.getBid());
+        Map<String,Object> map=new HashMap<>();
+        List<Applicationform> appf=applicationformMapper.selectList(wrapper1);
+        List aid_card=appf.stream().map(Applicationform::getAid).collect(Collectors.toList());
+        //遍历获取当前批次内的申请
+        for(int i=0;i<aid_card.size();i++){
+            map.put("app_key",aid_card.get(i));
+        }
+        wrapper.allEq(map);
         wrapper.eq("result","待审核");
         page= super.page(page,wrapper);
         return page;
