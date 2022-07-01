@@ -146,6 +146,7 @@ public class StudentController {
         Long id = student1.getId();
         return getById(id);
     }
+
     //学生列表
     @GetMapping("/getstuList")
     @ResponseBody
@@ -154,6 +155,22 @@ public class StudentController {
         Page<Student> page= studentService.pageList(pageDTO);
         return JsonResponse.success(page) ;
     }
+
+    //学生是否为新生
+    @GetMapping("/getBInfo")
+    @ResponseBody
+    public JsonResponse getBInfo() throws Exception {
+        Integer flag=-1;
+        Student student1 = getCurstu();
+        Batch batch1=SessionUtils.getCurBatch();
+        if(student1.getGrade()==batch1.getBid()){
+            flag=0;
+        }else{
+            flag=2;
+        }
+        return  JsonResponse.success(flag);
+    }
+
 
 
 }
