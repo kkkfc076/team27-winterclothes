@@ -7,8 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
@@ -45,6 +44,7 @@ public class Clothes extends Model<Clothes> {
 
     private String picture;
 
+    private Integer num;
 
     @Override
     protected Serializable pkVal() {

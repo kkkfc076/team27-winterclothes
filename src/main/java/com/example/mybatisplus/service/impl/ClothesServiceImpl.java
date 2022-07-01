@@ -71,7 +71,7 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         String sex=student.getSex();
         Integer bid=SessionUtils.getCurBatch().getBid();
         QueryWrapper<Clothes> wrapper =new QueryWrapper<>();
-        wrapper.select("distinct style,cname,bat_key,sex,picture");
+        wrapper.select(" distinct style,cname,bat_key,sex,picture");
         if (sex != null && sex != "") {
             wrapper.eq("sex",sex);
         }
@@ -108,8 +108,9 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         Page<Clothes> page=new Page<>(pageDTO.getPageNo(),pageDTO.getPageSize());
         QueryWrapper<Clothes> wrapper=new QueryWrapper<>();
         wrapper=wrapper.eq("bat_key",SessionUtils.getCurBatch().getBid());
-        if(StringUtils.isNotBlank(clothes.getSex())){
-            wrapper.eq("sex",clothes.getSex());
+        Student student = SessionUtils.getCurstu();
+        if(StringUtils.isNotBlank(student.getSex())){
+            wrapper.eq("sex",student.getSex());
         }
         if(clothes.getStyle()!=null){
             wrapper.eq("style",clothes.getStyle());
@@ -134,6 +135,14 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         clothes.setCid(Math.toIntExact(clothes.getId()));
         clothesService.updateById(clothes);
         return clothes;
+    }
+
+    @Override
+    public void Statistics() {
+        List<Integer> list=clothesMapper.selectCids();
+        for(int i=0;i<list.size();i++){
+            clothesMapper.setNums(list.get(i));
+        }
     }
 
 

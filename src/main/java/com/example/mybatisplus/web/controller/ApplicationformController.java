@@ -166,13 +166,24 @@ public class ApplicationformController {
         return JsonResponse.success(json);
     }
     /**
-     * 导出学生申请表
+     * 导出汇总表
      * */
     @PostMapping("/export")
     @ResponseBody
     public void export(HttpServletResponse response){
 
         applicationformService.export(response);
+    }
+
+    /**
+     * 导出审核表
+     * @return
+     */
+    @PostMapping("/verify")
+    @ResponseBody
+    public void verify(HttpServletResponse response){
+
+        applicationformService.verify(response);
     }
 
     //申请表中有无学生
@@ -212,6 +223,7 @@ public class ApplicationformController {
         Map<String,Object> map=applicationformService.dataStatistics();
         return JsonResponse.success(map);
     }
+
 
 }
 

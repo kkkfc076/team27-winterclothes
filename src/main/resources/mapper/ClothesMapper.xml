@@ -12,8 +12,12 @@
         <result column="style" property="style" />
         <result column="sex" property="sex" />
         <result column="picture" property="picture" />
+        <result column="num" property="num"/>
 
     </resultMap>
+    <update id="setNums">
+            UPDATE clothes set num=(SELECT COUNT(cid) from applicationform WHERE applicationform.cid=#{cid}) WHERE clothes.cid=#{cid};
+    </update>
     <select id="getClothesMapper" resultType="com.example.mybatisplus.model.domain.Clothes">
         select clothes.* from applicationform,student,clothes
         where sid=#{sid}
@@ -32,6 +36,12 @@
           and applicationform.cid = clothes.cid
           and clothes.bat_key = #{bid}
           and applicationform.bat_key = clothes.bat_key
+    </select>
+    <select id="selectCids" resultType="java.lang.Integer">
+        select cid from clothes
+    </select>
+    <select id="All" resultType="com.example.mybatisplus.model.domain.Clothes">
+        select * from clothes
     </select>
 
 </mapper>
