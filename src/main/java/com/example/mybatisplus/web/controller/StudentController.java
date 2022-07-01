@@ -24,6 +24,7 @@ import com.example.mybatisplus.model.domain.Student;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.example.mybatisplus.common.utls.SessionUtils.getCurstu;
 
@@ -161,12 +162,14 @@ public class StudentController {
     @ResponseBody
     public JsonResponse getBInfo() throws Exception {
         Integer flag=-1;
-        Student student1 = getCurstu();
-        Batch batch1=SessionUtils.getCurBatch();
-        if(student1.getGrade()==batch1.getBid()){
+        Integer S=getCurstu().getPyear();
+        Integer B= SessionUtils.getCurBatch().getBid();
+        if(S-B!=0){
+            flag = 2;
+        }
+        else
+        {
             flag=0;
-        }else{
-            flag=2;
         }
         return  JsonResponse.success(flag);
     }
