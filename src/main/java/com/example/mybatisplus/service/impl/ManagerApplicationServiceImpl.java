@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +89,7 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
             if (mApp.getState() == 3) {
                 mApp.setResult("已通过");
                 mApp.setTime(LocalDateTime.now());
-                mApp.setReason("学校用户默认通过1");
+//                mApp.setReason("学校用户默认通过1");
                 mApp.setResult("已通过");
                 mApp.insertOrUpdate();//更新数据库
                 //通知学生
@@ -124,7 +125,7 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
                 //为学校用户创建新的记录
                 ManagerApplication mApp1 = new ManagerApplication();
                 mApp1.setAppKey(mApp.getAppKey());
-                mApp1.setReason("学院用户默认通过");
+//                mApp1.setReason("学院用户默认通过");
                 mApp1.setResult("待审核");//默认学院用户通过申请
                 mApp1.setState(2);//自动提交
                 QueryWrapper<Manager> manWrapper = new QueryWrapper();
@@ -231,6 +232,23 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
             app.setResult(false);
             app.insertOrUpdate();
         }
+    }
+
+    @Override
+    public Map<String,Object> getHisInfo(Long id) {
+        ManagerApplication mApp=managerApplicationMapper.selectById(id);
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("mid",mApp.getManKey());
+        Manager man=managerMapper.selectOne(wrapper);
+        Map<String,Object> map=new HashMap<>();
+        map.put("mname",man.getMname());
+        map.put("mankey",man.getMid());
+        map.put("mlevel",man.getMlevel());
+        map.put("grade",man.getGrade());
+        map.put("time",mApp.getTime());
+        map.put("reason",mApp.getReason());
+        map.put("result",mApp.getResult());
+        return map;
     }
 
 }

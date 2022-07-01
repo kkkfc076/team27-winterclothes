@@ -96,7 +96,9 @@ ManagerApplicationService managerApplicationService;
 //        Student student=managerApplicationService.getApperInfo(10);
 //        System.out.println(student);
 //        managerApplicationService.storeReason(1,"测试1");
-        managerApplicationService.updateAppform(Collections.singletonList(1));
+//        managerApplicationService.updateAppform(Collections.singletonList(1));
+        Map<String,Object> man=managerApplicationService.getHisInfo(67l);
+        System.out.println(man);
     }
 }
 

@@ -2,6 +2,7 @@ package com.example.mybatisplus.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.model.domain.Applicationform;
+import com.example.mybatisplus.model.domain.Manager;
 import com.example.mybatisplus.model.domain.ManagerApplication;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.mybatisplus.model.domain.Student;
@@ -39,4 +40,5 @@ public interface ManagerApplicationService extends IService<ManagerApplication> 
 
     void updateOneDisApp(List<Serializable> singletonList);
 
+    Map<String,Object> getHisInfo(Long id);
 }

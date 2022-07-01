@@ -24,6 +24,7 @@ import com.example.mybatisplus.model.domain.ManagerApplication;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 
@@ -205,6 +206,15 @@ public class ManagerApplicationController {
     public JsonResponse addMAform(Applicationform applicationform){
         applicationformService.addMAform(applicationform);
         return JsonResponse.success(1);
+    }
+    /*
+  根据申请单编号查询管理员信息
+   */
+    @GetMapping (value = "/appHisInfo/{id}")
+    @ResponseBody
+    public JsonResponse hisInfo(@PathVariable Long id){
+        Map<String ,Object> man=managerApplicationService.getHisInfo(id);
+        return JsonResponse.success(man);
     }
 
 
