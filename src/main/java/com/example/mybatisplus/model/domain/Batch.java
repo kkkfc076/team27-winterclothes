@@ -8,13 +8,12 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author team27
@@ -36,6 +35,8 @@ public class Batch extends Model<Batch> {
     private LocalDateTime startdate;
 
     private LocalDateTime enddate;
+
+    private LocalDateTime applyend;
 
 
     @Override

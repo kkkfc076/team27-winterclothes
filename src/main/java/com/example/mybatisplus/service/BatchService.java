@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface BatchService extends IService<Batch> {
 
     Batch newBatch(Batch batch);
+
+    Boolean getPermission();
 }

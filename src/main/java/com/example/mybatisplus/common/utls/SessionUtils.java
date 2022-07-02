@@ -33,10 +33,6 @@ public class SessionUtils {
 
     public static Student getCurSUser() {return (Student) session().getAttribute("curUser");}
 
-    public static void saveCurTime(LocalDateTime dateTime) {session().setAttribute("logintime",dateTime);}
-
-    public static LocalDateTime getCurTime() {return (LocalDateTime) session().getAttribute("logintime");}
-
     public static void saveCurBatch(Batch batch) {session().setAttribute("curBatch",batch);}
 
     public static Batch getCurBatch(){return (Batch) session().getAttribute("curBatch");}

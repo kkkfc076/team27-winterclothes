@@ -8,12 +8,14 @@
         <result column="bid" property="bid" />
         <result column="startdate" property="startdate" />
         <result column="enddate" property="enddate" />
+        <result column="applyend" property="applyend"/>
     </resultMap>
     <select id="getBidByTime" resultType="com.example.mybatisplus.model.domain.Batch">
         select * from batch where startdate &lt; curtime() and enddate>=curtime();
     </select>
-    <update id="updateBatch">
-        update batch
-    </update>
+    <select id="getPermission" resultType="com.example.mybatisplus.model.domain.Batch">
+        select * from batch where startdate &lt; curtime() and applyend>=curtime();
+    </select>
+
 
 </mapper>

@@ -3,8 +3,10 @@ package com.example.mybatisplus.web.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.ApplicationformMapper;
+import com.example.mybatisplus.mapper.BatchMapper;
 import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.model.dto.PageDTO;
+import com.example.mybatisplus.service.BatchService;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -42,6 +44,9 @@ public class ApplicationformController {
 
     @Autowired
     private ApplicationformMapper applicationformMapper;
+
+    @Autowired
+    private BatchService batchService;
 
     /**
     * 描述：根据Id 查询
@@ -128,16 +133,21 @@ public class ApplicationformController {
     @PostMapping("/saveReason")
     @ResponseBody
     public JsonResponse saveReason(@RequestBody Applicationform applicationform){
+        Boolean permission=batchService.getPermission();
+        Applicationform applicationform1 =new Applicationform();
         Student student1= SessionUtils.getCurSUser();
         applicationform.setStuKey(student1.getSid());
         applicationform.setBatKey(SessionUtils.getCurBatch().getBid());
-        applicationformService.save(applicationform);
-        Batch batch1=SessionUtils.getCurBatch();
-        Applicationform applicationform1=applicationformService.getByStukey(student1.getSid(),batch1.getBid());
-        applicationformService.updateD(applicationform1.getId());
+        if(permission){
+            applicationformService.save(applicationform);
+            Batch batch1=SessionUtils.getCurBatch();
+            applicationform1=applicationformService.getByStukey(student1.getSid(),batch1.getBid());
+            applicationformService.updateD(applicationform1.getId());
 
-        applicationformService.addMAform(applicationform);
-        return JsonResponse.success(applicationform1);
+            applicationformService.addMAform(applicationform);
+        }
+        return JsonResponse.success(permission);
+
     }
 
     /**
@@ -171,7 +181,6 @@ public class ApplicationformController {
     @PostMapping("/export")
     @ResponseBody
     public void export(HttpServletResponse response){
-
         applicationformService.export(response);
     }
 

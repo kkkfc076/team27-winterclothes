@@ -128,5 +128,17 @@ public class BatchController {
         batchService.updateById(batch);
         return JsonResponse.success(batch);
     }
+
+    /*
+    *
+    * 判断学生是否在申请时间段
+    *
+    * */
+    @GetMapping
+    @ResponseBody
+    public JsonResponse getPermission(){
+        Boolean permission=batchService.getPermission();
+        return null;
+    }
 }
 
