@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.common.utls.SessionUtils;
 import com.example.mybatisplus.mapper.BatchMapper;
-import com.example.mybatisplus.model.domain.Batch;
-import com.example.mybatisplus.model.domain.ManagerApplication;
-import com.example.mybatisplus.model.domain.Student;
+import com.example.mybatisplus.model.domain.*;
 //import jdk.vm.ci.meta.Constant;
 //import jdk.vm.ci.meta.Constant;
 import com.example.mybatisplus.model.dto.PageDTO;
@@ -26,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.ManagerService;
-import com.example.mybatisplus.model.domain.Manager;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -260,18 +257,32 @@ public class ManagerController {
        List<Batch> map=managerService.getallBatch();
         return JsonResponse.success(map);
     }
-
+    /*
+    根据学院、批次查询总数据
+     */
     @GetMapping("/getselecteddata")
     @ResponseBody
     public JsonResponse getSelectedData( String str, Integer batch){
         Map<String,Object> map=managerService.getSelData(str,batch);
         return JsonResponse.success(map);
     }
+    /*
+    获取查询批次的总款式、男女款数量
+     */
     @GetMapping("/getClo")
     @ResponseBody
     public JsonResponse getClo( Integer batch){
         Map<String,Object> map=managerService.getClo(batch);
         return JsonResponse.success(map);
+    }
+    /*
+    根据学院、批次查询寒衣选择数据
+     */
+    @GetMapping("/getSelectedCol")
+    @ResponseBody
+    public JsonResponse getSelectedCol( String str, Integer batch){
+        List<Clothes> list=managerService.getSelCol(str,batch);
+        return JsonResponse.success(list);
     }
 }
 

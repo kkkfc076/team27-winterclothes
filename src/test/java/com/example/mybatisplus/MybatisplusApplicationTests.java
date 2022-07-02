@@ -102,5 +102,10 @@ ManagerApplicationService managerApplicationService;
         List<Clothes> list1=clothesMapper.All();
         System.out.println(list1);
     }
+    @Test
+    public void tt(){
+        List<Clothes> list=managerService.getSelCol("计算机",2022);
+        System.out.println(list);
+    }
 }
 

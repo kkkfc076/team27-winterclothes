@@ -2,38 +2,24 @@ package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
-import com.example.mybatisplus.common.BaseController;
-import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.common.utls.ExcelUtil;
 import com.example.mybatisplus.mapper.*;
 import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.model.dto.PageDTO;
-import com.example.mybatisplus.service.ApplicationformService;
 import com.example.mybatisplus.service.ManagerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mybatisplus.service.StudentService;
-import lombok.val;
+import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -228,26 +214,55 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
 
     @Override
     public Map<String, Object> getClo(Integer batch) {
-        QueryWrapper wrapper=new QueryWrapper();
-        wrapper.eq("bat_key",batch);
-        List<Clothes> clothes=clothesMapper.selectList(wrapper);
-        Integer total=0,man=0,woman=0;
-        for(Clothes clothes1:clothes){
-            System.out.println(clothes1);
-            if(clothes1.getSex().equals("男")){
-                man++;
-                total++;
-            }
-            if(clothes1.getSex().equals("女")){
-                woman++;
-                total++;
-            }
-        }
+        QueryWrapper<Clothes> wrapper=new QueryWrapper();
+        List<Clothes> clothes_total=clothesMapper.selectList(wrapper.eq("bat_key",batch).select("distinct cname"));
+        List<Clothes> clothes_man=clothesMapper.selectList(wrapper.eq("bat_key",batch).eq("sex","男").select("distinct cname"));
+        List<Clothes> clothes_woman=clothesMapper.selectList(wrapper.eq("bat_key",batch).eq("sex","男").select("distinct cname"));
         Map<String,Object> map= new HashMap<>();
-        map.put("total",total);
-        map.put("man",man);
-        map.put("woman",woman);
+        map.put("total",clothes_total.size());
+        map.put("man",clothes_man.size());
+        map.put("woman",clothes_woman.size());
         return map;
+    }
+
+    @Override
+    public List<Clothes> getSelCol(String str, Integer batch) {
+        QueryWrapper<Student> wrapper1=new QueryWrapper();
+        List<Student> student=studentMapper.selectList(wrapper1.eq("major",str));
+        System.out.println(student);
+        QueryWrapper<Applicationform> wrapper=new QueryWrapper<>();
+        List sid_card=student.stream().map(Student::getSid).collect(Collectors.toList());
+        List<Applicationform> list=applicationformMapper.selectList(wrapper.eq("bat_key",batch));
+        List<Integer> cid_list=new ArrayList();
+
+        for(int k=0;k<list.size();k++){
+                for(int i=0;i<student.size();i++) {
+                if (student.get(i).getSid().equals(list.get(k).getStuKey())){
+                    if(list.get(k).getResult()!=null) {
+                        if (list.get(k).getResult()== true) {
+                            System.out.println(list.get(k));
+                            System.out.println();
+                            cid_list.add(list.get(k).getCid());
+                        }
+                    }
+                }
+            }
+
+        }
+
+        List<Clothes> clothes=new ArrayList<>();
+        for(int i=0;i<cid_list.size();i++){
+            Clothes clothes1=clothesMapper.getByCid(cid_list.get(i));
+            int temp=1;
+            for(int k=1;k<cid_list.size();k++){
+                if(cid_list.get(k).equals(cid_list.get(i))){
+                    temp++;
+                }
+            }
+            clothes1.setNum(temp);
+            clothes.add(clothes1);
+        }
+        return clothes;
     }
 
 
