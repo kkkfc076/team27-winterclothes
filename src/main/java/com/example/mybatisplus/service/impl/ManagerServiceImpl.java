@@ -254,7 +254,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         for(int i=0;i<cid_list.size();i++){
             Clothes clothes1=clothesMapper.getByCid(cid_list.get(i));
             int temp=1;
-            for(int k=1;k<cid_list.size();k++){
+            for(int k=i+1;k<cid_list.size();k++){
                 if(cid_list.get(k).equals(cid_list.get(i))){
                     temp++;
                 }

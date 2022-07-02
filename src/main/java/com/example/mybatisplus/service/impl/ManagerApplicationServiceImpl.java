@@ -57,14 +57,14 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
         Batch batch=SessionUtils.getCurBatch();
         QueryWrapper wrapper1=new QueryWrapper();
         wrapper1.eq("bat_key",batch.getBid());
-        Map<String,Object> map=new HashMap<>();
+//        Map<String,Object> map=new HashMap<>();
         List<Applicationform> appf=applicationformMapper.selectList(wrapper1);
         List aid_card=appf.stream().map(Applicationform::getAid).collect(Collectors.toList());
         //遍历获取当前批次内的申请
-        for(int i=0;i<aid_card.size();i++){
-            map.put("app_key",aid_card.get(i));
-        }
-        wrapper.allEq(map);
+//        for(int i=0;i<aid_card.size();i++){
+//            map.put("app_key",aid_card.get(i));
+//        }
+        wrapper.in("app_key",aid_card);
         wrapper.eq("result","待审核");
         page= super.page(page,wrapper);
         return page;
