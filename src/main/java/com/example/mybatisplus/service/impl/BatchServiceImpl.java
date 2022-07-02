@@ -25,4 +25,14 @@ public class BatchServiceImpl extends ServiceImpl<BatchMapper, Batch> implements
         batch1.setEnddate(batch.getEnddate());
         return batch1;
     }
+
+    @Override
+    public Boolean getPermission() {
+        Boolean temp=false;
+        Batch batch=baseMapper.getPermission();
+        if(batch!=null){
+            temp=true;
+        }
+        return temp;
+    }
 }

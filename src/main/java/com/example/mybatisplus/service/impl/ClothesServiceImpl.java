@@ -94,8 +94,8 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
         QueryWrapper<Clothes> wrapper = new QueryWrapper<>();
         Map<String,Object> map=new HashMap<>();
         Integer bid=SessionUtils.getCurBatch().getBid();
-        List<Clothes> list1=clothesService.list(wrapper.eq("bat_key",bid));
-        List<Clothes> list2=clothesService.list(wrapper.eq("sex","男"));
+        List<Clothes> list1=clothesService.list(wrapper.eq("bat_key",bid).select("distinct style"));
+        List<Clothes> list2=clothesService.list(wrapper.eq("sex","男").select("distinct style"));
 
         map.put("total",list1.size());
         map.put("man",list2.size());

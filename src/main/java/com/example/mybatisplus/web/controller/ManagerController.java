@@ -130,8 +130,6 @@ public class ManagerController {
         Manager manager1=managerService.manlogin(manager);
         if(manager1!=null && manager1.getPermission()!=0){
             SessionUtils.saveCurUser(manager1);
-            LocalDateTime dateTime = LocalDateTime.now();
-            SessionUtils.saveCurTime(dateTime);
             return JsonResponse.success(manager1);
         }else {
             return JsonResponse.failure("用户名或密码错误");

@@ -98,6 +98,7 @@ public class StudentController {
         Student student1=studentService.stulogin(student);
         if(student1!=null){
             SessionUtils.saveCurUser(student1);
+
         }
         return JsonResponse.success(student1);
     }

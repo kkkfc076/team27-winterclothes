@@ -20,6 +20,5 @@ public interface BatchMapper extends BaseMapper<Batch> {
 
     Batch getBidByTime();
 
-
-    Integer updatebatch(LocalDateTime enddate);
+    Batch getPermission();
 }
