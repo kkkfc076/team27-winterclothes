@@ -88,7 +88,7 @@ ManagerApplicationService managerApplicationService;
     @Test
     public void sl(){
 //
-        Map<String ,Object> map=managerService.getClo(2022);
+        Map<String ,Object> map=managerService.getClo("计算机",2022);
         System.out.println(map);
     }
 

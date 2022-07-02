@@ -269,8 +269,8 @@ public class ManagerController {
      */
     @GetMapping("/getClo")
     @ResponseBody
-    public JsonResponse getClo( Integer batch){
-        Map<String,Object> map=managerService.getClo(batch);
+    public JsonResponse getClo( String str,Integer batch){
+        Map<String,Object> map=managerService.getClo(str,batch);
         return JsonResponse.success(map);
     }
     /*

@@ -189,17 +189,17 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
             wrapper.eq("stu_key",sid_card.get(i)).eq("bat_key",batch);
             Applicationform appf=applicationformMapper.selectOne(wrapper);
             if(appf!=null) {
-                if (appf.getResult() != null) {
-                    if (appf.getResult() == true) {
+                if(appf.getResult()!=null) {
+                    if (appf.getResult()) {
                         passed++;
                         total++;
-                    } else if (appf.getResult() == false) {
+                    } else if (!appf.getResult()) {
                         unpass++;
                         total++;
-                    } else {
-                        uncheck++;
-                        total++;
                     }
+                }else if (appf.getResult()==null) {
+                    uncheck++;
+                    total++;
                 }
             }
         }
@@ -213,11 +213,17 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
     }
 
     @Override
-    public Map<String, Object> getClo(Integer batch) {
+    public Map<String, Object> getClo(String str,Integer batch) {
         QueryWrapper<Clothes> wrapper=new QueryWrapper();
-        List<Clothes> clothes_total=clothesMapper.selectList(wrapper.eq("bat_key",batch).select("distinct cname"));
-        List<Clothes> clothes_man=clothesMapper.selectList(wrapper.eq("bat_key",batch).eq("sex","男").select("distinct cname"));
-        List<Clothes> clothes_woman=clothesMapper.selectList(wrapper.eq("bat_key",batch).eq("sex","男").select("distinct cname"));
+        QueryWrapper<Student> wrapper1=new QueryWrapper();
+        QueryWrapper<Applicationform> wrapper_app=new QueryWrapper<>();
+        List<Student> student=studentMapper.selectList(wrapper1.eq("major",str));
+        List sid_card=student.stream().map(Student::getSid).collect(Collectors.toList());
+        List<Applicationform> appf_list=applicationformMapper.selectList(wrapper_app.in("stu_key",sid_card));
+        List cid_list=appf_list.stream().map(Applicationform::getCid).collect(Collectors.toList());
+        List<Clothes> clothes_total=clothesMapper.selectList(wrapper.eq("bat_key",batch).select("distinct cname").in("cid",cid_list));
+        List<Clothes> clothes_man=clothesMapper.selectList(wrapper.eq("bat_key",batch).eq("sex","男").select("distinct cname").in("cid",cid_list));
+        List<Clothes> clothes_woman=clothesMapper.selectList(wrapper.eq("bat_key",batch).eq("sex","男").select("distinct cname").in("cid",cid_list));
         Map<String,Object> map= new HashMap<>();
         map.put("total",clothes_total.size());
         map.put("man",clothes_man.size());

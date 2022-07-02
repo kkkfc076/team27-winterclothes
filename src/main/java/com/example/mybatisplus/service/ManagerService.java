@@ -40,7 +40,7 @@ public interface ManagerService extends IService<Manager> {
 
     Map<String,Object> getSelData(String str, Integer batch);
 
-    Map<String, Object> getClo( Integer batch);
+    Map<String, Object> getClo( String str,Integer batch);
 
     List<Clothes> getSelCol(String str, Integer batch);
 }
