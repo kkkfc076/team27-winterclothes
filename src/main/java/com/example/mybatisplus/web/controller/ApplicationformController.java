@@ -144,7 +144,7 @@ public class ApplicationformController {
             applicationform1=applicationformService.getByStukey(student1.getSid(),batch1.getBid());
             applicationformService.updateD(applicationform1.getId());
 
-            applicationformService.addMAform(applicationform);
+            applicationformService.addMAform(applicationform1);
         }
         return JsonResponse.success(permission);
 

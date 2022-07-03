@@ -93,7 +93,10 @@ public class ClothesServiceImpl extends ServiceImpl<ClothesMapper, Clothes> impl
     public Map<String, Object> cloStatistics() {
         QueryWrapper<Clothes> wrapper = new QueryWrapper<>();
         Map<String,Object> map=new HashMap<>();
-        Integer bid=SessionUtils.getCurBatch().getBid();
+        Integer bid=null;
+        if(SessionUtils.getCurBatch()!=null){
+            bid=SessionUtils.getCurBatch().getBid();
+        }
         List<Clothes> list1=clothesService.list(wrapper.eq("bat_key",bid).select("distinct style"));
         List<Clothes> list2=clothesService.list(wrapper.eq("sex","男").select("distinct style"));
 

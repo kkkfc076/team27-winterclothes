@@ -104,7 +104,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
             //如果是，格式化字符串
             String[] row;
             //批量插入
-            for(int i=1;i<=rowCount;i++){
+            for(int i=1;i<rowCount;i++){
                 row=strings.get(i);
                 Student student=new Student();
                 student.setSid(Integer.valueOf(row[0]));
@@ -141,7 +141,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
             //如果是，格式化字符串
             String[] row;
             //批量插入
-            for(int i=1;i<rowCount+1;i++){
+            for(int i=1;i<rowCount;i++){
                 row=strings.get(i);
                 Manager manager=new Manager();
                 manager.setMid(Integer.valueOf(row[0]));

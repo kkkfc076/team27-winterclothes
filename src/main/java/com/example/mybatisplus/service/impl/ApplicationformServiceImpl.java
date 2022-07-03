@@ -74,7 +74,10 @@ public class ApplicationformServiceImpl extends ServiceImpl<ApplicationformMappe
     public Map<String, Object> dataStatistics() {
         Map<String,Object> map=new HashMap<>();
         QueryWrapper<Applicationform> wrapper=new QueryWrapper<>();
-        Integer bid= SessionUtils.getCurBatch().getBid();
+        Integer bid=null;
+        if(SessionUtils.getCurBatch()!=null){
+            bid=SessionUtils.getCurBatch().getBid();
+        }
         List<Applicationform> list1=applicationformService.list(wrapper.eq("bat_key",bid));//该批次总申请数
         List<Applicationform> list2=applicationformService.list(wrapper.eq("result",1));//已通过
         List<Applicationform> list3=applicationformService.list(wrapper.eq("result",0));//未通过

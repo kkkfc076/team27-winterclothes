@@ -118,7 +118,7 @@ public class ManagerApplicationServiceImpl extends ServiceImpl<ManagerApplicatio
                 mApp1. setResult("待审核");//默认学校用户通过申请
                 mApp1.setState(3);//自动提交
                 QueryWrapper<Manager> wrapper = new QueryWrapper();
-                wrapper.eq("mname", "学校测试").eq("mlevel", 3);
+                wrapper.eq("mname", "学校").eq("mlevel", 3);
                 Manager manager = managerMapper.selectOne(wrapper);
                 mApp1.setManKey(manager.getMid());
 
